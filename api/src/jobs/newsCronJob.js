@@ -1,9 +1,11 @@
 const cron = require('node-cron');
 const NewsService = require('../services/newsService');
+const FirebaseService = require('../services/firebaseService');
 
 class NewsCronJob {
     constructor() {
         this.newsService = NewsService;
+        this.firebaseService = FirebaseService;
     }
 
     // Fonction pour exécuter immédiatement le job (pour les tests)
@@ -12,6 +14,10 @@ class NewsCronJob {
             console.log('Fetching news...');
             const articles = await this.newsService.fetchLatestNews();
             console.log(`Retrieved ${articles.total} articles`);
+
+            const savedCount = await this.firebaseService.saveArticles(articles.articles);
+            console.log(`Saved ${savedCount} new articles to Firebase`);
+
             return articles;
         } catch (error) {
             console.error('Error executing news job:', error);
@@ -25,7 +31,8 @@ class NewsCronJob {
             await this.executeJob();
         }, {
             scheduled: true,
-            timezone: 'Europe/Paris'
+            timezone: 'Europe/Paris',
+            runOnInit: true
         });
         console.log('News cron job started');
     }

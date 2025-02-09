@@ -11,7 +11,7 @@ class NewsService {
                 }
             });
 
-            const articles = [response.data.news[0]];
+            const articles = [response.data.news[0], response.data.news[1], response.data.news[2]];
             const processedArticles = await this.processArticles(articles);
 
             return {
@@ -44,8 +44,8 @@ class NewsService {
                     author: article.author,
                     image: article.image,
                     published: article.published,
-                    source: article.source
                 });
+
             } catch (error) {
                 console.error(`Error processing article ${article.id}:`, error);
                 // Continue avec l'article suivant même si un échoue
