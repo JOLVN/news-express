@@ -8,11 +8,15 @@ const port = process.env.PORT || 3000;
 const { db } = require('./config/firebase');
 process.removeAllListeners('warning');
 
-// Route de test pour déclencher manuellement le job
-app.get('/fetch-news', async (req, res) => {
+// Créer une route pour executer mon cron
+app.get('/run-cron', async (req, res) => {
     try {
-        const articles = await newsCronJob.executeJob();
-        res.json({ success: true, articles });
+        await newsCronJob.executeJob();
+        const apiKey = req.headers['x-api-key'] || req.query.apiKey;
+        if (apiKey !== process.env.CRON_API_KEY) {
+            return res.status(401).json({ error: 'Unauthorized' });
+        }
+        res.status(200).json({ message: 'Cron executed successfully' });
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }

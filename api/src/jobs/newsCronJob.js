@@ -26,16 +26,16 @@ class NewsCronJob {
     }
 
     // Démarrer le cron job (toutes les 2 heures par défaut)
-    start(cronSchedule = '0 */2 * * *') {
-        cron.schedule(cronSchedule, async () => {
-            await this.executeJob();
-        }, {
-            scheduled: true,
-            timezone: 'Europe/Paris',
-            runOnInit: true
-        });
-        console.log('News cron job started');
-    }
+    // start(cronSchedule = '0 */2 * * *') {
+    //     cron.schedule(cronSchedule, async () => {
+    //         await this.executeJob();
+    //     }, {
+    //         scheduled: true,
+    //         timezone: 'Europe/Paris',
+    //         runOnInit: true
+    //     });
+    //     console.log('News cron job started');
+    // }
 }
 
 module.exports = new NewsCronJob();
