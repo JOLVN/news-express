@@ -89,6 +89,29 @@ class ChatGPTService {
             throw error;
         }
     }
+
+    async chat(message, articleContent) {
+        try {
+            const completion = await openai.chat.completions.create({
+                model: "gpt-4o-mini",
+                messages: [
+                    {
+                        role: "system",
+                        content: `Tu es un assistant helpful qui répond aux questions à propos de cet article: ${articleContent}`
+                    },
+                    {
+                        role: "user",
+                        content: message
+                    }
+                ],
+            });
+
+            return completion.choices[0].message.content;
+        } catch (error) {
+            console.error('OpenAI Error:', error);
+            throw error;
+        }
+    }
 }
 
 module.exports = new ChatGPTService();

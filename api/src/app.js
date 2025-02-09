@@ -2,10 +2,12 @@ require('dotenv').config();
 
 const express = require('express');
 const newsCronJob = require('./jobs/newsCronJob');
+const chatGPTService = require('./chatGPTService');
 
 const app = express();
 const port = process.env.PORT || 3000;
 const { db } = require('./config/firebase');
+
 process.removeAllListeners('warning');
 
 // Créer une route pour executer mon cron
@@ -60,6 +62,22 @@ app.get('/news/:date', async (req, res) => {
             success: false,
             error: error.message
         });
+    }
+});
+
+app.post('/api/chat', async (req, res) => {
+    const { message, articleContent } = req.body;
+
+    if (!message || !articleContent) {
+        return res.status(400).json({ error: 'Missing message or articleContent' });
+    }
+
+    try {
+        const response = await chatGPTService.chat(message, articleContent);
+        res.json({ response });
+    } catch (error) {
+        console.error('Error processing chat:', error);
+        res.status(500).json({ error: error.message });
     }
 });
 
