@@ -17,8 +17,6 @@ class FirebaseService {
     // Sauvegarder un nouvel article
     async saveArticle(article) {
         try {
-            console.log(`Saving article: ${article.title}`);
-
             const exists = await this.articleExists(article.url);
             if (!exists) {
                 await this.articlesCollection.add({
