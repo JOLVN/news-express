@@ -13,7 +13,7 @@ class NewsService {
                 }
             });
 
-            const articles = [response.data.news[0], response.data.news[1], response.data.news[2]];
+            const articles = [response.data.news[0], response.data.news[1], response.data.news[2], response.data.news[3], response.data.news[4]];
             const processedArticles = await this.processArticles(articles);
 
             return {
