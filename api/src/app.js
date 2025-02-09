@@ -63,9 +63,6 @@ app.get('/news/:date', async (req, res) => {
     }
 });
 
-// Démarrer le cron job
-newsCronJob.start();
-
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
