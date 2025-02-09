@@ -7,21 +7,20 @@ const chatGPTService = require('./services/chatGPTService');
 
 const app = express();
 const port = process.env.PORT || 3000;
-const { db } = require('./config/firebase');
 
 process.removeAllListeners('warning');
 
 // Créer une route pour executer mon cron
 app.get('/run-cron', async (req, res) => {
     try {
-        await newsCronJob.executeJob();
         const apiKey = req.headers['x-api-key'] || req.query.apiKey;
         if (apiKey !== process.env.CRON_API_KEY) {
             return res.status(401).json({ error: 'Unauthorized' });
         }
-        res.status(200).json({ message: 'Cron executed successfully' });
+        await newsCronJob.executeJob();
+        res.status(200).json({ message: 'OK' });
     } catch (error) {
-        res.status(500).json({ success: false, error: error.message });
+        res.status(500).json({ success: false, error: 'Error' });
     }
 });
 
