@@ -32,7 +32,7 @@ class NewsCronJob {
         }, {
             scheduled: true,
             timezone: 'Europe/Paris',
-            // runOnInit: true
+            runOnInit: true
         });
         console.log('News cron job started');
     }

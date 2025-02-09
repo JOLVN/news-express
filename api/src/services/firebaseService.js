@@ -17,17 +17,12 @@ class FirebaseService {
     // Sauvegarder un nouvel article
     async saveArticle(article) {
         try {
-            const exists = await this.articleExists(article.url);
-            if (!exists) {
-                await this.articlesCollection.add({
-                    ...article,
-                    createdAt: new Date()
-                });
-                console.log(`Article saved: ${article.title}`);
-                return true;
-            }
-            console.log(`Article already exists: ${article.title}`);
-            return false;
+            await this.articlesCollection.add({
+                ...article,
+                createdAt: new Date()
+            });
+            console.log(`Article saved: ${article.title}`);
+            return true;
         } catch (error) {
             console.error('Error saving article:', error);
             throw error;

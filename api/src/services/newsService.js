@@ -1,7 +1,9 @@
 const currentsApi = require('../config/currentsApi');
 const chatGPTService = require('./chatGPTService');
+const firebaseService = require('../services/firebaseService');
 
 class NewsService {
+
     async fetchLatestNews() {
         try {
             const response = await currentsApi.get('/latest-news', {
@@ -30,7 +32,11 @@ class NewsService {
         for (const article of articles) {
             try {
 
+                const exists = await firebaseService.articleExists(article.url);
+                if (exists) continue;
                 const processedArticle = await chatGPTService.processArticle(article);
+                console.log(`Article processed: ${article.title}`);
+
 
                 processedArticles.push({
                     id: article.id,
