@@ -35,6 +35,25 @@ class FirebaseService {
         const results = await Promise.all(savePromises);
         return results.filter(result => result).length; // Nombre d'articles sauvegardés
     }
+
+    // Récupérer les articles publiés à partir d'une date donnée
+    async getArticlesByDate(dateString) {
+        const snapshot = await this.articlesCollection
+            .where('published', '>=', dateString)
+            .where('published', '<', dateString + '\uf8ff')
+            .orderBy('published', 'desc')
+            .get();
+
+        const articles = [];
+        snapshot.forEach(doc => {
+            articles.push({
+                id: doc.id,
+                ...doc.data()
+            });
+        });
+
+        return articles;
+    }
 }
 
 module.exports = new FirebaseService();

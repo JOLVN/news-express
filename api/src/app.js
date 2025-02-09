@@ -2,7 +2,8 @@ require('dotenv').config();
 
 const express = require('express');
 const newsCronJob = require('./jobs/newsCronJob');
-const chatGPTService = require('./chatGPTService');
+const firebaseService = require('./services/firebaseService');
+const chatGPTService = require('./services/chatGPTService');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -28,24 +29,7 @@ app.get('/news/:date', async (req, res) => {
     try {
         const dateString = req.params.date; // Format attendu: YYYY-MM-DD
 
-        // Référence à la collection articles
-        const articlesRef = db.collection('articles');
-
-        // Requête Firestore
-        const snapshot = await articlesRef
-            .where('published', '>=', dateString)
-            .where('published', '<', dateString + '\uf8ff')
-            .orderBy('published', 'desc')
-            .get();
-
-        // Transformer les documents en tableau d'articles
-        const articles = [];
-        snapshot.forEach(doc => {
-            articles.push({
-                id: doc.id,
-                ...doc.data()
-            });
-        });
+        const articles = await firebaseService.getArticlesByDate(dateString);
 
         console.log(`Retrieved ${articles.length} articles for ${dateString}`);
 
