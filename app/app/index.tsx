@@ -1,9 +1,11 @@
 import AppLogo from "@/components/AppLogo";
+import ArticleScreenImage from "@/components/article/ArticleScreenImage";
 import CustomDrawer from "@/components/drawer/CustomDrawer";
 import CustomDrawerContent from "@/components/drawer/CustomDrawerContent";
 import { fetchArticles } from "@/functions/API";
 import { useThemeColors } from "@/hooks/useThemeColors";
-import { ArticleResponse } from "@/types/types";
+import { Article, ArticleResponse } from "@/types/types";
+import { LinearGradient } from "expo-linear-gradient";
 import { Link } from "expo-router";
 import { useEffect, useState } from "react";
 import { Image, Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
@@ -12,8 +14,9 @@ export default function Index() {
 
     const [isDrawerVisible, setIsDrawerVisible] = useState(false);
     const [articles, setArticles] = useState<ArticleResponse | undefined>(undefined);
+    const [visibleArticle, setVisibleArticle] = useState<Article | undefined>(undefined);
     const colors = useThemeColors();
-    const today = '2025-02-08';
+    const today = '2025-02-10';
 
     async function getArticles() {
         try {
@@ -21,6 +24,7 @@ export default function Index() {
             
             const data = await fetchArticles(today);
             setArticles(data);
+            setVisibleArticle(data.articles[0]);
             console.log(data);
             
         } catch (error) {
@@ -42,12 +46,7 @@ export default function Index() {
                 <CustomDrawerContent />
             </CustomDrawer>
 
-            <View style={styles.imageContainer}>
-                <Image
-                    source={{ uri: articles?.articles[0].image }}
-                    style={{ width: '100%', height: '100%' }}
-                />
-            </View>
+            <ArticleScreenImage image={visibleArticle?.image} />
 
             <SafeAreaView style={styles.contentContainer}>
                 <AppLogo onPress={() => setIsDrawerVisible(true)} />
@@ -71,10 +70,5 @@ const styles = StyleSheet.create({
         flex: 1,
         marginHorizontal: 20,
     },
-    imageContainer: {
-        position: 'absolute',
-        top: 0,
-        width: '100%',
-        height: '60%',
-    },
+    
 });

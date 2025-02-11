@@ -11,7 +11,7 @@ interface Question {
     answer: string;
 }
 
-interface Article {
+export interface Article {
     id: number;
     title: string;
     originalDescription: string;
