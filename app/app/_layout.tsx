@@ -1,11 +1,31 @@
 import { ThemeContext, ThemeContextProvider } from "@/contexts/ThemeContext";
-import { Stack } from "expo-router";
+import { useFonts } from "expo-font";
+import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import { PTSerif_400Regular, PTSerif_700Bold, PTSerif_700Bold_Italic } from "@expo-google-fonts/pt-serif";
+import { Montserrat_400Regular, Montserrat_500Medium } from "@expo-google-fonts/montserrat";
 
 function Root() {
 
     const { theme } = useContext(ThemeContext);
+    const [loaded] = useFonts({
+        'PTSerif-Regular': PTSerif_400Regular,
+        'PTSerif-Bold': PTSerif_700Bold,
+        'PTSerif-BoldItalic': PTSerif_700Bold_Italic,
+        'Montserrat-Regular': Montserrat_400Regular,
+        'Montserrat-Medium': Montserrat_500Medium,
+    });
+    
+    useEffect(() => {
+        if (loaded) {
+            SplashScreen.hideAsync();
+        }
+    }, [loaded]);
+    
+      if (!loaded) {
+        return null;
+      }
 
     return (
         <>

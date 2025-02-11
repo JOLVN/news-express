@@ -39,11 +39,8 @@ export default function Index() {
     }
 
     function getCurrentArticle(index: number) {        
-        if (articles) {
-            console.log('changing image into:', articles.articles[index].image);
+        if (articles)
             setVisibleImage(articles.articles[index].image);
-        }
-        
     }
 
     useEffect(() => {

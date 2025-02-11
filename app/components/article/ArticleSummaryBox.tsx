@@ -15,7 +15,6 @@ type Props = ViewProps & {
 
 export default function ArticleSummaryBox({ articles, onArticleChange, style, ...rest }: Props) {
 
-    const [currentIndex, setCurrentIndex] = useState(0);
     const colors = useThemeColors();
     const { theme } = useContext(ThemeContext);
 
@@ -25,7 +24,6 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, ..
     }) => {                
         if (viewableItems.length > 0) {
             const newIndex = viewableItems[0].index ?? 0;
-            setCurrentIndex(newIndex);
             onArticleChange(newIndex);
         }
     }).current;
@@ -36,8 +34,8 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, ..
     function ArticleSummary({ article }: { article: Article })  {
         return (
             <View style={[styles.articleContainer, {...Shadows[theme].medium}]} {...rest}>
-                <ThemedText style={styles.title}>{article.title}</ThemedText>
-                <ThemedText style={styles.summary}>{article.summary}</ThemedText>
+                <ThemedText variant={'articleSummaryTitle'}>{article.title}</ThemedText>
+                <ThemedText variant={'articleBody'}>{article.summary}</ThemedText>
             </View>
         );
     }
@@ -55,7 +53,7 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, ..
                 snapToInterval={height * 0.5 - 32}
                 bounces={true}
                 viewabilityConfig={viewConfig}
-                decelerationRate="normal"
+                decelerationRate="fast"
                 initialNumToRender={1}
                 disableIntervalMomentum={true}
                 overScrollMode="always"
@@ -78,11 +76,4 @@ const styles = StyleSheet.create({
         width: '100%',
         height: height * 0.5 - 32,
     },
-    title: {
-        fontSize: 20,
-        fontWeight: 'bold'
-    },
-    summary: {
-        fontSize: 16
-    }
 });
