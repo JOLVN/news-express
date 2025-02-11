@@ -5,6 +5,7 @@ import { Article } from "@/types/types";
 import { useContext, useRef, useState } from "react";
 import { Dimensions, FlatList, FlatListProps, StyleSheet, View, ViewProps, ViewToken } from "react-native";
 import ThemedText from "@/components/ui/ThemedText";
+import FlatButton from "../ui/FlatButton";
 
 const { height } = Dimensions.get('window');
 
@@ -33,15 +34,27 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, ..
 
     function ArticleSummary({ article }: { article: Article })  {
         return (
-            <View style={[styles.articleContainer, {...Shadows[theme].medium}]} {...rest}>
-                <ThemedText variant={'articleSummaryTitle'}>{article.title}</ThemedText>
-                <ThemedText variant={'articleBody'}>{article.summary}</ThemedText>
+            <View style={[styles.articleContainer]} {...rest}>
+                <View style={styles.articleSummaryContainer}>
+                    <ThemedText variant={'articleSummaryTitle'}>{article.title}</ThemedText>
+                    <ThemedText variant={'articleBody'}>{article.summary}</ThemedText>
+                </View>
+                <View style={styles.articleButtons}>
+                    <View>
+                        <FlatButton onPress={() => {}} >
+                            Écouter
+                        </FlatButton>
+                    </View>
+                    <FlatButton onPress={() => {}} borderBottom={true} >
+                        En savoir plus
+                    </FlatButton>
+                </View>
             </View>
         );
     }
 
     return (
-        <View style={[style, styles.container, {backgroundColor: colors.background}]}>
+        <View style={[style, styles.container, {backgroundColor: colors.background}, {...Shadows[theme].large}]}>
             <FlatList
                 data={articles}
                 renderItem={({ item }) => <ArticleSummary article={item} />}
@@ -70,10 +83,19 @@ const styles = StyleSheet.create({
         height: height * 0.5,
         borderRadius: 10,
         padding: 16,
-        overflow: 'hidden',
     },
     articleContainer: {
         width: '100%',
         height: height * 0.5 - 32,
     },
+    articleSummaryContainer: {
+        overflow: 'hidden',
+    },
+    articleButtons: {
+        position: 'absolute',
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        bottom: 10,
+    }
 });

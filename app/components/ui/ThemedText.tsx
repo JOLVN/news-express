@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     },
     regular: {
         fontFamily: 'Montserrat-Regular',
-        fontSize: 14,
+        fontSize: Platform.OS === 'ios' ? 18 : 14,
     },
     medium: {
         fontFamily: 'Montserrat-Medium',
