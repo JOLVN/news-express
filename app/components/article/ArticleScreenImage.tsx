@@ -1,6 +1,8 @@
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { LinearGradient } from "expo-linear-gradient";
-import { Image, StyleSheet, View } from "react-native";
+import { useEffect } from "react";
+import { StyleSheet, View } from "react-native";
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 type Props = {
     image?: string;
@@ -9,14 +11,34 @@ type Props = {
 export default function ArticleScreenImage({ image }: Props) {
 
     const colors = useThemeColors();
+    const opacity = useSharedValue(0);
+
+    useEffect(() => {
+        opacity.value = 0;
+    }, [image]);
+
+    const handleLoadEnd = () => {
+        opacity.value = 0;
+        opacity.value = withTiming(1, {
+            duration: 1000,
+        });
+    };
+
+    const animatedStyle = useAnimatedStyle(() => {
+        return {
+            opacity: opacity.value,
+        };
+    });
 
     return (
         <View style={styles.imageContainer}>
             {image && (
-                <Image
-                    source={{ uri: image }}
-                    style={{ width: '100%', height: '100%' }}
+                <Animated.Image
+                    source={{ uri: image, cache: 'reload' }}
+                    style={[styles.image, animatedStyle]}
+                    onLoadEnd={handleLoadEnd}
                 />
+                
             )}
             <LinearGradient
                 colors={['rgba(80,80,80,0.5)', 'transparent', 'transparent', 'rgba(80,80,80,0.5)']}
@@ -42,6 +64,11 @@ const styles = StyleSheet.create({
         top: 0,
         width: '100%',
         height: '65%',
+    },
+    image: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
     },
     gradient: {
         position: 'absolute',
