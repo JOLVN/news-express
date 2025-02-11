@@ -10,25 +10,25 @@ export default function ThemeSwitch() {
     return (
         <View style={styles.container}>
         <View style={styles.switchContainer}>
-            <Text style={[styles.text, { color: colors.grayDark }]}>
+            <Text style={[styles.text, { color: colors.background }]}>
             Mode sombre
             </Text>
             <Switch
                 value={theme === 'dark'}
                 onValueChange={toggleTheme}
-                trackColor={{ false: colors.grayLight, true: colors.accent }}
+                trackColor={{ false: colors.text, true: colors.accent500 }}
                 thumbColor="white"
             />
         </View>
         
         <View style={styles.switchContainer}>
-            <Text style={[styles.text, { color: colors.grayDark }]}>
+            <Text style={[styles.text, { color: colors.background }]}>
             Utiliser le thème système
             </Text>
             <Switch
                 value={isSystemTheme}
                 onValueChange={setIsSystemTheme}
-                trackColor={{ false: colors.grayLight, true: colors.accent }}
+                trackColor={{ false: colors.text, true: colors.accent500 }}
                 thumbColor="white"
             />
         </View>
