@@ -11,13 +11,13 @@ export const Shadows = {
             elevation: 4,
         },
         medium: {
-            shadowColor: "#000",
+            shadowColor: "#F7804B",
             shadowOffset: {
                 width: 0,
-                height: 4,
+                height: 0,
             },
-            shadowOpacity: 0.23,
-            shadowRadius: 2.62,
+            shadowOpacity: 0.3,
+            shadowRadius: 15,
             elevation: 4,
         },
         large: {
@@ -43,13 +43,13 @@ export const Shadows = {
             elevation: 4,
         },
         medium: {
-            shadowColor: "#000",
+            shadowColor: "#000000",
             shadowOffset: {
                 width: 0,
-                height: 4,
+                height: 0,
             },
-            shadowOpacity: 0.23,
-            shadowRadius: 2.62,
+            shadowOpacity: 0.4,
+            shadowRadius: 15,
             elevation: 4,
         },
         large: {

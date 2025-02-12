@@ -1,8 +1,12 @@
 import { UserCategory } from "@/types/categories";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import ThemedText from "@/components/ui/ThemedText";
+import { Shadows } from "@/constants/Shadows";
+import { useContext } from "react";
+import { ThemeContext } from "@/contexts/ThemeContext";
+import Animated, { useAnimatedStyle, withSpring } from "react-native-reanimated";
 
 type Props = {
     category: UserCategory;
@@ -11,16 +15,38 @@ type Props = {
 
 export default function CategoryWrapper({category, onPress}: Props) {
 
+    const { theme } = useContext(ThemeContext);
     const colors = useThemeColors();
 
+    const iconStyle = useAnimatedStyle(() => {
+        return {
+            transform: [
+                { rotate: withSpring(category.selected ? '360deg' : '0deg') }
+            ]
+        };
+    });
+
+    const borderStyle = useAnimatedStyle(() => ({
+        borderColor: withSpring(category.selected ? colors.gray500 : 'transparent')
+    }));
+
     return (
-        <View style={[styles.container, {backgroundColor: colors.gray800}]}>
+        <Animated.View style={[
+            styles.container, 
+            borderStyle,
+            {
+                backgroundColor: colors.gray800, 
+                ...Shadows[theme].medium, 
+            }
+        ]}>
             <Text>{category.emoji}</Text>
             <ThemedText variant="category" color={category.selected ? 'text' : 'gray500'}>{category.name}</ThemedText>
             <Pressable style={[styles.button, {borderColor: colors.accent500}]} onPress={onPress}>
-                <AntDesign name={category.selected ? 'check' : 'plus'} size={16} color={colors.accent500} />
+                <Animated.View style={iconStyle}>
+                    <AntDesign name={category.selected ? 'check' : 'plus'} size={Platform.OS === 'ios' ? 16 : 14} color={colors.accent500} />
+                </Animated.View>
             </Pressable>
-        </View>
+        </Animated.View>
     )
 }
 
@@ -29,14 +55,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingVertical: 7,
+        paddingVertical: Platform.OS === 'ios' ? 7 : 5,
         paddingHorizontal: 10,
         borderRadius: 50,
-        gap: 10
+        gap: 10,
+        borderWidth: 0.5,
     },
     button: {
-        height: 25,
-        width: 25,
+        height: Platform.OS === 'ios' ? 25 : 20,
+        width: Platform.OS === 'ios' ? 25 : 20,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 50,
