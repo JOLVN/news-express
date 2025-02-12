@@ -1,3 +1,4 @@
+import * as WebBrowser from 'expo-web-browser';
 import Button from "@/components/ui/Button";
 import ThemedText from "@/components/ui/ThemedText";
 import { useThemeColors } from "@/hooks/useThemeColors";
@@ -10,6 +11,15 @@ export default function ArticleDetails() {
     const colors = useThemeColors();
 
     const articleData = article ? JSON.parse(article as string) : null;
+
+    const openArticle = async () => {
+        if (!articleData) return;
+        try {
+            await WebBrowser.openBrowserAsync(articleData.url);
+        } catch (error) {
+            console.error('Erreur lors de l\'ouverture du lien:', error);
+        }
+      };
 
     if (!articleData) {
         return (
@@ -41,7 +51,7 @@ export default function ArticleDetails() {
                     <ThemedText variant={'articleTitle'} style={styles.sectionTitle}>Ce qu'il faut retenir</ThemedText>
                     <ThemedText variant={'articleBody'}>{articleData.detailedArticle.conclusion}</ThemedText>
                 </View>
-                <Button onPress={() => {}}>
+                <Button onPress={openArticle}>
                     Consulter l'article
                 </Button>
                 <View style={styles.section}>
