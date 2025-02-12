@@ -2,8 +2,8 @@ import { Shadows } from "@/constants/Shadows";
 import { ThemeContext } from "@/contexts/ThemeContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { Article } from "@/types/types";
-import { useContext, useRef, useState } from "react";
-import { Dimensions, FlatList, FlatListProps, StyleSheet, View, ViewProps, ViewToken } from "react-native";
+import { useContext, useRef } from "react";
+import { Dimensions, FlatList, StyleSheet, View, ViewProps, ViewToken } from "react-native";
 import ThemedText from "@/components/ui/ThemedText";
 import FlatButton from "../ui/FlatButton";
 import { Link } from "expo-router";
@@ -46,8 +46,8 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, ..
                             Écouter
                         </FlatButton>
                     </View>
-                    <Link href={{ pathname: '/article/[id]', params: {id: 1, article: JSON.stringify(article) }}} asChild>
-                        <FlatButton onPress={() => {}} borderBottom={true} >
+                    <Link href={{ pathname: '/article/[id]', params: {id: article.id }}} asChild>
+                        <FlatButton borderBottom={true} >
                             En savoir plus
                         </FlatButton>
                     </Link>

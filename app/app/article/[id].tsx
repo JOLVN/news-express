@@ -6,30 +6,32 @@ import { useLocalSearchParams } from "expo-router";
 import { Image, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Question } from '@/types/types';
 import ArticleQuestion from '@/components/article/ArticleQuestion';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { ArticlesContext } from '@/contexts/ArticlesContext';
 
 export default function ArticleDetails() {
 
-    const { id, article } = useLocalSearchParams();
+    const { getArticleById } = useContext(ArticlesContext);
+    const { id } = useLocalSearchParams();
+    const article = getArticleById(id as string);
+    
     const colors = useThemeColors();
     const [expandedQuestionIndex, setExpandedQuestionIndex] = useState<number | null>(null);
-
-    const articleData = article ? JSON.parse(article as string) : null;
 
     function toggleQuestion(index: number) {
         setExpandedQuestionIndex(index === expandedQuestionIndex ? null : index);
     }
 
     const openArticle = async () => {
-        if (!articleData) return;
+        if (!article) return;
         try {
-            await WebBrowser.openBrowserAsync(articleData.url);
+            await WebBrowser.openBrowserAsync(article.url);
         } catch (error) {
             console.error('Erreur lors de l\'ouverture du lien:', error);
         }
     };
 
-    if (!articleData) {
+    if (!article) {
         return (
             <View style={[styles.container, {backgroundColor: colors.coloredBackground}]}>
                 <ThemedText variant={'articleTitle'}>Article introuvable</ThemedText>
@@ -40,24 +42,24 @@ export default function ArticleDetails() {
     return (
         <ScrollView style={[styles.container, {backgroundColor: colors.coloredBackground}]}>
             <View style={{ gap: 30, paddingBottom: 40 }}>
-                <ThemedText variant={'articleTitle'}>{articleData.title}</ThemedText>
-                <Image source={{uri: articleData.image}} style={{width: '100%', height: 200}} />
-                <ThemedText variant={'articleItalic'}>{articleData.detailedArticle.introduction}</ThemedText>
+                <ThemedText variant={'articleTitle'}>{article.title}</ThemedText>
+                <Image source={{uri: article.image}} style={{width: '100%', height: 200}} />
+                <ThemedText variant={'articleItalic'}>{article.detailedArticle.introduction}</ThemedText>
                 <View style={styles.section}>
                     <ThemedText variant={'articleTitle'} style={styles.sectionTitle}>Context</ThemedText>
-                    <ThemedText variant={'articleBody'}>{articleData.detailedArticle.context}</ThemedText>
+                    <ThemedText variant={'articleBody'}>{article.detailedArticle.context}</ThemedText>
                 </View>
                 <View style={styles.section}>
                     <ThemedText variant={'articleTitle'} style={styles.sectionTitle}>Détails</ThemedText>
-                    <ThemedText variant={'articleBody'}>{articleData.detailedArticle.details}</ThemedText>
+                    <ThemedText variant={'articleBody'}>{article.detailedArticle.details}</ThemedText>
                 </View>
                 <View style={styles.section}>
                     <ThemedText variant={'articleTitle'} style={styles.sectionTitle}>Conséquences</ThemedText>
-                    <ThemedText variant={'articleBody'}>{articleData.detailedArticle.issues}</ThemedText>
+                    <ThemedText variant={'articleBody'}>{article.detailedArticle.issues}</ThemedText>
                 </View>
                 <View style={styles.section}>
                     <ThemedText variant={'articleTitle'} style={styles.sectionTitle}>Ce qu'il faut retenir</ThemedText>
-                    <ThemedText variant={'articleBody'}>{articleData.detailedArticle.conclusion}</ThemedText>
+                    <ThemedText variant={'articleBody'}>{article.detailedArticle.conclusion}</ThemedText>
                 </View>
                 <Button onPress={openArticle}>
                     Consulter l'article
@@ -65,7 +67,7 @@ export default function ArticleDetails() {
                 <View style={styles.section}>
                     <ThemedText variant={'articleTitle'} style={styles.sectionTitle}>Q&A</ThemedText>
                 </View>
-                {articleData.questions.map((qa: Question, index: number) => (
+                {article.questions.map((qa: Question, index: number) => (
                     <ArticleQuestion 
                         key={index} 
                         question={qa} 

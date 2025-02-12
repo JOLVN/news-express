@@ -4,18 +4,18 @@ import ArticleSummaryBox from "@/components/article/ArticleSummaryBox";
 import CustomDrawer from "@/components/drawer/CustomDrawer";
 import CustomDrawerContent from "@/components/drawer/CustomDrawerContent";
 import SafeArea from "@/components/SafeArea";
+import { ArticlesContext } from "@/contexts/ArticlesContext";
 import { fetchArticles } from "@/functions/API";
 import { useThemeColors } from "@/hooks/useThemeColors";
-import { Article, ArticleResponse } from "@/types/types";
-import { Link } from "expo-router";
-import { useEffect, useState } from "react";
-import { ActivityIndicator, Image, SafeAreaView, StyleSheet, View } from "react-native";
+import { ArticleResponse } from "@/types/types";
+import { useContext, useEffect, useState } from "react";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 
 export default function Index() {
 
     const [isLoading, setIsLoading] = useState(false);
     const [isDrawerVisible, setIsDrawerVisible] = useState(false);
-    const [articles, setArticles] = useState<ArticleResponse | undefined>(undefined);
+    const {articles, setArticles} = useContext(ArticlesContext);
     const [visibleImage, setVisibleImage] = useState<string | ''>('');
     const colors = useThemeColors();
     const today = '2025-02-11';
@@ -1359,12 +1359,12 @@ export default function Index() {
             setIsLoading(true)
             console.log('fetching articles...');
             
-            // const data = await fetchArticles(today);
-            setArticles(articlesData);
-            if (!visibleImage && articlesData.articles.length > 0) {
-                setVisibleImage(articlesData.articles[0].image);
+            const data = await fetchArticles(today);
+            setArticles(data.articles);
+            if (!visibleImage && data.articles.length > 0) {
+                setVisibleImage(data.articles[0].image);
             }
-            console.log(articlesData.count);
+            console.log(data.count);
             
         } catch (error) {
             console.error(error);
@@ -1375,7 +1375,7 @@ export default function Index() {
 
     function getCurrentArticle(index: number) {        
         if (articles)
-            setVisibleImage(articles.articles[index].image);
+            setVisibleImage(articles[index].image);
     }
 
     useEffect(() => {
@@ -1402,7 +1402,7 @@ export default function Index() {
                 <AppLogo onPress={() => setIsDrawerVisible(true)} />
                 <ArticleSummaryBox
                     style={styles.summaryBox}
-                    articles={articles?.articles || []}
+                    articles={articles}
                     onArticleChange={getCurrentArticle}
                 />
             </SafeArea>

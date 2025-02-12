@@ -2,7 +2,7 @@ interface ArticleDetails {
     introduction: string;
     context: string;
     details: string;
-    issue: string;
+    issues: string;
     conclusion: string;
 }
 
@@ -12,7 +12,7 @@ export interface Question {
 }
 
 export interface Article {
-    id: number;
+    id: string;
     title: string;
     originalDescription: string;
     summary: string;

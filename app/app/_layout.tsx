@@ -6,6 +6,7 @@ import { useContext, useEffect } from "react";
 import { PTSerif_400Regular, PTSerif_700Bold, PTSerif_700Bold_Italic, PTSerif_400Regular_Italic } from "@expo-google-fonts/pt-serif";
 import { Montserrat_400Regular, Montserrat_500Medium } from "@expo-google-fonts/montserrat";
 import { useThemeColors } from "@/hooks/useThemeColors";
+import { ArticlesContextProvider } from "@/contexts/ArticlesContext";
 
 function Root() {
 
@@ -57,7 +58,9 @@ function Root() {
 export default function RootLayout() {
     return (
         <ThemeContextProvider>
-            <Root />
+            <ArticlesContextProvider>
+                <Root />
+            </ArticlesContextProvider>
         </ThemeContextProvider>
     );
 }
