@@ -6,13 +6,19 @@ import { useLocalSearchParams } from "expo-router";
 import { Image, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Question } from '@/types/types';
 import ArticleQuestion from '@/components/article/ArticleQuestion';
+import { useState } from 'react';
 
 export default function ArticleDetails() {
 
     const { id, article } = useLocalSearchParams();
     const colors = useThemeColors();
+    const [expandedQuestionIndex, setExpandedQuestionIndex] = useState<number | null>(null);
 
     const articleData = article ? JSON.parse(article as string) : null;
+
+    function toggleQuestion(index: number) {
+        setExpandedQuestionIndex(index === expandedQuestionIndex ? null : index);
+    }
 
     const openArticle = async () => {
         if (!articleData) return;
@@ -21,7 +27,7 @@ export default function ArticleDetails() {
         } catch (error) {
             console.error('Erreur lors de l\'ouverture du lien:', error);
         }
-      };
+    };
 
     if (!articleData) {
         return (
@@ -60,7 +66,12 @@ export default function ArticleDetails() {
                     <ThemedText variant={'articleTitle'} style={styles.sectionTitle}>Q&A</ThemedText>
                 </View>
                 {articleData.questions.map((qa: Question, index: number) => (
-                    <ArticleQuestion key={index} question={qa} />
+                    <ArticleQuestion 
+                        key={index} 
+                        question={qa} 
+                        isExpanded={expandedQuestionIndex === index} 
+                        onToggle={() => toggleQuestion(index)} 
+                    />
                 ))}
             </View>
         </ScrollView>

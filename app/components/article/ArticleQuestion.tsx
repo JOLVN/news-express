@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, View } from "react-native"
 import ThemedText from "@/components/ui/ThemedText"
 import { Entypo } from '@expo/vector-icons';
 import { useThemeColors } from "@/hooks/useThemeColors";
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Animated, { 
     useAnimatedStyle, 
     withSpring,
@@ -12,12 +12,13 @@ import Animated, {
 } from 'react-native-reanimated';
 
 type Props = {
-    question: Question
+    question: Question,
+    isExpanded?: boolean,
+    onToggle: () => void,
 }
 
-export default function ArticleQuestion({question}: Props) {
+export default function ArticleQuestion({question, isExpanded, onToggle}: Props) {
     const colors = useThemeColors();
-    const [isExpanded, setIsExpanded] = useState(false);
     const contentHeight = useSharedValue(0);
     const animation = useSharedValue(0);
 
@@ -26,8 +27,8 @@ export default function ArticleQuestion({question}: Props) {
     }, []);
 
     const toggleAccordion = () => {
-        animation.value = withSpring(isExpanded ? 0 : 1);
-        setIsExpanded(!isExpanded);
+        animation.value = withSpring(isExpanded ? 0 : 1);        
+        onToggle();
     };
 
     const iconStyle = useAnimatedStyle(() => ({
@@ -44,6 +45,10 @@ export default function ArticleQuestion({question}: Props) {
         ),
         opacity: animation.value,
     }));
+
+    useEffect(() => {
+        animation.value = withSpring(isExpanded ? 1 : 0);
+    }, [isExpanded]);
 
     return (
         <View style={styles.container}>
