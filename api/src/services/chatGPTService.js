@@ -7,7 +7,7 @@ class ChatGPTService {
             "Technologies",
             "Business",
             "Science",
-            "Sports",
+            "Sport",
             "Divertissement",
             "Politique",
             "Santé",
@@ -31,7 +31,7 @@ class ChatGPTService {
                 "detailedArticle": {
                     "introduction": "présentation brève du sujet et son importance (sans parler de l'article)",
                     "context": "contexte, antécédents et chiffres clés",
-                    "details": "détails et explications qui permettent de comprendre l'ensemble",
+                    "details": "détails et explications qui permettent de comprendre l'ensemble, doit répondre au titre de l'article",
                     "issues": "importance et impacts potentiels",
                     "conclusion": "essentiel à retenir en une phrase"
                 },
@@ -57,7 +57,7 @@ class ChatGPTService {
             2. L'article détaillé doit être rédigé de manière claire et accessible, sans jargon complexe
             3. Chaque section doit être fluide et compréhensible pour un lecteur qui ne suit pas l'actualité de près
             4. Les catégories doivent être choisies parmi la liste suivante : ${categoriesList}
-            5. Les questions doivent être pertinentes par rapport à l'article
+            5. Les questions doivent être pertinentes et viennent compléter ce qui ne se trouve pas forcément dans l'article
             6. Les réponses aux questions doivent être claires et précises, pas plus de 2 phrases
 
             Réponds uniquement avec un JSON valide, sans autre texte avant ou après.
