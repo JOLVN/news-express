@@ -19,6 +19,8 @@ class ChatGPTService {
             "Cinéma",
             "Littérature",
             "Histoire",
+            "Société",
+            "Environnement",
         ].join(', ');
 
         try {
@@ -29,7 +31,7 @@ class ChatGPTService {
                 "detailedArticle": {
                     "introduction": "présentation brève du sujet et son importance (sans parler de l'article)",
                     "context": "contexte, antécédents et chiffres clés",
-                    "details": "points clés de manière synthétique et factuelle",
+                    "details": "détails et explications qui permettent de comprendre l'ensemble",
                     "issues": "importance et impacts potentiels",
                     "conclusion": "essentiel à retenir en une phrase"
                 },
