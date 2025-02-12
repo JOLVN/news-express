@@ -4,6 +4,8 @@ import ThemedText from "@/components/ui/ThemedText";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { useLocalSearchParams } from "expo-router";
 import { Image, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Question } from '@/types/types';
+import ArticleQuestion from '@/components/article/ArticleQuestion';
 
 export default function ArticleDetails() {
 
@@ -31,7 +33,7 @@ export default function ArticleDetails() {
 
     return (
         <ScrollView style={[styles.container, {backgroundColor: colors.coloredBackground}]}>
-            <View style={{ gap: 30, paddingBottom: 30 }}>
+            <View style={{ gap: 30, paddingBottom: 40 }}>
                 <ThemedText variant={'articleTitle'}>{articleData.title}</ThemedText>
                 <Image source={{uri: articleData.image}} style={{width: '100%', height: 200}} />
                 <ThemedText variant={'articleItalic'}>{articleData.detailedArticle.introduction}</ThemedText>
@@ -57,6 +59,9 @@ export default function ArticleDetails() {
                 <View style={styles.section}>
                     <ThemedText variant={'articleTitle'} style={styles.sectionTitle}>Q&A</ThemedText>
                 </View>
+                {articleData.questions.map((qa: Question, index: number) => (
+                    <ArticleQuestion key={index} question={qa} />
+                ))}
             </View>
         </ScrollView>
     );

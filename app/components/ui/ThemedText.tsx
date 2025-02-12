@@ -22,7 +22,11 @@ const styles = StyleSheet.create({
     },
     articleQuestion: {
         fontFamily: 'PTSerif-Regular',
-        fontSize: 14,
+        fontSize: Platform.OS === 'ios' ? 18 : 12,
+    },
+    articleAnswer: {
+        fontFamily: 'PTSerif-RegularItalic',
+        fontSize: Platform.OS === 'ios' ? 18 : 12,
     },
     regular: {
         fontFamily: 'Montserrat-Regular',

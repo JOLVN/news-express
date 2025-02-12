@@ -3,7 +3,7 @@ import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useContext, useEffect } from "react";
-import { PTSerif_400Regular, PTSerif_700Bold, PTSerif_700Bold_Italic } from "@expo-google-fonts/pt-serif";
+import { PTSerif_400Regular, PTSerif_700Bold, PTSerif_700Bold_Italic, PTSerif_400Regular_Italic } from "@expo-google-fonts/pt-serif";
 import { Montserrat_400Regular, Montserrat_500Medium } from "@expo-google-fonts/montserrat";
 import { useThemeColors } from "@/hooks/useThemeColors";
 
@@ -13,6 +13,7 @@ function Root() {
     const colors = useThemeColors();
     const [loaded] = useFonts({
         'PTSerif-Regular': PTSerif_400Regular,
+        'PTSerif-RegularItalic': PTSerif_400Regular_Italic,
         'PTSerif-Bold': PTSerif_700Bold,
         'PTSerif-BoldItalic': PTSerif_700Bold_Italic,
         'Montserrat-Regular': Montserrat_400Regular,

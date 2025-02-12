@@ -6,7 +6,7 @@ interface ArticleDetails {
     conclusion: string;
 }
 
-interface Question {
+export interface Question {
     question: string;
     answer: string;
 }
