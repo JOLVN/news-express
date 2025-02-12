@@ -53,15 +53,15 @@ export default function CustomDrawer({ isVisible, onClose, children }: CustomDra
 
     return (
         <View style={styles.container}>
-        <Animated.View 
-            style={[styles.drawer, drawerAnimatedStyle, {...Shadows[theme].medium}]}
-        >
-            {children}
-        </Animated.View>
-        <Animated.View 
-            style={[styles.overlay, overlayAnimatedStyle]}
-            onTouchStart={onClose}
-        />
+            <Animated.View 
+                style={[styles.drawer, drawerAnimatedStyle, {...Shadows[theme].medium}]}
+            >
+                {children}
+            </Animated.View>
+            <Animated.View 
+                style={[styles.overlay, overlayAnimatedStyle]}
+                onTouchStart={onClose}
+            />
         </View>
     );
 }

@@ -5,10 +5,12 @@ import { StatusBar } from "expo-status-bar";
 import { useContext, useEffect } from "react";
 import { PTSerif_400Regular, PTSerif_700Bold, PTSerif_700Bold_Italic } from "@expo-google-fonts/pt-serif";
 import { Montserrat_400Regular, Montserrat_500Medium } from "@expo-google-fonts/montserrat";
+import { useThemeColors } from "@/hooks/useThemeColors";
 
 function Root() {
 
     const { theme } = useContext(ThemeContext);
+    const colors = useThemeColors();
     const [loaded] = useFonts({
         'PTSerif-Regular': PTSerif_400Regular,
         'PTSerif-Bold': PTSerif_700Bold,
@@ -30,12 +32,22 @@ function Root() {
     return (
         <>
             <StatusBar style={theme === 'dark' ? 'light' : 'dark'} />
-            <Stack>
+            <Stack screenOptions={{ 
+                headerStyle: {
+                    backgroundColor: colors.background,
+                },
+                headerTintColor: colors.text,
+                headerTitleStyle: {
+                    fontFamily: 'Montserrat-Medium',
+                }
+            }}>
                 <Stack.Screen name="index" options={{ 
-                headerShown: false,
-                title: "Home",
+                    headerShown: false,
+                    title: "Home",
                 }} />
-                <Stack.Screen name="article/[id]" />
+                <Stack.Screen name="article/[id]" options={{ 
+                    title: "",
+                 }} />
             </Stack>
         </>
     )

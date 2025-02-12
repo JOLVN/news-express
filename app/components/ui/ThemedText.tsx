@@ -14,11 +14,11 @@ const styles = StyleSheet.create({
     },
     articleTitle: {
         fontFamily: 'PTSerif-Bold',
-        fontSize: 20,
+        fontSize: Platform.OS === 'ios' ? 26 : 20,
     },
     articleItalic: {
         fontFamily: 'PTSerif-BoldItalic',
-        fontSize: 16,
+        fontSize: Platform.OS === 'ios' ? 20 : 14,
     },
     articleQuestion: {
         fontFamily: 'PTSerif-Regular',

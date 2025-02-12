@@ -6,6 +6,7 @@ import { useContext, useRef, useState } from "react";
 import { Dimensions, FlatList, FlatListProps, StyleSheet, View, ViewProps, ViewToken } from "react-native";
 import ThemedText from "@/components/ui/ThemedText";
 import FlatButton from "../ui/FlatButton";
+import { Link } from "expo-router";
 
 const { height } = Dimensions.get('window');
 
@@ -45,9 +46,11 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, ..
                             Écouter
                         </FlatButton>
                     </View>
-                    <FlatButton onPress={() => {}} borderBottom={true} >
-                        En savoir plus
-                    </FlatButton>
+                    <Link href={{ pathname: '/article/[id]', params: {id: 1, article: JSON.stringify(article) }}} asChild>
+                        <FlatButton onPress={() => {}} borderBottom={true} >
+                            En savoir plus
+                        </FlatButton>
+                    </Link>
                 </View>
             </View>
         );

@@ -5,6 +5,8 @@ export const Colors = {
         background: '#FFFFFF',
         coloredBackground: '#E0E0F1',
         text: '#000000',
+        black: '#000000',
+        white: '#FFFFFF',
     },
     dark: {
         accent500: '#F7804B',
@@ -12,5 +14,7 @@ export const Colors = {
         background: '#090909',
         coloredBackground: '#000017',
         text: '#FFFFFF',
+        black: '#000000',
+        white: '#FFFFFF',
     }
 }

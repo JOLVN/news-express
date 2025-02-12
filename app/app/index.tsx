@@ -1407,12 +1407,6 @@ export default function Index() {
                 />
             </SafeArea>
 
-            {/* <Link href={{ pathname: '/article/[id]', params: {id: 1} }} asChild>
-                <Pressable>
-                <Text>Go to article 1</Text>
-                </Pressable>
-            </Link> */}
-
         </View>
     );
 }
