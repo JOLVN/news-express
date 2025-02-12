@@ -1,4 +1,4 @@
-import { Question } from "@/types/types"
+import { Question } from "@/types/articles"
 import { Pressable, StyleSheet, View } from "react-native"
 import ThemedText from "@/components/ui/ThemedText"
 import { Entypo } from '@expo/vector-icons';

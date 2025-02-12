@@ -1,4 +1,4 @@
-import { Article } from "@/types/types";
+import { Article } from "@/types/articles";
 import { createContext, useState } from "react";
 
 interface ArticlesContextProps {

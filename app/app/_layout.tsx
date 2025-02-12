@@ -7,6 +7,9 @@ import { PTSerif_400Regular, PTSerif_700Bold, PTSerif_700Bold_Italic, PTSerif_40
 import { Montserrat_400Regular, Montserrat_500Medium } from "@expo-google-fonts/montserrat";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { ArticlesContextProvider } from "@/contexts/ArticlesContext";
+import { CategoriesContext, CategoriesContextProvider } from "@/contexts/CategoriesContext";
+import categories from "@/data/categories.json";
+import { Category } from "@/types/categories";
 
 function Root() {
 
@@ -20,10 +23,18 @@ function Root() {
         'Montserrat-Regular': Montserrat_400Regular,
         'Montserrat-Medium': Montserrat_500Medium,
     });
+    const userCategories = categories.map((category: Category) => {
+        return {
+            ...category,
+            selected: true,
+        }
+    });
+    const { setCategories } = useContext(CategoriesContext);
     
     useEffect(() => {
         if (loaded) {
             SplashScreen.hideAsync();
+            setCategories(userCategories);
         }
     }, [loaded]);
     
@@ -59,7 +70,9 @@ export default function RootLayout() {
     return (
         <ThemeContextProvider>
             <ArticlesContextProvider>
-                <Root />
+                <CategoriesContextProvider>
+                    <Root />
+                </CategoriesContextProvider>
             </ArticlesContextProvider>
         </ThemeContextProvider>
     );

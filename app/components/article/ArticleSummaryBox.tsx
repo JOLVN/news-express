@@ -1,7 +1,7 @@
 import { Shadows } from "@/constants/Shadows";
 import { ThemeContext } from "@/contexts/ThemeContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
-import { Article } from "@/types/types";
+import { Article } from "@/types/articles";
 import { useContext, useRef } from "react";
 import { Dimensions, FlatList, StyleSheet, View, ViewProps, ViewToken } from "react-native";
 import ThemedText from "@/components/ui/ThemedText";

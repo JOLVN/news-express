@@ -4,7 +4,7 @@ import ThemedText from "@/components/ui/ThemedText";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { useLocalSearchParams } from "expo-router";
 import { Image, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
-import { Question } from '@/types/types';
+import { Question } from '@/types/articles';
 import ArticleQuestion from '@/components/article/ArticleQuestion';
 import { useContext, useState } from 'react';
 import { ArticlesContext } from '@/contexts/ArticlesContext';

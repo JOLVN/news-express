@@ -1,0 +1,87 @@
+[
+    {
+        "id": 1,
+        "name": "Technologies",
+        "emoji": "💻"
+    },
+    {
+        "id": 2,
+        "name": "Business",
+        "emoji": "💼"
+    },
+    {
+        "id": 3,
+        "name": "Science",
+        "emoji": "🔬"
+    },
+    {
+        "id": 4,
+        "name": "Sport",
+        "emoji": "🏋️"
+    },
+    {
+        "id": 5,
+        "name": "Divertissement",
+        "emoji": "🎭"
+    },
+    {
+        "id": 6,
+        "name": "Politique",
+        "emoji": "🏛️"
+    },
+    {
+        "id": 7,
+        "name": "Santé",
+        "emoji": "🏥"
+    },
+    {
+        "id": 8,
+        "name": "Éducation",
+        "emoji": "📚"
+    },
+    {
+        "id": 9,
+        "name": "Mode",
+        "emoji": "👗"
+    },
+    {
+        "id": 10,
+        "name": "Économie",
+        "emoji": "💰"
+    },
+    {
+        "id": 11,
+        "name": "Musique",
+        "emoji": "🎵"
+    },
+    {
+        "id": 12,
+        "name": "Art",
+        "emoji": "🎨"
+    },
+    {
+        "id": 13,
+        "name": "Cinéma",
+        "emoji": "🎬"
+    },
+    {
+        "id": 14,
+        "name": "Littérature",
+        "emoji": "📖"
+    },
+    {
+        "id": 15,
+        "name": "Histoire",
+        "emoji": "🏰"
+    },
+    {
+        "id": 16,
+        "name": "Société",
+        "emoji": "👥"
+    },
+    {
+        "id": 17,
+        "name": "Environnement",
+        "emoji": "🌍"
+    }
+]

@@ -7,7 +7,7 @@ import SafeArea from "@/components/SafeArea";
 import { ArticlesContext } from "@/contexts/ArticlesContext";
 import { fetchArticles } from "@/functions/API";
 import { useThemeColors } from "@/hooks/useThemeColors";
-import { ArticleResponse } from "@/types/types";
+import { ArticleResponse } from "@/types/articles";
 import { useContext, useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 
@@ -18,7 +18,7 @@ export default function Index() {
     const {articles, setArticles} = useContext(ArticlesContext);
     const [visibleImage, setVisibleImage] = useState<string | ''>('');
     const colors = useThemeColors();
-    const today = '2025-02-11';
+    const today = '2025-02-12';
 
     const articlesData = {
         "date": "2025-02-11",

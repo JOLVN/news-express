@@ -1,4 +1,5 @@
 import { Shadows } from "@/constants/Shadows";
+import { useThemeColors } from "@/hooks/useThemeColors";
 import { useEffect, useState } from "react";
 import { Dimensions, StyleSheet, useColorScheme, View } from "react-native";
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
@@ -13,6 +14,7 @@ interface CustomDrawerProps {
 
 export default function CustomDrawer({ isVisible, onClose, children }: CustomDrawerProps) {
 
+    const colors = useThemeColors();
     const [isRendered, setIsRendered] = useState(false);
     const translateX = useSharedValue(-SCREEN_WIDTH);
     const opacity = useSharedValue(0);
@@ -54,7 +56,7 @@ export default function CustomDrawer({ isVisible, onClose, children }: CustomDra
     return (
         <View style={styles.container}>
             <Animated.View 
-                style={[styles.drawer, drawerAnimatedStyle, {...Shadows[theme].medium}]}
+                style={[styles.drawer, drawerAnimatedStyle, {...Shadows[theme].medium}, { backgroundColor: colors.background }]}
             >
                 {children}
             </Animated.View>
@@ -74,7 +76,6 @@ const styles = StyleSheet.create({
     drawer: {
         ...StyleSheet.absoluteFillObject,
         width: '80%',
-        backgroundColor: 'white',
         zIndex: 1001,
     },
     overlay: {

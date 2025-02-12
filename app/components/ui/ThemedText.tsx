@@ -28,6 +28,10 @@ const styles = StyleSheet.create({
         fontFamily: 'PTSerif-RegularItalic',
         fontSize: Platform.OS === 'ios' ? 18 : 12,
     },
+    category: {
+        fontFamily: 'Montserrat-Regular',
+        fontSize: Platform.OS === 'ios' ? 16 : 12,
+    },
     regular: {
         fontFamily: 'Montserrat-Regular',
         fontSize: Platform.OS === 'ios' ? 18 : 14,

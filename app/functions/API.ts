@@ -1,4 +1,4 @@
-import { ArticleResponse } from "@/types/types";
+import { ArticleResponse } from "@/types/articles";
 
 const API_URL = 'https://news-express-1mmx.onrender.com/';
 
