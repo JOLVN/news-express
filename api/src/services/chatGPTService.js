@@ -19,7 +19,6 @@ class ChatGPTService {
             "Cinéma",
             "Littérature",
             "Histoire",
-            "Société",
             "Environnement",
         ].join(', ');
 
