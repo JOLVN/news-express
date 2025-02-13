@@ -23,20 +23,20 @@ function Root() {
         'Montserrat-Regular': Montserrat_400Regular,
         'Montserrat-Medium': Montserrat_500Medium,
     });
-    const userCategories = categories.map((category: Category) => {
-        return {
-            ...category,
-            selected: true,
-        }
-    });
-    const { setCategories } = useContext(CategoriesContext);
+    // TODO: use async storage to store user categories
+    const userCategories = categories;
+    const { setCategories, setUserCategories } = useContext(CategoriesContext);
     
     useEffect(() => {
         if (loaded) {
             SplashScreen.hideAsync();
-            setCategories(userCategories);
         }
     }, [loaded]);
+
+    useEffect(() => {
+        setCategories(categories);
+        setUserCategories(userCategories);
+    }, []);
     
       if (!loaded) {
         return null;

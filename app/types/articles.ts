@@ -30,3 +30,5 @@ export interface ArticleResponse {
     count: number,
     articles: Article[];
 }
+
+export type UserArticle = Article & { read: boolean };

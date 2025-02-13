@@ -76,11 +76,6 @@
     },
     {
         "id": 16,
-        "name": "Société",
-        "emoji": "👥"
-    },
-    {
-        "id": 17,
         "name": "Environnement",
         "emoji": "🌍"
     }

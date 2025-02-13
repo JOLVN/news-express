@@ -3,5 +3,3 @@ export interface Category {
     name: string;
     emoji: string;
 }
-
-export type UserCategory = Category & {selected: boolean};

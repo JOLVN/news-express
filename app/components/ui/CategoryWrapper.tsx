@@ -1,4 +1,3 @@
-import { UserCategory } from "@/types/categories";
 import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useThemeColors } from "@/hooks/useThemeColors";
@@ -7,13 +6,15 @@ import { Shadows } from "@/constants/Shadows";
 import { useContext } from "react";
 import { ThemeContext } from "@/contexts/ThemeContext";
 import Animated, { useAnimatedStyle, withSpring } from "react-native-reanimated";
+import { Category } from "@/types/categories";
 
 type Props = {
-    category: UserCategory;
+    category: Category;
     onPress: () => void;
+    isSelected: boolean;
 }
 
-export default function CategoryWrapper({category, onPress}: Props) {
+export default function CategoryWrapper({category, onPress, isSelected}: Props) {
 
     const { theme } = useContext(ThemeContext);
     const colors = useThemeColors();
@@ -21,13 +22,13 @@ export default function CategoryWrapper({category, onPress}: Props) {
     const iconStyle = useAnimatedStyle(() => {
         return {
             transform: [
-                { rotate: withSpring(category.selected ? '360deg' : '0deg') }
+                { rotate: withSpring(isSelected ? '360deg' : '0deg') }
             ]
         };
     });
 
     const borderStyle = useAnimatedStyle(() => ({
-        borderColor: withSpring(category.selected ? colors.gray500 : 'transparent')
+        borderColor: withSpring(isSelected ? colors.gray500 : 'transparent')
     }));
 
     return (
@@ -40,10 +41,10 @@ export default function CategoryWrapper({category, onPress}: Props) {
             }
         ]}>
             <Text>{category.emoji}</Text>
-            <ThemedText variant="category" color={category.selected ? 'text' : 'gray500'}>{category.name}</ThemedText>
+            <ThemedText variant="category" color={isSelected ? 'text' : 'gray500'}>{category.name}</ThemedText>
             <Pressable style={[styles.button, {borderColor: colors.accent500}]} onPress={onPress}>
                 <Animated.View style={iconStyle}>
-                    <AntDesign name={category.selected ? 'check' : 'plus'} size={Platform.OS === 'ios' ? 16 : 14} color={colors.accent500} />
+                    <AntDesign name={isSelected ? 'check' : 'plus'} size={Platform.OS === 'ios' ? 16 : 14} color={colors.accent500} />
                 </Animated.View>
             </Pressable>
         </Animated.View>
