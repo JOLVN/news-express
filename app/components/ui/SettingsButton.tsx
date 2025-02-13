@@ -2,20 +2,28 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import ThemedText from "./ThemedText";
 import { useThemeColors } from "@/hooks/useThemeColors";
+import { forwardRef } from "react";
 
-export default function SettingsButton() {
-
+const SettingsButton = forwardRef<View>((props, ref) => {
     const colors = useThemeColors();
 
     return (
-        <Pressable onPress={() => {}} style={({pressed}) => [styles.container, pressed && styles.pressed]}>
+        <Pressable 
+            ref={ref}
+            {...props}
+            style={({pressed}) => [styles.container, pressed && styles.pressed]}
+        >
             <View style={[styles.button, {backgroundColor: colors.accent500}]}>
                 <Feather name="settings" size={24} color="black" />
             </View>
             <ThemedText variant="medium">Paramètres</ThemedText>
         </Pressable>
-    )
-}
+    );
+});
+
+SettingsButton.displayName = 'SettingsButton';
+
+export default SettingsButton;
 
 const styles = StyleSheet.create({
     container: {

@@ -61,6 +61,9 @@ function Root() {
                 <Stack.Screen name="article/[id]" options={{ 
                     title: "",
                  }} />
+                <Stack.Screen name="settings" options={{ 
+                    title: "Paramètres",
+                 }} />
             </Stack>
             <SwitchThemeModal />
         </>

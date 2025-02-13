@@ -4,6 +4,7 @@ import ThemedText from "@/components/ui/ThemedText";
 import CategoriesContainer from "@/components/drawer/CategoriesContainer";
 import ThemeButton from "@/components/ui/ThemeButton";
 import SettingsButton from "@/components/ui/SettingsButton";
+import { Link } from "expo-router";
 
 export default function CustomDrawerContent() {
     
@@ -13,7 +14,9 @@ export default function CustomDrawerContent() {
                 <ThemedText variant="articleSummaryTitle">Personalise ton feed</ThemedText>
                 <CategoriesContainer style={{ marginTop: 10 }} />
                 <View style={styles.bottomContainer}>
-                    <SettingsButton />
+                    <Link href={{ pathname: '/settings'}} asChild>
+                        <SettingsButton />
+                    </Link>
                     <ThemeButton />
                 </View>
             </View>
