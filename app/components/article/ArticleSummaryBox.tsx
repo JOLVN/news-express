@@ -32,6 +32,15 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, ..
 
     const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
 
+    function EmptyList() {
+        return (
+            <View style={styles.emptyListContainer}>
+                <ThemedText variant={'articleBody'} style={{ textAlign: 'center' }}>
+                    Aucun article dans les catégories sélectionnées
+                </ThemedText>
+            </View>
+        )
+    }
 
     function ArticleSummary({ article }: { article: Article })  {
         return (
@@ -60,6 +69,7 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, ..
         <View style={[style, styles.container, {backgroundColor: colors.background}, {...Shadows[theme].large}]}>
             <FlatList
                 data={articles}
+                ListEmptyComponent={EmptyList}
                 renderItem={({ item }) => <ArticleSummary article={item} />}
                 keyExtractor={item => item.id.toString()}
                 pagingEnabled={true}
@@ -86,6 +96,12 @@ const styles = StyleSheet.create({
         height: height * 0.5,
         borderRadius: 10,
         padding: 16,
+    },
+    emptyListContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        height: height * 0.5 - 32,
+        alignItems: 'center',
     },
     articleContainer: {
         width: '100%',

@@ -10,10 +10,10 @@ export default function CategoriesContainer({style}: ViewProps) {
     function handlePress(categoryId: number) {
         const category = categories.find(c => c.id === categoryId);
         if (!category) return;
-        if (userCategories.find(c => c.id === categoryId) && userCategories.length > 1) {
-            unselectCategory(categoryId);
-        } else {
+        if (!userCategories.find(c => c.id === categoryId)) {
             selectCategory(categoryId);
+        } else if (userCategories.length > 1) {
+            unselectCategory(categoryId);
         }
     }
 

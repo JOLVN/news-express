@@ -56,6 +56,8 @@ export default function Index() {
     useEffect(() => {
         if (userArticles.length > 0 && userArticles[articleIndex]) {
             setVisibleImage(userArticles[articleIndex].image);
+        } else {
+            setVisibleImage('');
         }
     }, [userArticles, articleIndex]);
 
