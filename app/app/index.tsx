@@ -3,6 +3,7 @@ import ArticleScreenImage from "@/components/article/ArticleScreenImage";
 import ArticleSummaryBox from "@/components/article/ArticleSummaryBox";
 import CustomDrawer from "@/components/drawer/CustomDrawer";
 import CustomDrawerContent from "@/components/drawer/CustomDrawerContent";
+import LoadingArticlesOverlay from "@/components/LoadingArticlesOverlay";
 import SafeArea from "@/components/SafeArea";
 import { ArticlesContext } from "@/contexts/ArticlesContext";
 import { CategoriesContext } from "@/contexts/CategoriesContext";
@@ -63,7 +64,7 @@ export default function Index() {
 
     // TODO: Add loading screen
     if (isLoading || !userArticles) {
-        return <ActivityIndicator />
+        return <LoadingArticlesOverlay />;
     }
 
     return (
