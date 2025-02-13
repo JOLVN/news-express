@@ -9,7 +9,6 @@ import { useThemeColors } from "@/hooks/useThemeColors";
 import { ArticlesContextProvider } from "@/contexts/ArticlesContext";
 import { CategoriesContext, CategoriesContextProvider } from "@/contexts/CategoriesContext";
 import categories from "@/data/categories.json";
-import { Category } from "@/types/categories";
 
 function Root() {
 
@@ -23,9 +22,7 @@ function Root() {
         'Montserrat-Regular': Montserrat_400Regular,
         'Montserrat-Medium': Montserrat_500Medium,
     });
-    // TODO: use async storage to store user categories
-    const userCategories = categories;
-    const { setCategories, setUserCategories } = useContext(CategoriesContext);
+    const { setCategories } = useContext(CategoriesContext);
     
     useEffect(() => {
         if (loaded) {
@@ -35,7 +32,6 @@ function Root() {
 
     useEffect(() => {
         setCategories(categories);
-        setUserCategories(userCategories);
     }, []);
     
       if (!loaded) {
