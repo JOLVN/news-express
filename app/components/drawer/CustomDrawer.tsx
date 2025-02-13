@@ -2,6 +2,7 @@ import { Shadows } from "@/constants/Shadows";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { useEffect, useState } from "react";
 import { Dimensions, StyleSheet, useColorScheme, View } from "react-native";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -51,19 +52,48 @@ export default function CustomDrawer({ isVisible, onClose, children }: CustomDra
         };
     });
 
+    const panGesture = Gesture.Pan()
+        .activeOffsetX(-1)
+        .onChange((event) => {
+            'worklet';
+            if (isVisible) {
+                const newTranslateX = Math.min(event.translationX, 0);
+                translateX.value = newTranslateX;
+                opacity.value = 1 + newTranslateX / SCREEN_WIDTH;
+            }
+        })
+        .onEnd((event) => {
+            'worklet';
+            if (isVisible) {
+                if (event.translationX < -SCREEN_WIDTH * 0.2) {
+                    translateX.value = withTiming(-SCREEN_WIDTH, undefined, (finished) => {
+                        if (finished) {
+                            runOnJS(onClose)();
+                        }
+                    });
+                    opacity.value = withTiming(0);
+                } else {
+                    translateX.value = withSpring(0);
+                    opacity.value = withTiming(1);
+                }
+            }
+        });
+
     if (!isRendered) return null;
 
     return (
         <View style={styles.container}>
             <Animated.View 
-                style={[styles.drawer, drawerAnimatedStyle, {...Shadows[theme].medium}, { backgroundColor: colors.background }]}
-            >
-                {children}
-            </Animated.View>
-            <Animated.View 
                 style={[styles.overlay, overlayAnimatedStyle]}
                 onTouchStart={onClose}
             />
+            <GestureDetector gesture={panGesture}>
+                <Animated.View 
+                    style={[styles.drawer, drawerAnimatedStyle, {...Shadows[theme].medium}, { backgroundColor: colors.background }]}
+                >
+                    {children}
+                </Animated.View>
+            </GestureDetector>
         </View>
     );
 }

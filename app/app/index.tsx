@@ -3,6 +3,7 @@ import ArticleScreenImage from "@/components/article/ArticleScreenImage";
 import ArticleSummaryBox from "@/components/article/ArticleSummaryBox";
 import CustomDrawer from "@/components/drawer/CustomDrawer";
 import CustomDrawerContent from "@/components/drawer/CustomDrawerContent";
+import EdgeDetector from "@/components/EdgeDetector";
 import LoadingArticlesOverlay from "@/components/LoadingArticlesOverlay";
 import SafeArea from "@/components/SafeArea";
 import { ArticlesContext } from "@/contexts/ArticlesContext";
@@ -11,6 +12,7 @@ import { fetchArticles } from "@/functions/API";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { useContext, useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function Index() {
 
@@ -62,33 +64,37 @@ export default function Index() {
         }
     }, [userArticles, articleIndex]);
 
-    // TODO: Add loading screen
     if (isLoading || !userArticles) {
         return <LoadingArticlesOverlay />;
     }
 
     return (
-        <View style={[styles.container, {backgroundColor: colors.coloredBackground}]}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <View style={[styles.container, {backgroundColor: colors.coloredBackground}]}>
 
-            <CustomDrawer 
-                isVisible={isDrawerVisible} 
-                onClose={() => setIsDrawerVisible(false)}
-            >
-                <CustomDrawerContent />
-            </CustomDrawer>
+                    <CustomDrawer 
+                        isVisible={isDrawerVisible} 
+                        onClose={() => setIsDrawerVisible(false)}
+                    >
+                        <CustomDrawerContent />
+                    </CustomDrawer>
 
-            <ArticleScreenImage image={visibleImage} />
+                <ArticleScreenImage image={visibleImage} />
 
-            <SafeArea style={styles.contentContainer}>
-                <AppLogo onPress={() => setIsDrawerVisible(true)} />
-                <ArticleSummaryBox
-                    style={styles.summaryBox}
-                    articles={userArticles}
-                    onArticleChange={(index) => setArticleIndex(index)}
-                />
-            </SafeArea>
 
-        </View>
+                <SafeArea style={styles.contentContainer}>
+                    <ArticleSummaryBox
+                        style={styles.summaryBox}
+                        articles={userArticles}
+                        onArticleChange={(index) => setArticleIndex(index)}
+                        />
+                    <EdgeDetector style={{ left: -20 }} onSwipeStart={() => setIsDrawerVisible(true)} />
+                    <AppLogo onPress={() => setIsDrawerVisible(true)} />
+                </SafeArea>
+
+
+            </View>
+        </GestureHandlerRootView>
     );
 }
 
