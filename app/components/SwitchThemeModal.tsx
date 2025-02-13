@@ -115,6 +115,8 @@ const styles = StyleSheet.create({
     },
     modalContent: {
         paddingHorizontal: 20,
+        paddingBottom: 50,
+        gap: 20,
     },
     title: {
         textAlign: 'center',

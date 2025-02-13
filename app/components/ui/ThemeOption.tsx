@@ -14,11 +14,11 @@ export default function ThemeOption({title, onPress, selected}: Props) {
 
     return (
         <Pressable 
-            style={styles.optionContainer} 
+            style={[styles.optionContainer, {backgroundColor: colors.gray800}]} 
             onPress={onPress}
         >
-            <ThemedText>{title}</ThemedText>
-            {selected && <View style={[styles.radioButton, { borderColor: colors.text }]} />}
+            <View style={[styles.radioButton, { borderColor: selected ? colors.accent500 : colors.gray500 }]} />
+            <ThemedText variant="medium">{title}</ThemedText>
         </Pressable>
     );
 }
@@ -26,9 +26,11 @@ export default function ThemeOption({title, onPress, selected}: Props) {
 const styles = StyleSheet.create({
     optionContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        gap: 20,
         alignItems: 'center',
         paddingVertical: 16,
+        paddingHorizontal: 24,
+        borderRadius: 10,
     },
     radioButton: {
         width: 20,
