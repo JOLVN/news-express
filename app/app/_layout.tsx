@@ -9,6 +9,10 @@ import { useThemeColors } from "@/hooks/useThemeColors";
 import { ArticlesContextProvider } from "@/contexts/ArticlesContext";
 import { CategoriesContext, CategoriesContextProvider } from "@/contexts/CategoriesContext";
 import categories from "@/data/categories.json";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { ModalContextProvider } from "@/contexts/ModalContext";
+import SwitchThemeModal from "@/components/SwitchThemeModal";
 
 function Root() {
 
@@ -58,6 +62,7 @@ function Root() {
                     title: "",
                  }} />
             </Stack>
+            <SwitchThemeModal />
         </>
     )
 }
@@ -67,7 +72,13 @@ export default function RootLayout() {
         <ThemeContextProvider>
             <ArticlesContextProvider>
                 <CategoriesContextProvider>
-                    <Root />
+                    <ModalContextProvider>
+                        <GestureHandlerRootView style={{ flex: 1 }}>
+                            <BottomSheetModalProvider>
+                                <Root />
+                            </BottomSheetModalProvider>
+                        </GestureHandlerRootView>
+                    </ModalContextProvider>
                 </CategoriesContextProvider>
             </ArticlesContextProvider>
         </ThemeContextProvider>

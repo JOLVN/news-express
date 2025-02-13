@@ -7,7 +7,7 @@ export default function LoadingArticlesOverlay() {
 
     return (
         <View style={[styles.overlay, {backgroundColor: colors.coloredBackground}]}>
-            <ActivityIndicator size="large" color="white" />
+            <ActivityIndicator size="large" color={colors.accent500} />
         </View>
     );
 }

@@ -39,6 +39,10 @@ const styles = StyleSheet.create({
     medium: {
         fontFamily: 'Montserrat-Medium',
         fontSize: 16,
+    },
+    title: {
+        fontFamily: 'Montserrat-Medium',
+        fontSize: 22,
     }
 });
 
