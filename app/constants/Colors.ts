@@ -3,7 +3,7 @@ export const Colors = {
         accent500: '#F7804B',
         accent600: '#FFDB36',
         background: '#FFFFFF',
-        coloredBackground: '#E0E0F1',
+        coloredBackground: '#010121',
         text: '#000000',
         black: '#000000',
         white: '#FFFFFF',
