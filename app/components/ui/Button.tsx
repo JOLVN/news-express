@@ -13,7 +13,7 @@ export default function Button({children, onPress, style}: Props) {
     const colors = useThemeColors();
 
     return (
-        <Pressable onPress={onPress} style={[styles.button, style, {backgroundColor: colors.accent500}]}>
+        <Pressable onPress={onPress} style={({pressed}) => [styles.button, style, {backgroundColor: colors.accent500}, pressed && styles.pressed]}>
             <ThemedText variant={'medium'} color={'black'}>{children}</ThemedText>
         </Pressable>
     )
@@ -27,5 +27,8 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 40,
         borderRadius: 10,
+    },
+    pressed: {
+        opacity: 0.8,
     }
 });

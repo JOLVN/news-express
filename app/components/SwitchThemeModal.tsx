@@ -25,7 +25,13 @@ export default function SwitchThemeModal() {
     }, [isThemeModalVisible]);
 
     const handleSheetChanges = useCallback((index: number) => {
-        if (index === -1) hideThemeModal();
+        if (index === -1) {
+            opacity.value = withTiming(0, { duration: 200 }, (finished) => {
+                if (finished) {
+                    runOnJS(hideThemeModal)();
+                }
+            });
+        }
     }, [hideThemeModal]);
 
     const closeSheet = useCallback(() => {
@@ -72,6 +78,7 @@ export default function SwitchThemeModal() {
             backgroundStyle={{ backgroundColor: colors.background }}
             handleIndicatorStyle={{ backgroundColor: colors.text, width: 60 }}
             backdropComponent={BackdropComponent}
+            animateOnMount={true}
         >
             <BottomSheetView style={styles.modalContent}>
                 <ThemedText variant="title" style={styles.title}>Apparence</ThemedText>

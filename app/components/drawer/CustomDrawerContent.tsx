@@ -1,8 +1,9 @@
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import SafeArea from "@/components/SafeArea";
 import ThemedText from "@/components/ui/ThemedText";
-import CategoriesContainer from "./CategoriesContainer";
+import CategoriesContainer from "@/components/drawer/CategoriesContainer";
 import ThemeButton from "@/components/ui/ThemeButton";
+import SettingsButton from "@/components/ui/SettingsButton";
 
 export default function CustomDrawerContent() {
     
@@ -12,6 +13,7 @@ export default function CustomDrawerContent() {
                 <ThemedText variant="articleSummaryTitle">Personalise ton feed</ThemedText>
                 <CategoriesContainer style={{ marginTop: 10 }} />
                 <View style={styles.bottomContainer}>
+                    <SettingsButton />
                     <ThemeButton />
                 </View>
             </View>
@@ -26,7 +28,10 @@ const styles = StyleSheet.create({
     },
     bottomContainer: {
         position: 'absolute',
+        width: '100%',
         bottom: 16,
         right: 16,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     }
 });
