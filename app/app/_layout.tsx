@@ -64,6 +64,11 @@ function Root() {
                 <Stack.Screen name="settings" options={{ 
                     title: "Paramètres",
                  }} />
+                <Stack.Screen name="chatbot/[id]" options={{ 
+                    title: "",
+                    headerShown: false,
+                    presentation: 'modal',
+                 }} />
             </Stack>
             <SwitchThemeModal />
         </>

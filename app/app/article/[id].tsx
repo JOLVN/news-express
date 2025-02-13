@@ -2,7 +2,7 @@ import * as WebBrowser from 'expo-web-browser';
 import Button from "@/components/ui/buttons/Button";
 import ThemedText from "@/components/ui/ThemedText";
 import { useThemeColors } from "@/hooks/useThemeColors";
-import { useLocalSearchParams } from "expo-router";
+import { Link, useLocalSearchParams } from "expo-router";
 import { Image, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Question } from '@/types/articles';
 import ArticleQuestion from '@/components/article/ArticleQuestion';
@@ -79,7 +79,9 @@ export default function ArticleDetails() {
                     ))}
                 </View>
             </ScrollView>
-            <ChatbotButton style={styles.chatbotButton} />
+            <Link href={{ pathname: '/chatbot/[id]', params: {id: article.id }}} asChild>
+                <ChatbotButton style={styles.chatbotButton} />
+            </Link>
         </View>
     );
 }
