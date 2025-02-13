@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import ThemedText from "./ThemedText";
+import ThemedText from "../ThemedText";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { forwardRef } from "react";
 

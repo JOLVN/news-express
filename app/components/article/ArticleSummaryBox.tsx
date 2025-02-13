@@ -5,7 +5,7 @@ import { Article } from "@/types/articles";
 import { useContext, useRef } from "react";
 import { Dimensions, FlatList, StyleSheet, View, ViewProps, ViewToken } from "react-native";
 import ThemedText from "@/components/ui/ThemedText";
-import FlatButton from "../ui/FlatButton";
+import FlatButton from "../ui/buttons/FlatButton";
 import { Link } from "expo-router";
 
 const { height } = Dimensions.get('window');

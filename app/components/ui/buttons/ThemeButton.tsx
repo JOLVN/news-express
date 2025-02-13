@@ -1,15 +1,14 @@
 import { useThemeColors } from "@/hooks/useThemeColors";
-import { Platform, Pressable, StyleSheet, View } from "react-native";
+import { Platform, Pressable, StyleSheet } from "react-native";
 import { Entypo } from '@expo/vector-icons';
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { ThemeContext } from "@/contexts/ThemeContext";
-import SwitchThemeModal from "../SwitchThemeModal";
 import { ModalContext } from "@/contexts/ModalContext";
 
 export default function ThemeButton() {
 
     const { showThemeModal } = useContext(ModalContext);
-    const { theme, toggleTheme, isSystemTheme, setIsSystemTheme } = useContext(ThemeContext);
+    const { theme } = useContext(ThemeContext);
     const colors = useThemeColors();
     const iconName = theme === 'dark' ? 'light-up' : 'moon';
 

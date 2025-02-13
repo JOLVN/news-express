@@ -2,8 +2,8 @@ import { Pressable, StyleSheet, View } from "react-native";
 import SafeArea from "@/components/SafeArea";
 import ThemedText from "@/components/ui/ThemedText";
 import CategoriesContainer from "@/components/drawer/CategoriesContainer";
-import ThemeButton from "@/components/ui/ThemeButton";
-import SettingsButton from "@/components/ui/SettingsButton";
+import ThemeButton from "@/components/ui/buttons/ThemeButton";
+import SettingsButton from "@/components/ui/buttons/SettingsButton";
 import { Link } from "expo-router";
 
 export default function CustomDrawerContent() {
