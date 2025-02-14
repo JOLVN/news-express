@@ -7,6 +7,7 @@ import { Dimensions, FlatList, StyleSheet, View, ViewProps, ViewToken } from "re
 import ThemedText from "@/components/ui/ThemedText";
 import FlatButton from "../ui/buttons/FlatButton";
 import { Link } from "expo-router";
+import ListenButton from "@/components/ui/buttons/ListenButton";
 
 const { height } = Dimensions.get('window');
 
@@ -50,11 +51,7 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, ..
                     <ThemedText variant={'articleBody'}>{article.summary}</ThemedText>
                 </View>
                 <View style={styles.articleButtons}>
-                    <View>
-                        <FlatButton onPress={() => {}} >
-                            Écouter
-                        </FlatButton>
-                    </View>
+                    <ListenButton onPress={() => {}} />
                     <Link href={{ pathname: '/article/[id]', params: {id: article.id }}} asChild>
                         <FlatButton borderBottom={true} >
                             En savoir plus
@@ -116,5 +113,5 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         bottom: 10,
-    }
+    },
 });
