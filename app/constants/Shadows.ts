@@ -30,6 +30,16 @@ export const Shadows = {
             shadowRadius: 15,
             elevation: 6,
         },
+        extraLarge: {
+            shadowColor: '#000000',
+            shadowOffset: {
+                width: 0,
+                height: 0,
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 15,
+            elevation: 6,
+        },
     },
     dark: {
         small: {
@@ -61,6 +71,16 @@ export const Shadows = {
             shadowOpacity: 0.23,
             shadowRadius: 15,
             elevation: 4,
+        },
+        extraLarge: {
+            shadowColor: "#FFFFFF",
+            shadowOffset: {
+                width: 0,
+                height: 0,
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 15,
+            elevation: 6,
         },
     },
 };
