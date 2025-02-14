@@ -9,6 +9,8 @@ import { Message } from "@/types/chat";
 import { router, useLocalSearchParams } from "expo-router";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Dimensions, FlatList, Keyboard, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
+import { Image as ExpoImage } from 'expo-image';
+import ChatMessageLoading from "@/components/ChatMessageLoading";
 
 export default function Chatbot() {
 
@@ -18,6 +20,7 @@ export default function Chatbot() {
     const colors = useThemeColors();
 
     const [inputText, setInputText] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const [messages, setMessages] = useState<Message[]>([]);
     const flatListRef = useRef<FlatList>(null);
 
@@ -30,19 +33,7 @@ export default function Chatbot() {
         flatListRef.current?.scrollToEnd({ animated: true });
     };
 
-    useEffect(() => {
-        const keyboardDidShowListener = Keyboard.addListener(
-            'keyboardDidShow',
-            () => {
-                scrollToBottom();
-            }
-        );
-
-        // Cleanup
-        return () => {
-            keyboardDidShowListener.remove();
-        };
-    }, []);
+    
 
     async function sendMessage() {
         if (!article || !inputText) return;
@@ -58,6 +49,7 @@ export default function Chatbot() {
         setInputText('');
         
         try {
+            setIsLoading(true);
             const response = await getChatbotResponse(article.url, inputText);
             const apiMessage: Message = {
                 id: Date.now().toString(),
@@ -69,6 +61,8 @@ export default function Chatbot() {
             setMessages(prev => [...prev, apiMessage]);
         } catch (error) {
             console.error('Error:', error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -97,12 +91,22 @@ export default function Chatbot() {
                             <ChatMessage message={message} />
                         )}
                         keyExtractor={(item) => item.id}
-                        contentContainerStyle={styles.messagesContainer}
+                        contentContainerStyle={[styles.messagesContainer, messages.length === 0 && styles.emptyMessagesContainer]}
                         onContentSizeChange={scrollToBottom}
                         ListEmptyComponent={
-                            <ThemedText>
-                                Aucun message
-                            </ThemedText>
+                            <View style={[styles.emptyContainer]}>
+                                <ExpoImage
+                                    style={styles.emptyImage} 
+                                    source={require('@/assets/images/chatbot.png')} 
+                                    contentFit="contain"
+                                    cachePolicy="memory-disk"
+                                />
+                            </View>
+                        }
+                        ListFooterComponent={
+                            isLoading ? (
+                                <ChatMessageLoading />
+                            ) : null
                         }
                     />
                     
@@ -140,9 +144,23 @@ const styles = StyleSheet.create({
     messagesContainer: {
         paddingBottom: 40,
     },
+    emptyMessagesContainer: {
+        flex: 1,
+        height: '100%',
+    },
     chatInput: {
         paddingBottom: Platform.OS === 'ios' ? 60 : 40,
         minWidth: Dimensions.get('window').width - 40,
         maxWidth: Dimensions.get('window').width - 40,
     },
+    emptyContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    emptyImage: {
+        width: 60,
+        height: 60,
+        borderRadius: 15,
+    }
 });
