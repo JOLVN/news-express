@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet } from "react-native";
-import { Entypo } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { useThemeColors } from "@/hooks/useThemeColors";
 
 type Props = {
@@ -7,13 +7,13 @@ type Props = {
     style?: object,
 }
 
-export default function BackButton({onPress, style}: Props) {
+export default function CloseButton({onPress, style}: Props) {
 
     const colors = useThemeColors();
 
     return (
         <Pressable onPress={onPress} style={[style, styles.container, {backgroundColor: colors.gray700, borderColor: colors.gray500}]}>
-            <Entypo name="chevron-left" size={24} color={colors.accent500} />
+            <AntDesign name="close" size={24} color={colors.accent500} />
         </Pressable>
     )
 }

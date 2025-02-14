@@ -1,4 +1,4 @@
-import BackButton from "@/components/ui/buttons/BackButton";
+import CloseButton from "@/components/ui/buttons/CloseButton";
 import ThemedText from "@/components/ui/ThemedText";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { router, useLocalSearchParams } from "expo-router";
@@ -15,7 +15,7 @@ export default function Chatbot() {
 
     return (
         <View style={[styles.container, {backgroundColor: colors.coloredBackground}]}>
-            <BackButton onPress={handleGoBack} style={styles.backButton} />
+            <CloseButton onPress={handleGoBack} style={styles.closeButton} />
             <ThemedText>Chatbot {id}</ThemedText>
         </View>
     )
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    backButton: {
+    closeButton: {
         position: 'absolute',
         top: 20,
         left: 20,
