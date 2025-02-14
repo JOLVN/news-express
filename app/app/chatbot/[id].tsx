@@ -26,13 +26,23 @@ export default function Chatbot() {
         router.back();
     };
 
-    function dismissKeyboard() {
-        Keyboard.dismiss();
-    }
-
     const scrollToBottom = () => {
-        flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
+        flatListRef.current?.scrollToEnd({ animated: true });
     };
+
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener(
+            'keyboardDidShow',
+            () => {
+                scrollToBottom();
+            }
+        );
+
+        // Cleanup
+        return () => {
+            keyboardDidShowListener.remove();
+        };
+    }, []);
 
     async function sendMessage() {
         if (!article || !inputText) return;
@@ -46,7 +56,6 @@ export default function Chatbot() {
         
         setMessages(prev => [...prev, userMessage]);
         setInputText('');
-        scrollToBottom();
         
         try {
             const response = await getChatbotResponse(article.url, inputText);
@@ -58,7 +67,6 @@ export default function Chatbot() {
             };
             
             setMessages(prev => [...prev, apiMessage]);
-            scrollToBottom();
         } catch (error) {
             console.error('Error:', error);
         }
@@ -81,32 +89,30 @@ export default function Chatbot() {
                 style={styles.keyboardAvoidingView}
                 keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -25}
             >
-                <TouchableWithoutFeedback onPress={dismissKeyboard}>
-                    <View style={styles.content}>
-                        <FlatList
-                            ref={flatListRef}
-                            data={messages}
-                            renderItem={({item: message}) => (
-                                <ChatMessage message={message} />
-                            )}
-                            keyExtractor={(item) => item.id}
-                            contentContainerStyle={styles.messagesContainer}
-                            ListEmptyComponent={
-                                <ThemedText>
-                                    Aucun message
-                                </ThemedText>
-                            }
-                        />
-                        
-                        <View style={[styles.inputWrapper]}>
-                            <ChatInput 
-                                onInput={(text) => setInputText(text)} 
-                                onSubmit={sendMessage}
-                            />
-                        </View>
-                    </View>
-                </TouchableWithoutFeedback>
-
+                <View style={styles.content}>
+                    <FlatList
+                        ref={flatListRef}
+                        data={messages}
+                        renderItem={({item: message}) => (
+                            <ChatMessage message={message} />
+                        )}
+                        keyExtractor={(item) => item.id}
+                        contentContainerStyle={styles.messagesContainer}
+                        onContentSizeChange={scrollToBottom}
+                        ListEmptyComponent={
+                            <ThemedText>
+                                Aucun message
+                            </ThemedText>
+                        }
+                    />
+                    
+                    <ChatInput 
+                        style={styles.chatInput}
+                        value={inputText}
+                        onInput={(text) => setInputText(text)} 
+                        onSubmit={sendMessage}
+                    />
+                </View>
             </KeyboardAvoidingView>
         </View>
     )
@@ -117,6 +123,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         paddingTop: 80,
+        width: '100%',
     },
     closeButton: {
         position: 'absolute',
@@ -131,31 +138,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: Platform.OS === 'ios' ? 30 : 20,
     },
     messagesContainer: {
-        flex: 1,
-        width: '100%',
+        paddingBottom: 40,
     },
-    inputWrapper: {
+    chatInput: {
         paddingBottom: Platform.OS === 'ios' ? 60 : 40,
-        width: '100%',
-    },
-
-    messageContainer: {
-        maxWidth: '80%',
-        padding: 12,
-        borderRadius: 16,
-        marginVertical: 4,
-    },
-    userMessage: {
-        alignSelf: 'flex-end',
-        backgroundColor: '#007AFF',
-        marginLeft: 'auto',
-    },
-    apiMessage: {
-        alignSelf: 'flex-start',
-        backgroundColor: '#E5E5EA',
-        marginRight: 'auto',
-    },
-    messageText: {
-        fontSize: 16,
+        minWidth: Dimensions.get('window').width - 40,
+        maxWidth: Dimensions.get('window').width - 40,
     },
 });

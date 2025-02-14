@@ -19,7 +19,7 @@ export default function ChatMessage({message}: Props) {
                 alignSelf: message.isUser ? 'flex-end' : 'flex-start',
             }
         ]}>
-            <ThemedText variant="regular" color={message.isUser ? 'white' : 'text'}>{message.text}</ThemedText>
+            <ThemedText variant="regular" color={'text'}>{message.text}</ThemedText>
         </View>
     )
 }

@@ -8,10 +8,11 @@ import { ThemeContext } from "@/contexts/ThemeContext";
 type Props = {
     onInput: (text: string) => void;
     onSubmit: () => void;
+    value: string;
     style?: object;
 }
 
-export default function ChatInput({onInput, onSubmit, style}: Props) {
+export default function ChatInput({onInput, onSubmit, value, style}: Props) {
 
     const colors = useThemeColors();
     const { theme } = useContext(ThemeContext);
@@ -21,6 +22,7 @@ export default function ChatInput({onInput, onSubmit, style}: Props) {
             <TextInput 
                 onChangeText={onInput}
                 placeholder="Pose moi une question sur l'article !"
+                value={value}
                 style={[
                     styles.input, 
                     { backgroundColor: colors.background, color: colors.text },
