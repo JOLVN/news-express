@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, useEffect, useState } from "react";
 import { useColorScheme } from "react-native";
 
@@ -28,10 +29,43 @@ export function ThemeContextProvider({children}: Props) {
     const [theme, setTheme] = useState<Theme>(systemTheme);
 
     useEffect(() => {
+        loadThemePreferences();
+    }, []);
+
+    useEffect(() => {
+        saveThemePreferences();
+    }, [theme, isSystemTheme]);
+
+    useEffect(() => {
         if (isSystemTheme) {
             setTheme(systemTheme);
         }
     }, [systemTheme, isSystemTheme]);
+
+    const loadThemePreferences = async () => {
+        try {
+            const savedPreferences = await AsyncStorage.getItem('themePreferences');
+            if (savedPreferences) {
+                const { theme: savedTheme, isSystemTheme: savedIsSystemTheme } = JSON.parse(savedPreferences);
+                setTheme(savedTheme);
+                setIsSystemTheme(savedIsSystemTheme);
+            }
+        } catch (error) {
+            console.error('Erreur lors du chargement des préférences de thème:', error);
+        }
+    };
+
+    const saveThemePreferences = async () => {
+        try {
+            const preferences = JSON.stringify({
+                theme,
+                isSystemTheme,
+            });
+            await AsyncStorage.setItem('themePreferences', preferences);
+        } catch (error) {
+            console.error('Erreur lors de la sauvegarde des préférences de thème:', error);
+        }
+    };
 
     function toggleTheme() {
         setIsSystemTheme(false);

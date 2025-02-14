@@ -37,8 +37,8 @@ export default function CategoryWrapper({category, onPress, isSelected}: Props) 
             borderStyle,
             {
                 backgroundColor: colors.gray800, 
-                ...Shadows[theme].medium, 
-            }
+            },
+            isSelected && {...Shadows[theme].medium},
         ]}>
             <Text>{category.emoji}</Text>
             <ThemedText variant="category" color={isSelected ? 'text' : 'gray500'}>{category.name}</ThemedText>
