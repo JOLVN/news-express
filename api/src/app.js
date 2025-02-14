@@ -6,6 +6,8 @@ const firebaseService = require('./services/firebaseService');
 const chatGPTService = require('./services/chatGPTService');
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 const port = process.env.PORT || 3000;
 
 process.removeAllListeners('warning');
