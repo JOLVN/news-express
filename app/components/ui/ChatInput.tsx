@@ -1,5 +1,5 @@
 import { useThemeColors } from "@/hooks/useThemeColors";
-import { Pressable, StyleSheet, TextInput, View } from "react-native";
+import { Platform, Pressable, StyleSheet, TextInput, View } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { Shadows } from "@/constants/Shadows";
 import { useContext } from "react";
@@ -22,6 +22,7 @@ export default function ChatInput({onInput, onSubmit, value, style}: Props) {
             <TextInput 
                 onChangeText={onInput}
                 placeholder="Pose moi une question sur l'article !"
+                placeholderTextColor={colors.gray500}
                 value={value}
                 style={[
                     styles.input, 
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingRight: 70,
         fontFamily: 'Montserrat_400Regular',
-        fontSize: 16,
+        fontSize: Platform.OS === 'ios' ? 16 : 14,
     },
     submitButton: {
         position: 'absolute',

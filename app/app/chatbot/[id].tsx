@@ -8,7 +8,7 @@ import { useThemeColors } from "@/hooks/useThemeColors";
 import { Message } from "@/types/chat";
 import { router, useLocalSearchParams } from "expo-router";
 import { useContext, useEffect, useRef, useState } from "react";
-import { Dimensions, FlatList, Keyboard, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
+import { Dimensions, FlatList, KeyboardAvoidingView, Platform, StyleSheet, View } from "react-native";
 import { Image as ExpoImage } from 'expo-image';
 import ChatMessageLoading from "@/components/ChatMessageLoading";
 
@@ -19,6 +19,7 @@ export default function Chatbot() {
     const article = getArticleById(id as string);
     const colors = useThemeColors();
 
+    const [isMounted, setIsMounted] = useState(false);
     const [inputText, setInputText] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [messages, setMessages] = useState<Message[]>([]);
@@ -66,6 +67,21 @@ export default function Chatbot() {
         }
     };
 
+
+    // Solve bug on IOS -> Sometimes the content not takes the full height
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsMounted(true);
+        }, 50);
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (!isMounted) {
+        return (
+            <View style={[styles.container, {backgroundColor: colors.coloredBackground}]} />
+        )
+    }
+
     if (!article) {
         return (
             <View style={[styles.container, {backgroundColor: colors.coloredBackground}]}>
@@ -81,7 +97,7 @@ export default function Chatbot() {
             <KeyboardAvoidingView 
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 style={styles.keyboardAvoidingView}
-                keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : -25}
+                keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -25}
             >
                 <View style={styles.content}>
                     <FlatList
@@ -131,7 +147,7 @@ const styles = StyleSheet.create({
     },
     closeButton: {
         position: 'absolute',
-        top: 20,
+        top: Platform.OS === 'ios' ? 20 : 30,
         left: 20,
     },
     keyboardAvoidingView: {
@@ -149,7 +165,7 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     chatInput: {
-        paddingBottom: Platform.OS === 'ios' ? 60 : 40,
+        paddingBottom: Platform.OS === 'ios' ? 120 : 40,
         minWidth: Dimensions.get('window').width - 40,
         maxWidth: Dimensions.get('window').width - 40,
     },
