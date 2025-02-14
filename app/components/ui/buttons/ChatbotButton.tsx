@@ -1,5 +1,6 @@
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import { ForwardedRef, forwardRef } from "react";
+import { Image as ExpoImage } from 'expo-image';
 
 type Props = {
     style?: object,
@@ -14,9 +15,11 @@ const ChatbotButton = forwardRef<View, Props>(({ style, onPress, ...props }, ref
             onPress={onPress}
             {...props}
         >
-            <Image 
+            <ExpoImage
                 style={styles.image} 
                 source={require('@/assets/images/chatbot.png')} 
+                contentFit="contain"
+                cachePolicy="memory-disk"
             />
         </Pressable>
     )
