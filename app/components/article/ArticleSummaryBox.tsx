@@ -8,6 +8,7 @@ import ThemedText from "@/components/ui/ThemedText";
 import FlatButton from "../ui/buttons/FlatButton";
 import { Link } from "expo-router";
 import ListenButton from "@/components/ui/buttons/ListenButton";
+import { useGoogleTTS } from "@/hooks/useGoogleTTS";
 
 const { height } = Dimensions.get('window');
 
@@ -20,6 +21,7 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, ..
 
     const colors = useThemeColors();
     const { theme } = useContext(ThemeContext);
+    const { speak, stop, isPlaying, error } = useGoogleTTS();
 
     const onViewableItemsChanged = useRef(({ viewableItems }: {
         viewableItems: ViewToken[];
@@ -51,7 +53,7 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, ..
                     <ThemedText variant={'articleBody'}>{article.summary}</ThemedText>
                 </View>
                 <View style={styles.articleButtons}>
-                    <ListenButton onPress={() => {}} />
+                    <ListenButton onPress={() => isPlaying ? stop() : speak(article.summary)} />
                     <Link href={{ pathname: '/article/[id]', params: {id: article.id }}} asChild>
                         <FlatButton borderBottom={true} >
                             En savoir plus

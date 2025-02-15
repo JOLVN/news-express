@@ -13,6 +13,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { ModalContextProvider } from "@/contexts/ModalContext";
 import SwitchThemeModal from "@/components/SwitchThemeModal";
+import { GoogleTTSService } from "@/services/GoogleTTS";
 
 function Root() {
 
@@ -33,6 +34,10 @@ function Root() {
             SplashScreen.hideAsync();
         }
     }, [loaded]);
+
+    useEffect(() => {
+        GoogleTTSService.initialize();
+    }, []);
 
     useEffect(() => {
         setCategories(categories);

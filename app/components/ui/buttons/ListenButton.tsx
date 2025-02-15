@@ -24,8 +24,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 5,
+        zIndex: 10010
     },
     pressed: {
-        opacity: 0.7,
+        opacity: 0.5,
     }
 });
