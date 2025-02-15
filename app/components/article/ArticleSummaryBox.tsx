@@ -53,7 +53,10 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, ..
                     <ThemedText variant={'articleBody'}>{article.summary}</ThemedText>
                 </View>
                 <View style={styles.articleButtons}>
-                    <ListenButton onPress={() => isPlaying ? stop() : speak(article.summary)} />
+                    <ListenButton 
+                        onPress={() => isPlaying ? stop() : speak(article.summary)} 
+                        isListening={isPlaying}
+                    />
                     <Link href={{ pathname: '/article/[id]', params: {id: article.id }}} asChild>
                         <FlatButton borderBottom={true} >
                             En savoir plus
