@@ -83,12 +83,12 @@ export default function Index() {
 
 
                 <SafeArea style={styles.contentContainer}>
+                    <EdgeDetector style={{ left: -20 }} onSwipeStart={() => setIsDrawerVisible(true)} />
                     <ArticleSummaryBox
                         style={styles.summaryBox}
                         articles={userArticles}
                         onArticleChange={(index) => setArticleIndex(index)}
                         />
-                    <EdgeDetector style={{ left: -20 }} onSwipeStart={() => setIsDrawerVisible(true)} />
                     <AppLogo onPress={() => setIsDrawerVisible(true)} />
                 </SafeArea>
 
