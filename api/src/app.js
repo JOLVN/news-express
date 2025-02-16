@@ -28,8 +28,12 @@ app.get('/run-cron', async (req, res) => {
 
 app.get('/news/:date', async (req, res) => {
     try {
-        const dateString = req.params.date; // Format attendu: YYYY-MM-DD
+        const apiKey = req.headers['x-api-key'] || req.query.apiKey;
+        if (apiKey !== process.env.API_KEY) {
+            return res.status(401).json({ error: 'Unauthorized' });
+        }
 
+        const dateString = req.params.date; // Format attendu: YYYY-MM-DD
         const articles = await firebaseService.getArticlesByDate(dateString);
 
         console.log(`Retrieved ${articles.length} articles for ${dateString}`);
@@ -51,6 +55,11 @@ app.get('/news/:date', async (req, res) => {
 });
 
 app.post('/api/chat', async (req, res) => {
+    const apiKey = req.headers['x-api-key'] || req.query.apiKey;
+    if (apiKey !== process.env.API_KEY) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+
     const { message, articleContent } = req.body;
 
     if (!message || !articleContent) {

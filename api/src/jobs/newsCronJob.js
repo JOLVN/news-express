@@ -13,7 +13,7 @@ class NewsCronJob {
         try {
             console.log('Fetching news...');
             const frenchArticles = await this.newsService.fetchLatestNews('fr', 'fr');
-            console.log(`Retrieved ${articles.total} fr articles`);
+            console.log(`Retrieved ${frenchArticles.total} fr articles`);
 
             const savedCountFr = await this.firebaseService.saveArticles(frenchArticles.articles);
             console.log(`Saved ${savedCountFr} new fr articles to Firebase`);
