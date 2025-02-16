@@ -16,7 +16,7 @@ process.removeAllListeners('warning');
 app.get('/run-cron', async (req, res) => {
     try {
         const apiKey = req.headers['x-api-key'] || req.query.apiKey;
-        if (apiKey !== process.env.CRON_API_KEY) {
+        if (apiKey !== process.env.API_KEY) {
             return res.status(401).json({ error: 'Unauthorized' });
         }
         await newsCronJob.executeJob();
