@@ -4,12 +4,12 @@ const firebaseService = require('../services/firebaseService');
 
 class NewsService {
 
-    async fetchLatestNews() {
+    async fetchLatestNews(language, country) {
         try {
             const response = await currentsApi.get('/latest-news', {
                 params: {
-                    language: 'fr',
-                    country: 'fr'
+                    language: language,
+                    country: country
                 }
             });
 
@@ -50,6 +50,7 @@ class NewsService {
                     author: article.author,
                     image: article.image,
                     published: article.published,
+                    language: article.language,
                 });
 
             } catch (error) {

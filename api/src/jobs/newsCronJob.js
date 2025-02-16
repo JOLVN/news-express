@@ -12,13 +12,22 @@ class NewsCronJob {
     async executeJob() {
         try {
             console.log('Fetching news...');
-            const articles = await this.newsService.fetchLatestNews();
-            console.log(`Retrieved ${articles.total} articles`);
+            const frenchArticles = await this.newsService.fetchLatestNews('fr', 'fr');
+            console.log(`Retrieved ${articles.total} fr articles`);
 
-            const savedCount = await this.firebaseService.saveArticles(articles.articles);
-            console.log(`Saved ${savedCount} new articles to Firebase`);
+            const savedCountFr = await this.firebaseService.saveArticles(frenchArticles.articles);
+            console.log(`Saved ${savedCountFr} new fr articles to Firebase`);
 
-            return articles;
+            const englishArticles = await this.newsService.fetchLatestNews('en', 'us');
+            console.log(`Retrieved ${englishArticles.total} en articles`);
+
+            const savedCountEn = await this.firebaseService.saveArticles(englishArticles.articles);
+            console.log(`Saved ${savedCountEn} new en articles to Firebase`);
+
+            return {
+                fr: frenchArticles,
+                en: englishArticles,
+            };
         } catch (error) {
             console.error('Error executing news job:', error);
             throw error;
