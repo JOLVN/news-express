@@ -23,16 +23,16 @@ class ChatGPTService {
         ].join(', ');
 
         try {
-            const prompt = `Tu dois rédiger un article mieux rédigé et plus conscit que celui fournit. 
+            const prompt = `Tu dois rédiger un article mieux rédigé et plus conscit que celui fournit, dans la même langue que l'article en question. 
             Analyse l'article suivant (à l'aide de la source) et génère une réponse au format JSON strict selon cette structure :
             {
                 "summary": "résumé de l'actu de 90 mots environ",
                 "detailedArticle": {
                     "introduction": "présentation brève du sujet et son importance (sans parler de l'article)",
-                    "context": "contexte, antécédents et chiffres clés",
+                    "context": "contexte de l'affaire, antécédents et chiffres clés",
                     "details": "détails et explications qui permettent de comprendre l'ensemble, doit répondre au titre de l'article",
                     "issues": "importance et impacts potentiels",
-                    "conclusion": "essentiel à retenir en une phrase"
+                    "conclusion": "essentiel à retenir en une phrase ou deux"
                 },
                 "questions: [
                     {
@@ -54,10 +54,11 @@ class ChatGPTService {
             Consignes importantes:
             1. Le résumé doit faire environ 90 mots
             2. L'article détaillé doit être rédigé de manière claire et accessible, sans jargon complexe
-            3. Chaque section doit être fluide et compréhensible pour un lecteur qui ne suit pas l'actualité de près
+            3. Chaque section doit être fluide et compréhensible pour un lecteur qui ne suit pas l'actualité de près, sans être trop répétitif
             4. Les catégories doivent être choisies parmi la liste suivante : ${categoriesList}
             5. Les questions doivent être pertinentes et viennent compléter ce qui ne se trouve pas forcément dans l'article
             6. Les réponses aux questions doivent être claires et précises, pas plus de 2 phrases
+            7. Tout doit être dans la même langue que l'article
 
             Réponds uniquement avec un JSON valide, sans autre texte avant ou après.
 
