@@ -1,5 +1,11 @@
+interface CategoryName {
+    fr: string;
+    en: string;
+}
+
 export interface Category {
     id: number;
-    name: string;
+    label: string;
+    name: CategoryName;
     emoji: string;
 }

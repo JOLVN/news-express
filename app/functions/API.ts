@@ -1,11 +1,12 @@
 import { ArticleResponse } from "@/types/articles";
+import { Language } from "@/types/languages";
 
 const API_URL = 'https://news-express-1mmx.onrender.com/';
 const API_KEY = process.env.EXPO_PUBLIC_PERSONAL_API_KEY;
 
-export async function fetchArticles(day: string) {
-    const path = `news/${day}?apiKey=${API_KEY}`;
-    
+export async function fetchArticles(day: string, language: Language) {
+    const path = `news/${day}/${language}?apiKey=${API_KEY}`;
+
     try {
         const response = await fetch(`${API_URL}${
             path

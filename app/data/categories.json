@@ -1,82 +1,146 @@
 [
     {
         "id": 1,
-        "name": "Technologies",
+        "label": "Technologies",
+        "name": {
+            "fr": "Technologies",
+            "en": "Technologies"
+        },
         "emoji": "💻"
     },
     {
         "id": 2,
-        "name": "Business",
+        "label": "Business",
+        "name": {
+            "fr": "Business",
+            "en": "Business"
+        },
         "emoji": "💼"
     },
     {
         "id": 3,
-        "name": "Science",
+        "label": "Science",
+        "name": {
+            "fr": "Science",
+            "en": "Science"
+        },
         "emoji": "🔬"
     },
     {
         "id": 4,
-        "name": "Sport",
+        "label": "Sport",
+        "name": {
+            "fr": "Sport",
+            "en": "Sport"
+        },
         "emoji": "🏋️"
     },
     {
         "id": 5,
-        "name": "Divertissement",
+        "label": "Divertissement",
+        "name": {
+            "fr": "Divertissement",
+            "en": "Entertainment"
+        },
         "emoji": "🎭"
     },
     {
         "id": 6,
-        "name": "Politique",
+        "label": "Politique",
+        "name": {
+            "fr": "Politique",
+            "en": "Politics"
+        },
         "emoji": "🏛️"
     },
     {
         "id": 7,
-        "name": "Santé",
+        "label": "Santé",
+        "name": {
+            "fr": "Santé",
+            "en": "Health"
+        },
         "emoji": "🏥"
     },
     {
         "id": 8,
-        "name": "Éducation",
+        "label": "Éducation",
+        "name": {
+            "fr": "Éducation",
+            "en": "Education"
+        },
         "emoji": "📚"
     },
     {
         "id": 9,
-        "name": "Mode",
+        "label": "Mode",
+        "name": {
+            "fr": "Mode",
+            "en": "Fashion"
+        },
         "emoji": "👗"
     },
     {
         "id": 10,
-        "name": "Économie",
+        "label": "Économie",
+        "name": {
+            "fr": "Économie",
+            "en": "Economy"
+        },
         "emoji": "💰"
     },
     {
         "id": 11,
-        "name": "Musique",
+        "label": "Musique",
+        "name": {
+            "fr": "Musique",
+            "en": "Music"
+        },
         "emoji": "🎵"
     },
     {
         "id": 12,
-        "name": "Art",
+        "label": "Art",
+        "name": {
+            "fr": "Art",
+            "en": "Art"
+        },
         "emoji": "🎨"
     },
     {
         "id": 13,
-        "name": "Cinéma",
+        "label": "Cinéma",
+        "name": {
+            "fr": "Cinéma",
+            "en": "Cinema"
+        },
         "emoji": "🎬"
     },
     {
         "id": 14,
-        "name": "Littérature",
+        "label": "Littérature",
+        "name": {
+            "fr": "Littérature",
+            "en": "Literature"
+        },
         "emoji": "📖"
     },
     {
         "id": 15,
-        "name": "Histoire",
+        "label": "Histoire",
+        "name": {
+            "fr": "Histoire",
+            "en": "History"
+        },
         "emoji": "🏰"
     },
     {
         "id": 16,
-        "name": "Environnement",
+        "label": "Environnement",
+        "name": {
+            "fr": "Environnement",
+            "en": "Environment"
+        },
         "emoji": "🌍"
     }
 ]

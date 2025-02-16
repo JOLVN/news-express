@@ -14,6 +14,7 @@ import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { ModalContextProvider } from "@/contexts/ModalContext";
 import SwitchThemeModal from "@/components/SwitchThemeModal";
 import { GoogleTTSService } from "@/services/GoogleTTS";
+import { LanguageContextProvider } from "@/contexts/LanguageContext";
 
 function Root() {
 
@@ -83,17 +84,19 @@ function Root() {
 export default function RootLayout() {
     return (
         <ThemeContextProvider>
-            <ArticlesContextProvider>
-                <CategoriesContextProvider>
-                    <ModalContextProvider>
-                        <GestureHandlerRootView style={{ flex: 1 }}>
-                            <BottomSheetModalProvider>
-                                <Root />
-                            </BottomSheetModalProvider>
-                        </GestureHandlerRootView>
-                    </ModalContextProvider>
-                </CategoriesContextProvider>
-            </ArticlesContextProvider>
+            <LanguageContextProvider>
+                <ArticlesContextProvider>
+                    <CategoriesContextProvider>
+                        <ModalContextProvider>
+                            <GestureHandlerRootView style={{ flex: 1 }}>
+                                <BottomSheetModalProvider>
+                                    <Root />
+                                </BottomSheetModalProvider>
+                            </GestureHandlerRootView>
+                        </ModalContextProvider>
+                    </CategoriesContextProvider>
+                </ArticlesContextProvider>
+            </LanguageContextProvider>
         </ThemeContextProvider>
     );
 }

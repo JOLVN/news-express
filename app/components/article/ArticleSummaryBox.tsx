@@ -9,6 +9,8 @@ import FlatButton from "../ui/buttons/FlatButton";
 import { Link } from "expo-router";
 import ListenButton from "@/components/ui/buttons/ListenButton";
 import { useGoogleTTS } from "@/hooks/useGoogleTTS";
+import { LanguageContext } from "@/contexts/LanguageContext";
+import { Texts } from "@/constants/Texts";
 
 const { height } = Dimensions.get('window');
 
@@ -21,6 +23,7 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, ..
 
     const colors = useThemeColors();
     const { theme } = useContext(ThemeContext);
+    const { language } = useContext(LanguageContext);
     const { speak, stop, isPlaying, error } = useGoogleTTS();
 
     const onViewableItemsChanged = useRef(({ viewableItems }: {
@@ -39,7 +42,7 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, ..
         return (
             <View style={styles.emptyListContainer}>
                 <ThemedText variant={'articleBody'} style={{ textAlign: 'center' }}>
-                    Aucun article dans les catégories sélectionnées
+                    {Texts[language].noArticles}
                 </ThemedText>
             </View>
         )
@@ -59,7 +62,7 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, ..
                     />
                     <Link href={{ pathname: '/article/[id]', params: {id: article.id }}} asChild>
                         <FlatButton borderBottom={true} >
-                            En savoir plus
+                            {Texts[language].moreButton}
                         </FlatButton>
                     </Link>
                 </View>

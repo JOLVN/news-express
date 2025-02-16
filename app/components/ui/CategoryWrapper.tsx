@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { ThemeContext } from "@/contexts/ThemeContext";
 import Animated, { useAnimatedStyle, withSpring } from "react-native-reanimated";
 import { Category } from "@/types/categories";
+import { LanguageContext } from "@/contexts/LanguageContext";
 
 type Props = {
     category: Category;
@@ -17,6 +18,7 @@ type Props = {
 export default function CategoryWrapper({category, onPress, isSelected}: Props) {
 
     const { theme } = useContext(ThemeContext);
+    const { language } = useContext(LanguageContext);
     const colors = useThemeColors();
 
     const iconStyle = useAnimatedStyle(() => {
@@ -41,7 +43,7 @@ export default function CategoryWrapper({category, onPress, isSelected}: Props) 
             isSelected && {...Shadows[theme].medium},
         ]}>
             <Text>{category.emoji}</Text>
-            <ThemedText variant="category" color={isSelected ? 'text' : 'gray500'}>{category.name}</ThemedText>
+            <ThemedText variant="category" color={isSelected ? 'text' : 'gray500'}>{category.name[language]}</ThemedText>
             <Pressable style={[styles.button, {borderColor: colors.accent500}]} onPress={onPress}>
                 <Animated.View style={iconStyle}>
                     <AntDesign name={isSelected ? 'check' : 'plus'} size={Platform.OS === 'ios' ? 16 : 14} color={colors.accent500} />

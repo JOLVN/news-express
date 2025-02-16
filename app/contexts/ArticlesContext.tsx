@@ -24,7 +24,7 @@ export function ArticlesContextProvider({children}: {children: React.ReactNode})
     const [userArticles, setUserArticles] = useState<UserArticle[]>([]);
 
     function setUserArticlesByCategories(cats: Category[], arts: Article[]) {
-        const categories = cats.map(cat => cat.name);
+        const categories = cats.map(cat => cat.label);
         const a = arts.filter(article => article.categories.some(category => categories.includes(category)));
         
         const ua = a.map(article => {

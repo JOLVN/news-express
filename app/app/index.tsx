@@ -8,6 +8,7 @@ import LoadingArticlesOverlay from "@/components/LoadingArticlesOverlay";
 import SafeArea from "@/components/SafeArea";
 import { ArticlesContext } from "@/contexts/ArticlesContext";
 import { CategoriesContext } from "@/contexts/CategoriesContext";
+import { LanguageContext } from "@/contexts/LanguageContext";
 import { fetchArticles } from "@/functions/API";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { useContext, useEffect, useState } from "react";
@@ -22,6 +23,7 @@ export default function Index() {
     const {articles, userArticles, setArticles, setUserArticlesByCategories} = useContext(ArticlesContext);
     const {userCategories} = useContext(CategoriesContext);
     const [visibleImage, setVisibleImage] = useState<string | ''>('');
+    const { language } = useContext(LanguageContext);
     const colors = useThemeColors();
     const today = '2025-02-16';
 
@@ -30,7 +32,7 @@ export default function Index() {
             setIsLoading(true)
             console.log('fetching articles...');
             
-            const data = await fetchArticles(today);
+            const data = await fetchArticles(today, language);
             setArticles(data.articles);
             setUserArticlesByCategories(userCategories, data.articles);
             
