@@ -23,7 +23,7 @@ export default function Index() {
     const {userCategories} = useContext(CategoriesContext);
     const [visibleImage, setVisibleImage] = useState<string | ''>('');
     const colors = useThemeColors();
-    const today = '2025-02-13';
+    const today = '2025-02-16';
 
     async function getArticles() {
         try {
