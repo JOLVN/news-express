@@ -9,6 +9,8 @@ import ArticleQuestion from '@/components/article/ArticleQuestion';
 import { useContext, useState } from 'react';
 import { ArticlesContext } from '@/contexts/ArticlesContext';
 import ChatbotButton from '@/components/ui/buttons/ChatbotButton';
+import { Texts } from '@/constants/Texts';
+import { LanguageContext } from '@/contexts/LanguageContext';
 
 export default function ArticleDetails() {
 
@@ -17,6 +19,7 @@ export default function ArticleDetails() {
     const article = getArticleById(id as string);
     
     const colors = useThemeColors();
+    const { language } = useContext(LanguageContext);
     const [expandedQuestionIndex, setExpandedQuestionIndex] = useState<number | null>(null);
 
     function toggleQuestion(index: number) {
@@ -45,29 +48,31 @@ export default function ArticleDetails() {
             <ScrollView style={[styles.container]}>
                 <View style={{ gap: 30, paddingBottom: 40 }}>
                     <ThemedText variant={'articleTitle'}>{article.title}</ThemedText>
-                    <Image source={{uri: article.image}} style={{width: '100%', height: 200}} />
+                    {article.image && article.image !== 'None' && (
+                        <Image source={{uri: article.image}} style={{width: '100%', height: 200}} />
+                    )}
                     <ThemedText variant={'articleItalic'}>{article.detailedArticle.introduction}</ThemedText>
                     <View style={styles.section}>
-                        <ThemedText variant={'articleTitle'} style={styles.sectionTitle}>Context</ThemedText>
+                        <ThemedText variant={'articleTitle'} style={styles.sectionTitle}>{Texts[language].context}</ThemedText>
                         <ThemedText variant={'articleBody'}>{article.detailedArticle.context}</ThemedText>
                     </View>
                     <View style={styles.section}>
-                        <ThemedText variant={'articleTitle'} style={styles.sectionTitle}>Détails</ThemedText>
+                        <ThemedText variant={'articleTitle'} style={styles.sectionTitle}>{Texts[language].details}</ThemedText>
                         <ThemedText variant={'articleBody'}>{article.detailedArticle.details}</ThemedText>
                     </View>
                     <View style={styles.section}>
-                        <ThemedText variant={'articleTitle'} style={styles.sectionTitle}>Conséquences</ThemedText>
+                        <ThemedText variant={'articleTitle'} style={styles.sectionTitle}>{Texts[language].issues}</ThemedText>
                         <ThemedText variant={'articleBody'}>{article.detailedArticle.issues}</ThemedText>
                     </View>
                     <View style={styles.section}>
-                        <ThemedText variant={'articleTitle'} style={styles.sectionTitle}>Ce qu'il faut retenir</ThemedText>
+                        <ThemedText variant={'articleTitle'} style={styles.sectionTitle}>{Texts[language].conclusion}</ThemedText>
                         <ThemedText variant={'articleBody'}>{article.detailedArticle.conclusion}</ThemedText>
                     </View>
                     <Button onPress={openArticle}>
-                        Consulter l'article
+                        {Texts[language].openArticle}
                     </Button>
                     <View style={styles.section}>
-                        <ThemedText variant={'articleTitle'} style={styles.sectionTitle}>Q&A</ThemedText>
+                        <ThemedText variant={'articleTitle'} style={styles.sectionTitle}>{Texts[language].qAndA}</ThemedText>
                     </View>
                     {article.questions.map((qa: Question, index: number) => (
                         <ArticleQuestion 

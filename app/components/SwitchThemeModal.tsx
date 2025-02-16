@@ -7,11 +7,14 @@ import { ModalContext } from '@/contexts/ModalContext';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import ThemeOption from '@/components/ui/ThemeOption';
 import { useThemeColors } from '@/hooks/useThemeColors';
+import { LanguageContext } from '@/contexts/LanguageContext';
+import { Texts } from '@/constants/Texts';
 
 export default function SwitchThemeModal() {
 
     const { isThemeModalVisible, hideThemeModal } = useContext(ModalContext);
     const { theme, toggleTheme, isSystemTheme, setIsSystemTheme } = useContext(ThemeContext);
+    const { language } = useContext(LanguageContext);
     const colors = useThemeColors();
     const opacity = useSharedValue(0);
     const bottomSheetRef = useRef<BottomSheet>(null);
@@ -81,10 +84,10 @@ export default function SwitchThemeModal() {
             animateOnMount={true}
         >
             <BottomSheetView style={styles.modalContent}>
-                <ThemedText variant="title" style={styles.title}>Apparence</ThemedText>
+                <ThemedText variant="title" style={styles.title}>{Texts[language].appearance}</ThemedText>
                 
                 <ThemeOption 
-                    title="Système" 
+                    title={Texts[language].system} 
                     selected={isSystemTheme}
                     onPress={() => {
                         setIsSystemTheme(true);
@@ -93,7 +96,7 @@ export default function SwitchThemeModal() {
                 />
                 
                 <ThemeOption 
-                    title="Clair" 
+                    title={Texts[language].light}
                     selected={!isSystemTheme && theme === 'light'}
                     onPress={() => {
                         setIsSystemTheme(false);
@@ -103,7 +106,7 @@ export default function SwitchThemeModal() {
                 />
                 
                 <ThemeOption 
-                    title="Sombre" 
+                    title={Texts[language].dark} 
                     selected={!isSystemTheme && theme === 'dark'}
                     onPress={() => {
                         setIsSystemTheme(false);

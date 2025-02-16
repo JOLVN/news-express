@@ -14,11 +14,13 @@ import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { ModalContextProvider } from "@/contexts/ModalContext";
 import SwitchThemeModal from "@/components/SwitchThemeModal";
 import { GoogleTTSService } from "@/services/GoogleTTS";
-import { LanguageContextProvider } from "@/contexts/LanguageContext";
+import { LanguageContext, LanguageContextProvider } from "@/contexts/LanguageContext";
+import { Texts } from "@/constants/Texts";
 
 function Root() {
 
     const { theme } = useContext(ThemeContext);
+    const { language } = useContext(LanguageContext);
     const colors = useThemeColors();
     const [loaded] = useFonts({
         'PTSerif-Regular': PTSerif_400Regular,
@@ -62,7 +64,7 @@ function Root() {
             }}>
                 <Stack.Screen name="index" options={{ 
                     headerShown: false,
-                    title: "Home",
+                    title: Texts[language].home,
                 }} />
                 <Stack.Screen name="article/[id]" options={{ 
                     title: "",

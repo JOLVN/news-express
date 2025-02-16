@@ -5,13 +5,18 @@ import CategoriesContainer from "@/components/drawer/CategoriesContainer";
 import ThemeButton from "@/components/ui/buttons/ThemeButton";
 import SettingsButton from "@/components/ui/buttons/SettingsButton";
 import { Link } from "expo-router";
+import { useContext } from "react";
+import { LanguageContext } from "@/contexts/LanguageContext";
+import { Texts } from "@/constants/Texts";
 
 export default function CustomDrawerContent() {
+
+    const { language } = useContext(LanguageContext);
     
     return (
         <SafeArea>
             <View style={styles.container}>
-                <ThemedText variant="articleSummaryTitle">Personalise ton feed</ThemedText>
+                <ThemedText variant="articleSummaryTitle">{Texts[language].personalizeFeed}</ThemedText>
                 <CategoriesContainer style={{ marginTop: 10 }} />
                 <View style={styles.bottomContainer}>
                     <Link href={{ pathname: '/settings'}} asChild>

@@ -4,6 +4,8 @@ import { Entypo } from "@expo/vector-icons";
 import { Shadows } from "@/constants/Shadows";
 import { useContext } from "react";
 import { ThemeContext } from "@/contexts/ThemeContext";
+import { LanguageContext } from "@/contexts/LanguageContext";
+import { Texts } from "@/constants/Texts";
 
 type Props = {
     onInput: (text: string) => void;
@@ -16,12 +18,13 @@ export default function ChatInput({onInput, onSubmit, value, style}: Props) {
 
     const colors = useThemeColors();
     const { theme } = useContext(ThemeContext);
+    const { language } = useContext(LanguageContext);
 
     return (
         <View style={[styles.container, style]}>
             <TextInput 
                 onChangeText={onInput}
-                placeholder="Pose moi une question sur l'article !"
+                placeholder={Texts[language].chatInputPlaceholder}
                 placeholderTextColor={colors.gray500}
                 value={value}
                 style={[
