@@ -26,7 +26,7 @@ app.get('/run-cron', async (req, res) => {
     }
 });
 
-app.get('/news/:date', async (req, res) => {
+app.get('/news/:date/:language', async (req, res) => {
     try {
         const apiKey = req.headers['x-api-key'] || req.query.apiKey;
         if (apiKey !== process.env.API_KEY) {
@@ -34,9 +34,10 @@ app.get('/news/:date', async (req, res) => {
         }
 
         const dateString = req.params.date; // Format attendu: YYYY-MM-DD
-        const articles = await firebaseService.getArticlesByDate(dateString);
+        const language = req.params.language;
+        const articles = await firebaseService.getArticlesByDate(dateString, language);
 
-        console.log(`Retrieved ${articles.length} articles for ${dateString}`);
+        console.log(`Retrieved ${articles.length} articles for ${dateString} in ${language}`);
 
         res.json({
             success: true,

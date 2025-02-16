@@ -37,10 +37,11 @@ class FirebaseService {
     }
 
     // Récupérer les articles publiés à partir d'une date donnée
-    async getArticlesByDate(dateString) {
+    async getArticlesByDate(dateString, language) {
         const snapshot = await this.articlesCollection
             .where('published', '>=', dateString)
             .where('published', '<', dateString + '\uf8ff')
+            .where('language', '==', language)
             .orderBy('published', 'desc')
             .get();
 
