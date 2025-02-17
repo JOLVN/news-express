@@ -1,6 +1,7 @@
 import AppLogo from "@/components/AppLogo";
 import ArticleScreenImage from "@/components/article/ArticleScreenImage";
 import ArticleSummaryBox from "@/components/article/ArticleSummaryBox";
+import DateCarousel from "@/components/DateCarousel";
 import CustomDrawer from "@/components/drawer/CustomDrawer";
 import CustomDrawerContent from "@/components/drawer/CustomDrawerContent";
 import EdgeDetector from "@/components/EdgeDetector";
@@ -12,6 +13,7 @@ import { LanguageContext } from "@/contexts/LanguageContext";
 import { ReadArticlesContext } from "@/contexts/ReadArticlesContext";
 import { fetchArticles } from "@/functions/API";
 import { sortArticles } from "@/functions/articles";
+import { formatDate } from "@/functions/date";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { useContext, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -24,26 +26,26 @@ export default function Index() {
     const [isDrawerVisible, setIsDrawerVisible] = useState(false);
     const [visibleImage, setVisibleImage] = useState<string | ''>('');
     const [isCurrentArticleRead, setIsCurrentArticleRead] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(formatDate(new Date()));
 
     const {articles, userArticles, setArticles, setUserArticlesByCategories} = useContext(ArticlesContext);
     const { readArticles, isArticleRead, markArticleAsRead } = useContext(ReadArticlesContext);
     const {userCategories} = useContext(CategoriesContext);
     const { language } = useContext(LanguageContext);
     const colors = useThemeColors();
-    const today = '2025-02-16';
 
-    async function getArticles(changeIsLoading = true) {
+    async function getArticles(date: string, changeIsLoading = true) {
         try {
             if (changeIsLoading) setIsLoading(true);
             console.log('fetching articles...');
             
-            const data = await fetchArticles(today, language);
-            setArticles(data.articles);            
+            const data = await fetchArticles(date, language);
+            setArticles(data.articles);
             const sortedArticles = sortArticles(data.articles, readArticles);
             setUserArticlesByCategories(userCategories, sortedArticles);
             
             if (!visibleImage && data.articles.length > 0) {
-                setVisibleImage(data.articles[0].image);
+                setVisibleImage(sortedArticles[0].image);
             }
             console.log(data.count);
             
@@ -63,8 +65,13 @@ export default function Index() {
         }
     };
 
+    function handleDateChange(newDate: string) {        
+        setSelectedDate(newDate);        
+        getArticles(newDate, false);
+    };
+
     useEffect(() => {
-        getArticles();
+        getArticles(selectedDate);
     }, [language]);
 
     useEffect(() => {
@@ -99,16 +106,20 @@ export default function Index() {
 
                 <ArticleScreenImage image={visibleImage} />
 
-
                 <SafeArea style={styles.contentContainer}>
                     <EdgeDetector style={{ left: -20 }} onSwipeStart={() => setIsDrawerVisible(true)} />
-                    <ArticleSummaryBox
-                        style={styles.summaryBox}
-                        articles={userArticles}
-                        onArticleChange={(index) => setArticleIndex(index)}
-                        onRefetchArticles={() => getArticles(false)}
-                        isRead={isCurrentArticleRead}
-                    />
+                    <View style={styles.summaryBox}>
+                        <DateCarousel 
+                            style={{ marginBottom: 16 }}
+                            onDateChange={handleDateChange} 
+                        />
+                        <ArticleSummaryBox
+                            articles={userArticles}
+                            onArticleChange={(index) => setArticleIndex(index)}
+                            onRefetchArticles={() => getArticles(selectedDate, false)}
+                            isRead={isCurrentArticleRead}
+                        />
+                    </View>
                     <AppLogo onPress={() => setIsDrawerVisible(true)} />
                 </SafeArea>
 
@@ -129,6 +140,8 @@ const styles = StyleSheet.create({
     summaryBox: {
         position: 'absolute',
         bottom: 40,
+        left: 0,
+        right: 0,
     },
     
 });

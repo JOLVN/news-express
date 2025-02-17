@@ -143,6 +143,7 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 50,
     },
     emptyListContainer: {
+        width: '100%',
         flex: 1,
         justifyContent: 'center',
         height: height * 0.5 - 32,
