@@ -1,8 +1,8 @@
+import { Language } from '@/types/languages';
 import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
 
 const GOOGLE_TTS_ENDPOINT = 'https://texttospeech.googleapis.com/v1/text:synthesize';
-const GOOGLE_VOICE = 'fr-FR-Studio-A';
 const GOOGLE_TTS_API_KEY = process.env.EXPO_PUBLIC_GOOGLE_TTS_API_KEY;
 
 export class GoogleTTSService {
@@ -16,8 +16,10 @@ export class GoogleTTSService {
     });
   }
 
-  static async speak(text: string) {
+  static async speak(text: string, language: Language) {    
+    const GOOGLE_VOICE = language === 'fr' ? 'fr-FR-Studio-A' : 'en-US-Studio-O';
     try {
+      
       // 1. Conversion du texte en audio via API Google
       const response = await fetch(
         `${GOOGLE_TTS_ENDPOINT}?key=${GOOGLE_TTS_API_KEY}`,
@@ -29,7 +31,7 @@ export class GoogleTTSService {
           body: JSON.stringify({
             input: { text },
             voice: {
-              languageCode: 'fr-FR',
+              languageCode: language === 'fr' ? 'fr-FR' : 'en-US',
               name: GOOGLE_VOICE,
             },
             audioConfig: {

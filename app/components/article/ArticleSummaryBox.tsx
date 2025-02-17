@@ -29,7 +29,8 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, ..
     const onViewableItemsChanged = useRef(({ viewableItems }: {
         viewableItems: ViewToken[];
         changed: ViewToken[];
-    }) => {                
+    }) => {
+        stop();
         if (viewableItems.length > 0) {
             const newIndex = viewableItems[0].index ?? 0;
             onArticleChange(newIndex);
@@ -37,6 +38,11 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, ..
     }).current;
 
     const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
+
+    function onListenPress(article: Article) {
+        if (isPlaying) stop();
+        else speak(article.summary, language);
+    }
 
     function EmptyList() {
         return (
@@ -57,7 +63,7 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, ..
                 </View>
                 <View style={styles.articleButtons}>
                     <ListenButton 
-                        onPress={() => isPlaying ? stop() : speak(article.summary)} 
+                        onPress={() => onListenPress(article)} 
                         isListening={isPlaying}
                     />
                     <Link href={{ pathname: '/article/[id]', params: {id: article.id }}} asChild>

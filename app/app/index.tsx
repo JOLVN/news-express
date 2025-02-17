@@ -50,7 +50,7 @@ export default function Index() {
 
     useEffect(() => {
         getArticles();
-    }, []);
+    }, [language]);
 
     useEffect(() => {
         if (userCategories) {

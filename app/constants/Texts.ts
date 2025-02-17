@@ -27,6 +27,8 @@ export const Texts = {
         language: "Langue",
         french: "Français",
         english: "Anglais",
+        // Settings
+        settings: "Paramètres",
     },
     en: {
         // Home
@@ -56,5 +58,7 @@ export const Texts = {
         language: "Language",
         french: "French",
         english: "English",
+        // Settings
+        settings: "Settings",
     }
 }

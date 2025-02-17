@@ -71,7 +71,7 @@ function Root() {
                     title: "",
                  }} />
                 <Stack.Screen name="settings" options={{ 
-                    title: "Paramètres",
+                    title: Texts[language].settings,
                  }} />
                 <Stack.Screen name="chatbot/[id]" options={{ 
                     title: "",
