@@ -33,8 +33,6 @@ export interface ArticleResponse {
     articles: Article[];
 }
 
-export type UserArticle = Article & { read: boolean };
-
 export interface ReadArticle {
     id: string;
     readAt: string;

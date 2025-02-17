@@ -1,10 +1,10 @@
-import { Article, ReadArticle, UserArticle } from "@/types/articles";
+import { Article } from "@/types/articles";
 import { Category } from "@/types/categories";
 import { createContext, useState } from "react";
 
 interface ArticlesContextProps {
     articles: Article[];
-    userArticles: UserArticle[];
+    userArticles: Article[];
     setArticles: (articles: Article[]) => void;
     setUserArticlesByCategories: (categories: Category[], articles: Article[]) => void;
     getArticleById: (id: string) => Article | undefined;
@@ -21,7 +21,7 @@ export const ArticlesContext = createContext<ArticlesContextProps>({
 export function ArticlesContextProvider({children}: {children: React.ReactNode}) {
 
     const [articles, setArticles] = useState<Article[]>([]);
-    const [userArticles, setUserArticles] = useState<UserArticle[]>([]);
+    const [userArticles, setUserArticles] = useState<Article[]>([]);
 
     function setUserArticlesByCategories(cats: Category[], arts: Article[]) {
         const categories = cats.map(cat => cat.label);
@@ -32,10 +32,7 @@ export function ArticlesContextProvider({children}: {children: React.ReactNode})
             if (userArticle) {
                 return userArticle;
             }
-            return {
-                ...article,
-                read: false
-            }
+            return article;
         });
         
         setUserArticles(ua);
