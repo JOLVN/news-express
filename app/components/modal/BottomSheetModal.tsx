@@ -1,20 +1,17 @@
 import { Pressable, StyleSheet } from 'react-native';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import ThemedText from './ui/ThemedText';
-import { useContext, useCallback, useMemo, useRef, useEffect } from 'react';
-import { ThemeContext } from '@/contexts/ThemeContext';
-import { ModalContext } from '@/contexts/ModalContext';
+import { useCallback, useMemo, useRef, useEffect } from 'react';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
-import ThemeOption from '@/components/ui/ThemeOption';
 import { useThemeColors } from '@/hooks/useThemeColors';
-import { LanguageContext } from '@/contexts/LanguageContext';
-import { Texts } from '@/constants/Texts';
 
-export default function SwitchThemeModal() {
+type Props = {
+    children: React.ReactNode;
+    isVisible: boolean;
+    hideModal: () => void;
+}
 
-    const { isThemeModalVisible, hideThemeModal } = useContext(ModalContext);
-    const { theme, toggleTheme, isSystemTheme, setIsSystemTheme } = useContext(ThemeContext);
-    const { language } = useContext(LanguageContext);
+export default function BottomSheetModal({children, isVisible, hideModal}: Props) {
+
     const colors = useThemeColors();
     const opacity = useSharedValue(0);
     const bottomSheetRef = useRef<BottomSheet>(null);
@@ -22,20 +19,20 @@ export default function SwitchThemeModal() {
     const snapPoints = useMemo(() => ['50%', '75%', '100%'], []);
 
     useEffect(() => {
-        if (isThemeModalVisible) {
+        if (isVisible) {
             opacity.value = withTiming(0.5, { duration: 200 });
         }
-    }, [isThemeModalVisible]);
+    }, [isVisible]);
 
-    const handleSheetChanges = useCallback((index: number) => {
+    const handleSheetChanges = useCallback((index: number) => {        
         if (index === -1) {
             opacity.value = withTiming(0, { duration: 200 }, (finished) => {
                 if (finished) {
-                    runOnJS(hideThemeModal)();
+                    runOnJS(hideModal)();
                 }
             });
         }
-    }, [hideThemeModal]);
+    }, [hideModal]);
 
     const closeSheet = useCallback(() => {
         bottomSheetRef.current?.close();
@@ -53,7 +50,7 @@ export default function SwitchThemeModal() {
         opacity: opacity.value,
     }));
 
-    if (!isThemeModalVisible) return null;
+    if (!isVisible) return null;
 
     function BackdropComponent() {
         return (
@@ -84,36 +81,7 @@ export default function SwitchThemeModal() {
             animateOnMount={true}
         >
             <BottomSheetView style={styles.modalContent}>
-                <ThemedText variant="title" style={styles.title}>{Texts[language].appearance}</ThemedText>
-                
-                <ThemeOption 
-                    title={Texts[language].system} 
-                    selected={isSystemTheme}
-                    onPress={() => {
-                        setIsSystemTheme(true);
-                        handleClose();
-                    }}
-                />
-                
-                <ThemeOption 
-                    title={Texts[language].light}
-                    selected={!isSystemTheme && theme === 'light'}
-                    onPress={() => {
-                        setIsSystemTheme(false);
-                        if (theme === 'dark') toggleTheme();
-                        handleClose();
-                    }}
-                />
-                
-                <ThemeOption 
-                    title={Texts[language].dark} 
-                    selected={!isSystemTheme && theme === 'dark'}
-                    onPress={() => {
-                        setIsSystemTheme(false);
-                        if (theme === 'light') toggleTheme();
-                        handleClose();
-                    }}
-                />
+                {children}
             </BottomSheetView>
         </BottomSheet>
     );
@@ -127,11 +95,5 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingBottom: 50,
         gap: 20,
-    },
-    title: {
-        textAlign: 'center',
-        marginVertical: 12,
-        marginBottom: 24,
-    },
-    
+    },    
 });

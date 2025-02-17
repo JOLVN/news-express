@@ -8,7 +8,7 @@ type Props = {
     selected: boolean;
 }
 
-export default function ThemeOption({title, onPress, selected}: Props) {
+export default function ModalOption({title, onPress, selected}: Props) {
 
     const colors = useThemeColors();
 

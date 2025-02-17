@@ -12,10 +12,11 @@ import categories from "@/data/categories.json";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { ModalContextProvider } from "@/contexts/ModalContext";
-import SwitchThemeModal from "@/components/SwitchThemeModal";
+import SwitchThemeModal from "@/components/modal/SwitchThemeModal";
 import { GoogleTTSService } from "@/services/GoogleTTS";
 import { LanguageContext, LanguageContextProvider } from "@/contexts/LanguageContext";
 import { Texts } from "@/constants/Texts";
+import SwitchLanguageModal from "@/components/modal/SwitchLanguageModal";
 
 function Root() {
 
@@ -79,6 +80,7 @@ function Root() {
                  }} />
             </Stack>
             <SwitchThemeModal />
+            <SwitchLanguageModal />
         </>
     )
 }

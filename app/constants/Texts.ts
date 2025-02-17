@@ -23,6 +23,10 @@ export const Texts = {
         qAndA: "Q&A",
         // Chat
         chatInputPlaceholder: "Pose moi une question sur l'article !",
+        // Language
+        language: "Langue",
+        french: "Français",
+        english: "Anglais",
     },
     en: {
         // Home
@@ -48,5 +52,9 @@ export const Texts = {
         qAndA: "Q&A",
         // Chat
         chatInputPlaceholder: "Ask me a question about the article !",
+        // Language
+        language: "Language",
+        french: "French",
+        english: "English",
     }
 }
