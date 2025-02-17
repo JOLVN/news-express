@@ -11,11 +11,13 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { Dimensions, FlatList, KeyboardAvoidingView, Platform, StyleSheet, View } from "react-native";
 import { Image as ExpoImage } from 'expo-image';
 import ChatMessageLoading from "@/components/ChatMessageLoading";
+import { LanguageContext } from "@/contexts/LanguageContext";
 
 export default function Chatbot() {
 
     const { getArticleById } = useContext(ArticlesContext);
     const { id } = useLocalSearchParams();
+    const { language } = useContext(LanguageContext);
     const article = getArticleById(id as string);
     const colors = useThemeColors();
 
@@ -51,7 +53,7 @@ export default function Chatbot() {
         
         try {
             setIsLoading(true);
-            const response = await getChatbotResponse(article.url, inputText);
+            const response = await getChatbotResponse(article.url, inputText, language);
             const apiMessage: Message = {
                 id: Date.now().toString(),
                 text: response,

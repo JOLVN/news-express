@@ -29,8 +29,8 @@ export async function fetchArticles(day: string, language: Language) {
     }
 }
 
-export async function getChatbotResponse(articleUrl: string, question: string): Promise<string> {
-    const path = `api/chat?apiKey=${API_KEY}`;
+export async function getChatbotResponse(articleUrl: string, question: string, language: Language): Promise<string> {
+    const path = `api/chat?apiKey=${API_KEY}&language=${language}`;
     try {
         const response = await fetch(`${API_URL}${path}`, {
             method: 'POST',
