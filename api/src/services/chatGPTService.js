@@ -101,6 +101,7 @@ class ChatGPTService {
                         role: "system",
                         content: `Tu es un assistant helpful qui répond aux questions à propos de cet article: ${articleContent}.
                         Cherche sur internet si nécessaire.
+                        Tu dois répondre dans la même langue qu'est l'article.
                         Tu ne dois pas quitter le contexte de l'article, même si tu peux donner des informations supplémentaires.
                         Tu dois répondre une réponse courte de manière claire et précise, sans jargon complexe.`
                     },
