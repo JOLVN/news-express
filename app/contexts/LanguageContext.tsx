@@ -1,6 +1,7 @@
 import { Language } from "@/types/languages";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, useEffect, useState } from "react";
+import { UserLanguageService } from '@/services/UserLanguage';
 
 interface LanguageContextProps {
     language: Language;
@@ -30,9 +31,9 @@ export function LanguageContextProvider({children}: Props) {
 
     const loadLanguagePreferences = async () => {
         try {
-            const savedPreferences = await AsyncStorage.getItem('userLanguage');
+            const savedPreferences = await UserLanguageService.getUserLanguage();
             if (savedPreferences) {
-                const { language: savedLanguage } = JSON.parse(savedPreferences);
+                const { language: savedLanguage } = savedPreferences;
                 setLanguage(savedLanguage);
             }
         } catch (error) {
@@ -42,10 +43,7 @@ export function LanguageContextProvider({children}: Props) {
 
     const saveLanguagePreferences = async () => {
         try {
-            const preferences = JSON.stringify({
-                language
-            });
-            await AsyncStorage.setItem('userLanguage', preferences);
+            await UserLanguageService.setUserLanguage(language);
         } catch (error) {
             console.error('Error while saving theme preferences:', error);
         }

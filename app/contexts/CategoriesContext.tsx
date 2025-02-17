@@ -1,6 +1,6 @@
 import { Category } from "@/types/categories";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, useEffect, useState } from "react";
+import { UserCategoriesService } from '@/services/UserCategories';
 
 interface CategoriesContextProps {
     categories: Category[];
@@ -27,11 +27,11 @@ export function CategoriesContextProvider({children}: {children: React.ReactNode
 
     const loadSavedCategories = async () => {
         try {
-            const savedCategories = await AsyncStorage.getItem('userCategories');
+            const savedCategories = await UserCategoriesService.getUserCategories();
             if (savedCategories) {
-                setUserCategories(JSON.parse(savedCategories));
+                setUserCategories(savedCategories);
             } else {
-                await AsyncStorage.setItem('userCategories', JSON.stringify(categories));
+                await UserCategoriesService.setUserCategories(categories);
                 setUserCategories(categories);
             }
         } catch (error) {
@@ -41,7 +41,7 @@ export function CategoriesContextProvider({children}: {children: React.ReactNode
 
     const saveCategories = async (categories: Category[]) => {
         try {
-            await AsyncStorage.setItem('userCategories', JSON.stringify(categories));
+            await UserCategoriesService.setUserCategories(categories);
         } catch (error) {
             console.log('Error while saving categories:', error);
         }

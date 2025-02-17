@@ -1,6 +1,6 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, useEffect, useState } from "react";
 import { useColorScheme } from "react-native";
+import { UserThemeService } from '@/services/UserTheme';
 
 type Theme = 'light' | 'dark';
 
@@ -44,26 +44,26 @@ export function ThemeContextProvider({children}: Props) {
 
     const loadThemePreferences = async () => {
         try {
-            const savedPreferences = await AsyncStorage.getItem('themePreferences');
+            const savedPreferences = await UserThemeService.getUserTheme();
             if (savedPreferences) {
-                const { theme: savedTheme, isSystemTheme: savedIsSystemTheme } = JSON.parse(savedPreferences);
+                const { theme: savedTheme, isSystemTheme: savedIsSystemTheme } = savedPreferences;
                 setTheme(savedTheme);
                 setIsSystemTheme(savedIsSystemTheme);
             }
         } catch (error) {
-            console.error('Erreur lors du chargement des préférences de thème:', error);
+            console.error('Error while loading theme preferences:', error);
         }
     };
 
     const saveThemePreferences = async () => {
         try {
-            const preferences = JSON.stringify({
+            const preferences = {
                 theme,
                 isSystemTheme,
-            });
-            await AsyncStorage.setItem('themePreferences', preferences);
+            };
+            await UserThemeService.setUserTheme(preferences);
         } catch (error) {
-            console.error('Erreur lors de la sauvegarde des préférences de thème:', error);
+            console.error('Error while saving theme preferences:', error);
         }
     };
 
