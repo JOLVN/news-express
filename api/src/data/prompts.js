@@ -50,7 +50,8 @@ export function getProcessArticlePrompt(article, language) {
 
             # Notes
 
-            - Le résumé doit obligatoirement faire environ 90 mots.
+            - Le résumé doit obligatoirement faire environ 90 mots. 
+            - Si le titre de l'article fait plus de 15 mots, le résumé doit pas faire plus que 80 mots.
             - L'article détaillé doit être clair, fluide et adapté à un public non familier avec l'actualité.
             - Les réponses aux questions doivent enrichir l'article sans être redondantes par rapport au contenu principal.
             - Chaque article doit comporter entre 1 et 3 catégories pertinentes parmi cette liste : ${categories.join(', ')}.
@@ -109,6 +110,7 @@ export function getProcessArticlePrompt(article, language) {
             # Notes
 
             - The summary must be approximately 90 words long.
+            - If the article title is more than 15 words, the summary should not exceed 80 words.
             - The detailed article should be clear, fluent, and accessible to a general audience unfamiliar with the news.
             - Answers to the questions should enrich the article without repeating the main content.
             - Each article must include between 1 and 3 relevant categories from this list: ${categories.join(', ')}.
