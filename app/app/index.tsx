@@ -27,9 +27,9 @@ export default function Index() {
     const colors = useThemeColors();
     const today = '2025-02-16';
 
-    async function getArticles() {
+    async function getArticles(changeIsLoading = true) {
         try {
-            setIsLoading(true)
+            if (changeIsLoading) setIsLoading(true);
             console.log('fetching articles...');
             
             const data = await fetchArticles(today, language);
@@ -44,7 +44,7 @@ export default function Index() {
         } catch (error) {
             console.error(error);
         } finally {
-            setIsLoading(false);
+            if (changeIsLoading) setIsLoading(false);
         }
     }
 
@@ -90,6 +90,7 @@ export default function Index() {
                         style={styles.summaryBox}
                         articles={userArticles}
                         onArticleChange={(index) => setArticleIndex(index)}
+                        onRefetchArticles={() => getArticles(false)}
                         />
                     <AppLogo onPress={() => setIsDrawerVisible(true)} />
                 </SafeArea>

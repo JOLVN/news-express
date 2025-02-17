@@ -2,8 +2,8 @@ import { Shadows } from "@/constants/Shadows";
 import { ThemeContext } from "@/contexts/ThemeContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { Article } from "@/types/articles";
-import { useContext, useRef } from "react";
-import { Dimensions, FlatList, StyleSheet, View, ViewProps, ViewToken } from "react-native";
+import { useCallback, useContext, useRef, useState } from "react";
+import { Dimensions, FlatList, RefreshControl, StyleSheet, View, ViewProps, ViewToken } from "react-native";
 import ThemedText from "@/components/ui/ThemedText";
 import FlatButton from "../ui/buttons/FlatButton";
 import { Link } from "expo-router";
@@ -16,15 +16,17 @@ const { height } = Dimensions.get('window');
 
 type Props = ViewProps & {
     onArticleChange: (index: number) => void,
-    articles: Article[]
+    articles: Article[],
+    onRefetchArticles?: () => Promise<void>,
 }
 
-export default function ArticleSummaryBox({ articles, onArticleChange, style, ...rest }: Props) {
+export default function ArticleSummaryBox({ articles, onArticleChange, style, onRefetchArticles, ...rest }: Props) {
 
     const colors = useThemeColors();
     const { theme } = useContext(ThemeContext);
     const { language } = useContext(LanguageContext);
     const { speak, stop, isPlaying, error } = useGoogleTTS();
+    const [isRefreshing, setIsRefreshing] = useState(false);
 
     const onViewableItemsChanged = useRef(({ viewableItems }: {
         viewableItems: ViewToken[];
@@ -38,6 +40,17 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, ..
     }).current;
 
     const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
+
+    const onRefresh = useCallback(async () => {
+        setIsRefreshing(true);
+        try {
+            await onRefetchArticles?.();
+        } catch (error) {
+            console.error('Error while refreshing articles:', error);
+        } finally {
+            setIsRefreshing(false);
+        }
+    }, [onRefetchArticles]);
 
     function onListenPress(article: Article) {
         if (isPlaying) stop();
@@ -96,6 +109,15 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, ..
                 overScrollMode="always"
                 alwaysBounceVertical={true}
                 contentContainerStyle={{  }}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={isRefreshing}
+                        onRefresh={onRefresh}
+                        tintColor={colors.accent600}
+                        colors={[colors.accent600]}
+                        progressBackgroundColor={colors.background}
+                    />
+                }
             />
         </View>
     );
