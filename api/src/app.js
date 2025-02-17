@@ -61,6 +61,11 @@ app.post('/api/chat', async (req, res) => {
         return res.status(401).json({ error: 'Unauthorized' });
     }
 
+    const language = req.headers['x-language'] || req.query.language;
+    if (!language) {
+        return res.status(400).json({ error: 'Missing language' });
+    }
+
     const { message, articleContent } = req.body;
 
     if (!message || !articleContent) {
@@ -68,7 +73,7 @@ app.post('/api/chat', async (req, res) => {
     }
 
     try {
-        const response = await chatGPTService.chat(message, articleContent);
+        const response = await chatGPTService.chat(message, articleContent, language);
         res.json({ response });
     } catch (error) {
         console.error('Error processing chat:', error);

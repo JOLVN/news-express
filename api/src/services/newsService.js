@@ -14,7 +14,7 @@ class NewsService {
             });
 
             const articles = response.data.news;
-            const processedArticles = await this.processArticles(articles);
+            const processedArticles = await this.processArticles(articles, language);
 
             return {
                 total: processedArticles.length,
@@ -26,7 +26,7 @@ class NewsService {
         }
     }
 
-    async processArticles(articles) {
+    async processArticles(articles, language) {
         const processedArticles = [];
 
         for (const article of articles) {
@@ -34,7 +34,7 @@ class NewsService {
 
                 const exists = await firebaseService.articleExists(article.url);
                 if (exists) continue;
-                const processedArticle = await chatGPTService.processArticle(article);
+                const processedArticle = await chatGPTService.processArticle(article, language);
                 console.log(`Article processed: ${article.title}`);
 
 
