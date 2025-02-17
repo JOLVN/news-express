@@ -14,7 +14,8 @@ class NewsService {
             });
 
             const articles = response.data.news;
-            const processedArticles = await this.processArticles(articles, language);
+            const articlesWithImage = articles.filter(article => article.image !== null && article.image !== 'None' && article.image !== '');
+            const processedArticles = await this.processArticles(articlesWithImage, language);
 
             return {
                 total: processedArticles.length,
