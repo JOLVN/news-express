@@ -129,6 +129,7 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         height: height * 0.5,
+        minHeight: 450,
         borderRadius: 10,
         padding: 16,
     },
@@ -145,11 +146,13 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         height: height * 0.5 - 32,
+        minHeight: 428,
         alignItems: 'center',
     },
     articleContainer: {
         width: '100%',
         height: height * 0.5 - 32,
+        minHeight: 428,
     },
     articleSummaryContainer: {
         overflow: 'hidden',
@@ -159,6 +162,6 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        bottom: 10,
+        bottom: 16,
     },
 });
