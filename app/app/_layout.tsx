@@ -17,6 +17,7 @@ import { GoogleTTSService } from "@/services/GoogleTTS";
 import { LanguageContext, LanguageContextProvider } from "@/contexts/LanguageContext";
 import { Texts } from "@/constants/Texts";
 import SwitchLanguageModal from "@/components/modal/SwitchLanguageModal";
+import { ReadArticlesContextProvider } from "@/contexts/ReadArticlesContext";
 
 function Root() {
 
@@ -90,15 +91,17 @@ export default function RootLayout() {
         <ThemeContextProvider>
             <LanguageContextProvider>
                 <ArticlesContextProvider>
-                    <CategoriesContextProvider>
-                        <ModalContextProvider>
-                            <GestureHandlerRootView style={{ flex: 1 }}>
-                                <BottomSheetModalProvider>
-                                    <Root />
-                                </BottomSheetModalProvider>
-                            </GestureHandlerRootView>
-                        </ModalContextProvider>
-                    </CategoriesContextProvider>
+                    <ReadArticlesContextProvider>
+                        <CategoriesContextProvider>
+                            <ModalContextProvider>
+                                <GestureHandlerRootView style={{ flex: 1 }}>
+                                    <BottomSheetModalProvider>
+                                        <Root />
+                                    </BottomSheetModalProvider>
+                                </GestureHandlerRootView>
+                            </ModalContextProvider>
+                        </CategoriesContextProvider>
+                    </ReadArticlesContextProvider>
                 </ArticlesContextProvider>
             </LanguageContextProvider>
         </ThemeContextProvider>

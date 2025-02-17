@@ -9,10 +9,12 @@ import SafeArea from "@/components/SafeArea";
 import { ArticlesContext } from "@/contexts/ArticlesContext";
 import { CategoriesContext } from "@/contexts/CategoriesContext";
 import { LanguageContext } from "@/contexts/LanguageContext";
+import { ReadArticlesContext } from "@/contexts/ReadArticlesContext";
 import { fetchArticles } from "@/functions/API";
+import { sortArticles } from "@/functions/articles";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { useContext, useEffect, useState } from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function Index() {
@@ -20,9 +22,12 @@ export default function Index() {
     const [articleIndex, setArticleIndex] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [isDrawerVisible, setIsDrawerVisible] = useState(false);
-    const {articles, userArticles, setArticles, setUserArticlesByCategories} = useContext(ArticlesContext);
-    const {userCategories} = useContext(CategoriesContext);
     const [visibleImage, setVisibleImage] = useState<string | ''>('');
+    const [isCurrentArticleRead, setIsCurrentArticleRead] = useState(false);
+
+    const {articles, userArticles, setArticles, setUserArticlesByCategories} = useContext(ArticlesContext);
+    const { readArticles, isArticleRead, markArticleAsRead } = useContext(ReadArticlesContext);
+    const {userCategories} = useContext(CategoriesContext);
     const { language } = useContext(LanguageContext);
     const colors = useThemeColors();
     const today = '2025-02-16';
@@ -33,8 +38,9 @@ export default function Index() {
             console.log('fetching articles...');
             
             const data = await fetchArticles(today, language);
-            setArticles(data.articles);
-            setUserArticlesByCategories(userCategories, data.articles);
+            setArticles(data.articles);            
+            const sortedArticles = sortArticles(data.articles, readArticles);
+            setUserArticlesByCategories(userCategories, sortedArticles);
             
             if (!visibleImage && data.articles.length > 0) {
                 setVisibleImage(data.articles[0].image);
@@ -47,6 +53,15 @@ export default function Index() {
             if (changeIsLoading) setIsLoading(false);
         }
     }
+
+    async function handleReadArticle(articleId: string) {
+        if (isArticleRead(articleId)) {
+            setIsCurrentArticleRead(true);
+        } else {
+            await markArticleAsRead(articleId, language);
+            setIsCurrentArticleRead(false);
+        }
+    };
 
     useEffect(() => {
         getArticles();
@@ -61,6 +76,7 @@ export default function Index() {
     useEffect(() => {
         if (userArticles.length > 0 && userArticles[articleIndex]) {
             setVisibleImage(userArticles[articleIndex].image);
+            handleReadArticle(userArticles[articleIndex].id);
         } else {
             setVisibleImage('');
         }
@@ -91,7 +107,8 @@ export default function Index() {
                         articles={userArticles}
                         onArticleChange={(index) => setArticleIndex(index)}
                         onRefetchArticles={() => getArticles(false)}
-                        />
+                        isRead={isCurrentArticleRead}
+                    />
                     <AppLogo onPress={() => setIsDrawerVisible(true)} />
                 </SafeArea>
 

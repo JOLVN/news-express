@@ -1,4 +1,4 @@
-import { Article, UserArticle } from "@/types/articles";
+import { Article, ReadArticle, UserArticle } from "@/types/articles";
 import { Category } from "@/types/categories";
 import { createContext, useState } from "react";
 

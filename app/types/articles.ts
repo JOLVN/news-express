@@ -1,3 +1,5 @@
+import { Language } from "./languages";
+
 interface ArticleDetails {
     introduction: string;
     context: string;
@@ -32,3 +34,9 @@ export interface ArticleResponse {
 }
 
 export type UserArticle = Article & { read: boolean };
+
+export interface ReadArticle {
+    id: string;
+    readAt: string;
+    language: Language;
+}

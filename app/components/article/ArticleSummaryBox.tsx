@@ -18,9 +18,10 @@ type Props = ViewProps & {
     onArticleChange: (index: number) => void,
     articles: Article[],
     onRefetchArticles?: () => Promise<void>,
+    isRead: boolean,
 }
 
-export default function ArticleSummaryBox({ articles, onArticleChange, style, onRefetchArticles, ...rest }: Props) {
+export default function ArticleSummaryBox({ articles, onArticleChange, style, onRefetchArticles, isRead, ...rest }: Props) {
 
     const colors = useThemeColors();
     const { theme } = useContext(ThemeContext);
@@ -91,6 +92,7 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, on
 
     return (
         <View style={[style, styles.container, {backgroundColor: colors.background}, {...Shadows[theme].large}]}>
+            <View style={[styles.bookmark, { backgroundColor: isRead ? colors.gray500 : colors.accent600 }]} />
             <FlatList
                 data={articles}
                 ListEmptyComponent={EmptyList}
@@ -129,6 +131,15 @@ const styles = StyleSheet.create({
         height: height * 0.5,
         borderRadius: 10,
         padding: 16,
+    },
+    bookmark: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        width: 20,
+        height: 20,
+        borderTopRightRadius: 10,
+        borderBottomLeftRadius: 50,
     },
     emptyListContainer: {
         flex: 1,
