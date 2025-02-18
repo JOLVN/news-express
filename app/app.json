@@ -14,7 +14,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#010121"
       }
     },
     "web": {
@@ -27,10 +27,13 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "image": "./assets/images/splash-screen-light.png",
+          "backgroundColor": "#000000",
+          "resizeMode": "cover",
+          "dark": {
+            "image": "./assets/images/splash-screen-dark.png",
+            "backgroundColor": "#000000"
+          }
         }
       ],
       "expo-font"

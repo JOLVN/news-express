@@ -1,6 +1,7 @@
 import { ThemeContext, ThemeContextProvider } from "@/contexts/ThemeContext";
 import { useFonts } from "expo-font";
-import { SplashScreen, Stack } from "expo-router";
+import { Stack } from "expo-router";
+import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from "expo-status-bar";
 import { useContext, useEffect } from "react";
 import { PTSerif_400Regular, PTSerif_700Bold, PTSerif_700Bold_Italic, PTSerif_400Regular_Italic } from "@expo-google-fonts/pt-serif";
@@ -18,6 +19,9 @@ import { LanguageContext, LanguageContextProvider } from "@/contexts/LanguageCon
 import { Texts } from "@/constants/Texts";
 import SwitchLanguageModal from "@/components/modal/SwitchLanguageModal";
 import { ReadArticlesContextProvider } from "@/contexts/ReadArticlesContext";
+import { useColorScheme } from "react-native";
+
+SplashScreen.preventAutoHideAsync();
 
 function Root() {
 
