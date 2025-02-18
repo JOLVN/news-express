@@ -5,7 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from "expo-status-bar";
 import { useContext, useEffect } from "react";
 import { PTSerif_400Regular, PTSerif_700Bold, PTSerif_700Bold_Italic, PTSerif_400Regular_Italic } from "@expo-google-fonts/pt-serif";
-import { Montserrat_400Regular, Montserrat_500Medium } from "@expo-google-fonts/montserrat";
+import { Montserrat_400Regular, Montserrat_500Medium, Montserrat_600SemiBold, Montserrat_700Bold } from "@expo-google-fonts/montserrat";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { ArticlesContextProvider } from "@/contexts/ArticlesContext";
 import { CategoriesContext, CategoriesContextProvider } from "@/contexts/CategoriesContext";
@@ -19,7 +19,6 @@ import { LanguageContext, LanguageContextProvider } from "@/contexts/LanguageCon
 import { Texts } from "@/constants/Texts";
 import SwitchLanguageModal from "@/components/modal/SwitchLanguageModal";
 import { ReadArticlesContextProvider } from "@/contexts/ReadArticlesContext";
-import { useColorScheme } from "react-native";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -35,6 +34,8 @@ function Root() {
         'PTSerif-BoldItalic': PTSerif_700Bold_Italic,
         'Montserrat-Regular': Montserrat_400Regular,
         'Montserrat-Medium': Montserrat_500Medium,
+        'Montserrat-SemiBold': Montserrat_600SemiBold,
+        'Montserrat-Bold': Montserrat_700Bold,
     });
     const { setCategories } = useContext(CategoriesContext);
     
@@ -77,6 +78,9 @@ function Root() {
                  }} />
                 <Stack.Screen name="settings" options={{ 
                     title: Texts[language].settings,
+                 }} />
+                <Stack.Screen name="upgrade" options={{ 
+                    title: '',
                  }} />
                 <Stack.Screen name="chatbot/[id]" options={{ 
                     title: "",

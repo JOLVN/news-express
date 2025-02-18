@@ -31,6 +31,21 @@ export const Texts = {
         english: "Anglais (US)",
         // Settings
         settings: "Paramètres",
+        upgradeToXpressPremium: "Passer à Xpress Premium",
+        // Upgrade
+        upgradeTitle1: "Essaie",
+        upgradeTitle2: "gratuitement pendant 1 semaine",
+        creditsByMonth: "200 crédits / mois",
+        accessBookmarks: "Accès aux favoris",
+        annualSubscription: "Annuel",
+        monthlySubscription: "Mensuel",
+        annualSubscriptionDescription: "par an après 7 jours d'essai",
+        monthlySubscriptionDescription: "par mois après 7 jours d'essai",
+        discount: "ÉCONOMISEZ 20%",
+        subscriptionButton: "Commencer l'essai gratuit ⚡️",
+        subscriptionInfo: "Vous serez facturé €XX.XX par UU après la fin de votre essai gratuit de 7 jours. Vous pouvez annuler à tout moment.",
+        year: "an",
+        month: "mois",
         // Errors
         error: "Erreur",
         errorFetchingArticles: "Erreur lors de la récupération des articles",
@@ -68,6 +83,21 @@ export const Texts = {
         english: "English (US)",
         // Settings
         settings: "Settings",
+        upgradeToXpressPremium: "Upgrade to Xpress Premium",
+        // Upgrade
+        upgradeTitle1: "Try",
+        upgradeTitle2: "free for 1 week",
+        creditsByMonth: "200 credits / month",
+        accessBookmarks: "Access to bookmarks",
+        annualSubscription: "Annual",
+        monthlySubscription: "Monthly",
+        annualSubscriptionDescription: "per year after 7 day trial",
+        monthlySubscriptionDescription: "per month after 7 day trial",
+        discount: "SAVE 20%",
+        subscriptionButton: "Start 1 week free trial ⚡️",
+        subscriptionInfo: "You’ll be charged €XX.XX per UU after your 7 days free trial ends. You can cancel anytime.",
+        year: "year",
+        month: "month",
         // Errors
         error: "Error",
         errorFetchingArticles: "Error while fetching articles",

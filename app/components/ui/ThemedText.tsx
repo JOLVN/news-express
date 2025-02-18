@@ -36,14 +36,46 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat-Regular',
         fontSize: Platform.OS === 'ios' ? 18 : 14,
     },
+    regularSm: {
+        fontFamily: 'Montserrat-Regular',
+        fontSize: Platform.OS === 'ios' ? 16 : 12,
+    },
     medium: {
         fontFamily: 'Montserrat-Medium',
         fontSize: Platform.OS === 'ios' ? 16 : 14,
     },
+    mediumXs: {
+        fontFamily: 'Montserrat-Medium',
+        fontSize: Platform.OS === 'ios' ? 12 : 10,
+    },
+    semibold: {
+        fontFamily: 'Montserrat-SemiBold',
+        fontSize: Platform.OS === 'ios' ? 18 : 14,
+    },
+    semiboldXs: {
+        fontFamily: 'Montserrat-SemiBold',
+        fontSize: Platform.OS === 'ios' ? 12 : 10,
+    },
+    semiboldXl: {
+        fontFamily: 'Montserrat-SemiBold',
+        fontSize: Platform.OS === 'ios' ? 24 : 20,
+    },
     title: {
         fontFamily: 'Montserrat-Medium',
         fontSize: 22,
-    }
+    },
+    titleBold: {
+        fontFamily: 'Montserrat-Bold',
+        fontSize: 22,
+    },
+    titleXl: {
+        fontFamily: 'Montserrat-Medium',
+        fontSize: Platform.OS === 'ios' ? 24 : 22,
+    },
+    titleBoldXl: {
+        fontFamily: 'Montserrat-Bold',
+        fontSize: Platform.OS === 'ios' ? 24 : 22,
+    },
 });
 
 type Props = TextProps & {

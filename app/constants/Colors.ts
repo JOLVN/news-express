@@ -1,5 +1,6 @@
 export const Colors = {
     light: {
+        accent400: '#82462B',
         accent500: '#F7804B',
         accent600: '#FFDB36',
         background: '#FFFFFF',
@@ -13,6 +14,7 @@ export const Colors = {
         gray800: '#E9EAFF',
     },
     dark: {
+        accent400: '#82462B',
         accent500: '#F7804B',
         accent600: '#FFDB36',
         background: '#090909',

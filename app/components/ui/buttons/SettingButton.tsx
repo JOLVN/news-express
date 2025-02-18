@@ -1,24 +1,28 @@
-import { Platform, Pressable, StyleSheet } from "react-native";
+import { Platform, Pressable, StyleSheet, View } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import ThemedText from "@/components/ui/ThemedText";
 import { useThemeColors } from "@/hooks/useThemeColors";
+import { forwardRef } from "react";
 
 type Props = {
     text: string;
-    onPress: () => void;
+    onPress?: () => void;
 }
 
-export default function SettingButton({text, onPress}: Props) {
-
+const SettingButton = forwardRef<View, Props>(({text, onPress}, ref) => {
     const colors = useThemeColors();
 
     return (
-        <Pressable style={styles.button} onPress={onPress}>
+        <Pressable ref={ref} style={styles.button} onPress={onPress}>
             <ThemedText variant="medium">{text}</ThemedText>
             <Entypo name="chevron-thin-right" size={Platform.OS === 'ios' ? 22 : 20} color={colors.text} />
         </Pressable>
     )
-}
+});
+
+SettingButton.displayName = 'SettingButton';
+
+export default SettingButton;
 
 const styles = StyleSheet.create({
     button: {
