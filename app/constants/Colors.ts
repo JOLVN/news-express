@@ -17,7 +17,7 @@ export const Colors = {
         accent600: '#FFDB36',
         background: '#090909',
         coloredBackground: '#010121',
-        lowOpacityBackground: 'rgba(1, 1, 33, 0.6)',
+        lowOpacityBackground: 'rgba(1, 1, 1, 0.6)',
         text: '#FFFFFF',
         black: '#000000',
         white: '#FFFFFF',

@@ -48,9 +48,9 @@ function Root() {
         setCategories(categories);
     }, []);
     
-      if (!loaded) {
+    if (!loaded) {
         return null;
-      }
+    }
 
     return (
         <>

@@ -47,6 +47,14 @@ export default function ArticleScreenImage({ image }: Props) {
                 locations={[0, 0.4, 0.6, 1]}
                 style={styles.gradient}
             />
+            {/* Linear Gradient from top */}
+            <LinearGradient
+                colors={[colors.lowOpacityBackground, 'transparent']}
+                start={{x: 0.5, y: 0}}
+                end={{x: 0.5, y: 1}}
+                style={styles.topGradient}
+            />
+            {/* Linear Gradient from bottom */}
             <LinearGradient
                 colors={['transparent', colors.coloredBackground]}
                 start={{x: 0.5, y: 0}}
@@ -76,6 +84,13 @@ const styles = StyleSheet.create({
         right: 0,
         top: 0,
         bottom: 0,
+    },
+    topGradient: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: '60%',
     },
     bottomGradient: {
         position: 'absolute',

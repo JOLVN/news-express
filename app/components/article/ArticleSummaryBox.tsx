@@ -162,6 +162,6 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        bottom: Platform.OS === 'ios' ? 16 : 8,
+        bottom: 8,
     },
 });
