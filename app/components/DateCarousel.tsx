@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useContext } from 'react';
 import {
     View,
     StyleSheet,
@@ -7,10 +7,12 @@ import {
 } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { format } from 'date-fns';
-import { fr } from 'date-fns/locale';
+import { fr, enUS } from 'date-fns/locale';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import { formatDate } from '@/functions/date';
 import { Ionicons } from '@expo/vector-icons';
+import { Texts } from '@/constants/Texts';
+import { LanguageContext } from '@/contexts/LanguageContext';
 
 const CONTAINER_WIDTH = 110;
 const ITEM_WIDTH = CONTAINER_WIDTH;
@@ -23,6 +25,7 @@ type Props = {
 export default function DateCarousel({ onDateChange, style }: Props) {
 
     const colors = useThemeColors();
+    const { language } = useContext(LanguageContext);
     const flatListRef = useRef<FlatList>(null);
     const lastDate = useRef<string | null>(null);
     const [currentIndex, setCurrentIndex] = useState(6);
@@ -57,6 +60,7 @@ export default function DateCarousel({ onDateChange, style }: Props) {
 
     const dates = Array.from({ length: 7 }, (_, i) => {
         const date = new Date();
+        date.setHours(0, 0, 0, 0);
         date.setDate(date.getDate() - (6 - i));
         return date;
     });
@@ -69,6 +73,8 @@ export default function DateCarousel({ onDateChange, style }: Props) {
             setCurrentIndex(index);
             const newDate = formatDate(viewableItems[0].item);
             if (newDate && newDate !== lastDate.current) {
+                console.log(newDate);
+                
                 lastDate.current = newDate;
                 onDateChange(newDate);
             }
@@ -90,20 +96,22 @@ export default function DateCarousel({ onDateChange, style }: Props) {
 
     const renderItem = ({ item }: { item: Date }) => {
         const today = new Date();
+        today.setHours(0, 0, 0, 0);
         const yesterday = new Date();
+        yesterday.setHours(0, 0, 0, 0);
         yesterday.setDate(yesterday.getDate() - 1);
 
         let displayText = '';
-        if (item.toDateString() === today.toDateString()) {
-            displayText = "Aujourd'hui";
+        if (item.toDateString() === today.toDateString()) {            
+            displayText = Texts[language].today;
         } else if (item.toDateString() === yesterday.toDateString()) {
-            displayText = "Hier";
+            displayText = Texts[language].yesterday;
         } else {
-            displayText = format(item, 'EEEE d', { locale: fr });
+            displayText = format(item, 'EEEE d', { locale: language === 'fr' ? fr : enUS });
         }
         return (
             <View style={styles.itemContainer}>
-                <Animated.Text style={[styles.dateText, { color: colors.text }]}>
+                <Animated.Text style={[styles.dateText, { color: colors.white }]}>
                     {displayText}
                 </Animated.Text>
             </View>
@@ -115,7 +123,7 @@ export default function DateCarousel({ onDateChange, style }: Props) {
             <Ionicons 
                 name="arrow-back" 
                 size={24} 
-                color={currentIndex === 0 ? colors.gray500 : colors.text}
+                color={currentIndex === 0 ? colors.gray500 : colors.white}
                 onPress={handlePrevious}
             />
             <View style={[styles.boxContainer, style, { backgroundColor: 'rgba(0, 0, 0, 0.6)' }]}>
@@ -132,12 +140,17 @@ export default function DateCarousel({ onDateChange, style }: Props) {
                     bounces={false}
                     onViewableItemsChanged={viewableItemsChanged}
                     viewabilityConfig={viewConfig}
+                    getItemLayout={(_, index) => ({
+                        length: ITEM_WIDTH,
+                        offset: ITEM_WIDTH * index,
+                        index,
+                    })}
                 />
             </View>
             <Ionicons 
                 name="arrow-forward" 
                 size={24} 
-                color={currentIndex === dates.length - 1 ? colors.gray500 : colors.text}
+                color={currentIndex === dates.length - 1 ? colors.gray500 : colors.white}
                 onPress={handleNext}
             />
         </View>
@@ -154,7 +167,7 @@ const styles = StyleSheet.create({
         width: CONTAINER_WIDTH,
         height: 35,
         alignSelf: 'center',
-        borderRadius: 16,
+        borderRadius: 10,
         shadowColor: "#FFF",
         shadowOffset: {
             width: 0,

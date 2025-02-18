@@ -92,7 +92,9 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, on
 
     return (
         <View style={[style, styles.container, {backgroundColor: colors.background}, {...Shadows[theme].large}]}>
-            <View style={[styles.bookmark, { backgroundColor: isRead ? colors.gray500 : colors.accent600 }]} />
+            {articles.length > 0 && (
+                <View style={[styles.bookmark, { backgroundColor: isRead ? colors.gray500 : colors.accent600 }]} />
+            )}
             <FlatList
                 data={articles}
                 ListEmptyComponent={EmptyList}

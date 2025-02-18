@@ -21,12 +21,14 @@ export const Texts = {
         conclusion: "Ce qu'il faut retenir",
         openArticle: "Consulter l'article",
         qAndA: "Q&A",
+        today: "Aujourd'hui",
+        yesterday: "Hier",
         // Chat
         chatInputPlaceholder: "Pose moi une question sur l'article !",
         // Language
         language: "Langue",
         french: "Français",
-        english: "Anglais",
+        english: "Anglais (US)",
         // Settings
         settings: "Paramètres",
     },
@@ -52,12 +54,14 @@ export const Texts = {
         conclusion: "What to remember",
         openArticle: "Open the article",
         qAndA: "Q&A",
+        today: "Today",
+        yesterday: "Yesterday",
         // Chat
         chatInputPlaceholder: "Ask me a question about the article !",
         // Language
         language: "Language",
         french: "French",
-        english: "English",
+        english: "English (US)",
         // Settings
         settings: "Settings",
     }

@@ -26,7 +26,10 @@ export default function Index() {
     const [isDrawerVisible, setIsDrawerVisible] = useState(false);
     const [visibleImage, setVisibleImage] = useState<string | ''>('');
     const [isCurrentArticleRead, setIsCurrentArticleRead] = useState(false);
-    const [selectedDate, setSelectedDate] = useState(formatDate(new Date()));
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const [selectedDate, setSelectedDate] = useState(formatDate(today));
 
     const {articles, userArticles, setArticles, setUserArticlesByCategories} = useContext(ArticlesContext);
     const { readArticles, isArticleRead, markArticleAsRead } = useContext(ReadArticlesContext);
