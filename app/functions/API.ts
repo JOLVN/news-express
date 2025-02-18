@@ -1,10 +1,13 @@
+import { Texts } from "@/constants/Texts";
 import { ArticleResponse } from "@/types/articles";
 import { Language } from "@/types/languages";
+import { Alert } from "react-native";
 
 const API_URL = 'https://news-express-1mmx.onrender.com/';
 const API_KEY = process.env.EXPO_PUBLIC_PERSONAL_API_KEY;
 
 export async function fetchArticles(day: string, language: Language) {
+
     const path = `news/${day}/${language}?apiKey=${API_KEY}`;
 
     try {
@@ -12,6 +15,7 @@ export async function fetchArticles(day: string, language: Language) {
             path
         }`);
         if (!response.ok) {
+            Alert.alert(Texts[language].error, Texts[language].errorFetchingArticles);
             throw {
                 message: 'Error while fetching articles',
                 status: response.status,
@@ -44,6 +48,7 @@ export async function getChatbotResponse(articleUrl: string, question: string, l
     });
   
         if (!response.ok) {
+            Alert.alert(Texts[language].error, Texts[language].errorFetchingChatbotResponse);
             throw {
                 message: 'Error while fetching chatbot response',
                 status: response.status,

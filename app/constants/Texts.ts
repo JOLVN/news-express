@@ -31,6 +31,10 @@ export const Texts = {
         english: "Anglais (US)",
         // Settings
         settings: "Paramètres",
+        // Errors
+        error: "Erreur",
+        errorFetchingArticles: "Erreur lors de la récupération des articles",
+        errorFetchingChatbotResponse: "Erreur lors de la récupération de la réponse du chatbot",
     },
     en: {
         // Home
@@ -64,5 +68,9 @@ export const Texts = {
         english: "English (US)",
         // Settings
         settings: "Settings",
+        // Errors
+        error: "Error",
+        errorFetchingArticles: "Error while fetching articles",
+        errorFetchingChatbotResponse: "Error while fetching chatbot response",
     }
 }
