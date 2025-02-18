@@ -4,6 +4,7 @@ import {
     StyleSheet,
     FlatList,
     ViewToken,
+    Platform,
 } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { format } from 'date-fns';
@@ -111,7 +112,7 @@ export default function DateCarousel({ onDateChange, style }: Props) {
         }
         return (
             <View style={styles.itemContainer}>
-                <Animated.Text style={[styles.dateText, { color: colors.white }]}>
+                <Animated.Text style={[styles.dateText, { color: colors.text }]}>
                     {displayText}
                 </Animated.Text>
             </View>
@@ -126,7 +127,7 @@ export default function DateCarousel({ onDateChange, style }: Props) {
                 color={currentIndex === 0 ? colors.gray500 : colors.white}
                 onPress={handlePrevious}
             />
-            <View style={[styles.boxContainer, style, { backgroundColor: 'rgba(0, 0, 0, 0.6)' }]}>
+            <View style={[styles.boxContainer, style, { backgroundColor: colors.lowOpacityBackground }]}>
                 <FlatList
                     ref={flatListRef}
                     data={dates}
@@ -165,7 +166,7 @@ const styles = StyleSheet.create({
     },
     boxContainer: {
         width: CONTAINER_WIDTH,
-        height: 35,
+        height: Platform.OS === 'ios' ? 36 : 30,
         alignSelf: 'center',
         borderRadius: 10,
         shadowColor: "#FFF",
@@ -175,7 +176,6 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 15,
-        elevation: 5,
     },
     itemContainer: {
         width: ITEM_WIDTH,
@@ -185,6 +185,6 @@ const styles = StyleSheet.create({
     },
     dateText: {
         fontFamily: 'Montserrat-Medium',
-        fontSize: 16,
+        fontSize: Platform.OS === 'ios' ? 16 : 14,
     },
 });

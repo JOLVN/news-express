@@ -18,7 +18,7 @@ export default function ThemeButton() {
                 style={[styles.container, {backgroundColor: colors.gray700}]}
                 onPress={showThemeModal}
             >
-                <Entypo name={iconName} size={24} color={colors.text} />
+                <Entypo name={iconName} size={24} color={colors.white} />
             </Pressable>
         </>
     );

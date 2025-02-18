@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     },
     articleBody: {
         fontFamily: 'PTSerif-Regular',
-        fontSize: Platform.OS === 'ios' ? 20 : 14,
+        fontSize: Platform.OS === 'ios' ? 20 : 16,
     },
     articleTitle: {
         fontFamily: 'PTSerif-Bold',
@@ -18,15 +18,15 @@ const styles = StyleSheet.create({
     },
     articleItalic: {
         fontFamily: 'PTSerif-BoldItalic',
-        fontSize: Platform.OS === 'ios' ? 20 : 14,
+        fontSize: Platform.OS === 'ios' ? 20 : 16,
     },
     articleQuestion: {
         fontFamily: 'PTSerif-Regular',
-        fontSize: Platform.OS === 'ios' ? 18 : 12,
+        fontSize: Platform.OS === 'ios' ? 18 : 14,
     },
     articleAnswer: {
         fontFamily: 'PTSerif-RegularItalic',
-        fontSize: Platform.OS === 'ios' ? 18 : 12,
+        fontSize: Platform.OS === 'ios' ? 18 : 14,
     },
     category: {
         fontFamily: 'Montserrat-Regular',
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     },
     medium: {
         fontFamily: 'Montserrat-Medium',
-        fontSize: 16,
+        fontSize: Platform.OS === 'ios' ? 16 : 14,
     },
     title: {
         fontFamily: 'Montserrat-Medium',

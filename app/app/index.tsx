@@ -68,7 +68,9 @@ export default function Index() {
         }
     };
 
-    function handleDateChange(newDate: string) {        
+    function handleDateChange(newDate: string) {
+        console.log('date changed to:', newDate);
+        
         setSelectedDate(newDate);        
         getArticles(newDate, false);
     };

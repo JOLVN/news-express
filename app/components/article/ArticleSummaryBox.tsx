@@ -3,7 +3,7 @@ import { ThemeContext } from "@/contexts/ThemeContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { Article } from "@/types/articles";
 import { useCallback, useContext, useRef, useState } from "react";
-import { Dimensions, FlatList, RefreshControl, StyleSheet, View, ViewProps, ViewToken } from "react-native";
+import { Dimensions, FlatList, Platform, RefreshControl, StyleSheet, View, ViewProps, ViewToken } from "react-native";
 import ThemedText from "@/components/ui/ThemedText";
 import FlatButton from "../ui/buttons/FlatButton";
 import { Link } from "expo-router";
@@ -12,7 +12,7 @@ import { useGoogleTTS } from "@/hooks/useGoogleTTS";
 import { LanguageContext } from "@/contexts/LanguageContext";
 import { Texts } from "@/constants/Texts";
 
-const { height } = Dimensions.get('window');
+const CONTAINER_HEIGHT = 450;
 
 type Props = ViewProps & {
     onArticleChange: (index: number) => void,
@@ -104,7 +104,7 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, on
                 showsVerticalScrollIndicator={false}
                 onViewableItemsChanged={onViewableItemsChanged}
                 snapToAlignment="start"
-                snapToInterval={height * 0.5 - 32}
+                snapToInterval={CONTAINER_HEIGHT - 32}
                 bounces={true}
                 viewabilityConfig={viewConfig}
                 decelerationRate="fast"
@@ -130,8 +130,7 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, on
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        height: height * 0.5,
-        minHeight: 450,
+        height: CONTAINER_HEIGHT,
         borderRadius: 10,
         padding: 16,
     },
@@ -148,14 +147,12 @@ const styles = StyleSheet.create({
         width: '100%',
         flex: 1,
         justifyContent: 'center',
-        height: height * 0.5 - 32,
-        minHeight: 428,
+        height: CONTAINER_HEIGHT - 32,
         alignItems: 'center',
     },
     articleContainer: {
         width: '100%',
-        height: height * 0.5 - 32,
-        minHeight: 428,
+        height: CONTAINER_HEIGHT - 32,
     },
     articleSummaryContainer: {
         overflow: 'hidden',
@@ -165,6 +162,6 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        bottom: 16,
+        bottom: Platform.OS === 'ios' ? 16 : 8,
     },
 });

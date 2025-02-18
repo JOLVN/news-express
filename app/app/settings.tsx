@@ -16,14 +16,12 @@ export default function Settings() {
     const { showThemeModal, showLanguageModal } = useContext(ModalContext);
 
     return (
-        <SafeArea style={{ backgroundColor: colors.coloredBackground }}>
-            <View style={[styles.container]}>
-                <View style={[styles.section, {borderColor: colors.text}]}>
-                    <SettingButton text={Texts[language].appearance} onPress={showThemeModal} />
-                    <SettingButton text={Texts[language].language} onPress={showLanguageModal} />
-                </View>
+        <View style={[styles.container, { backgroundColor: colors.coloredBackground }]}>
+            <View style={[styles.section, {borderColor: colors.text}]}>
+                <SettingButton text={Texts[language].appearance} onPress={showThemeModal} />
+                <SettingButton text={Texts[language].language} onPress={showLanguageModal} />
             </View>
-        </SafeArea>
+        </View>
     )
 }
 
