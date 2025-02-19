@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     },
     boxContainer: {
         width: CONTAINER_WIDTH,
-        height: Platform.OS === 'ios' ? 36 : 30,
+        height: 30,
         alignSelf: 'center',
         borderRadius: 10,
         shadowColor: "#FFF",
@@ -185,6 +185,6 @@ const styles = StyleSheet.create({
     },
     dateText: {
         fontFamily: 'Montserrat-Medium',
-        fontSize: Platform.OS === 'ios' ? 16 : 14,
+        fontSize: 14,
     },
 });

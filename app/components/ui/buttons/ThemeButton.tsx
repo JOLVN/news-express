@@ -26,7 +26,7 @@ export default function ThemeButton() {
 
 const styles = StyleSheet.create({
     container: {
-        padding: Platform.OS === 'ios' ? 12 : 8,
+        padding: 8,
         borderRadius: 15,
     },
     

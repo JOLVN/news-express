@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
-        paddingHorizontal: Platform.OS === 'ios' ? 30 : 20,
+        paddingHorizontal: 20,
     },
     messagesContainer: {
         paddingBottom: 40,

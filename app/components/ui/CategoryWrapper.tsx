@@ -46,7 +46,7 @@ export default function CategoryWrapper({category, onPress, isSelected}: Props) 
             <ThemedText variant="category" color={isSelected ? 'text' : 'gray500'}>{category.name[language]}</ThemedText>
             <Pressable style={[styles.button, {borderColor: colors.accent500}]} onPress={onPress}>
                 <Animated.View style={iconStyle}>
-                    <AntDesign name={isSelected ? 'check' : 'plus'} size={Platform.OS === 'ios' ? 16 : 14} color={colors.accent500} />
+                    <AntDesign name={isSelected ? 'check' : 'plus'} size={14} color={colors.accent500} />
                 </Animated.View>
             </Pressable>
         </Animated.View>

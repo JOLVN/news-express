@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingRight: 70,
         fontFamily: 'Montserrat_400Regular',
-        fontSize: Platform.OS === 'ios' ? 16 : 14,
+        fontSize: 14,
     },
     submitButton: {
         position: 'absolute',

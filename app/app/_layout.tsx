@@ -3,12 +3,12 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from "expo-status-bar";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { PTSerif_400Regular, PTSerif_700Bold, PTSerif_700Bold_Italic, PTSerif_400Regular_Italic } from "@expo-google-fonts/pt-serif";
 import { Montserrat_400Regular, Montserrat_500Medium, Montserrat_600SemiBold, Montserrat_700Bold } from "@expo-google-fonts/montserrat";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { ArticlesContextProvider } from "@/contexts/ArticlesContext";
-import { CategoriesContext, CategoriesContextProvider } from "@/contexts/CategoriesContext";
+import { CategoriesContextProvider } from "@/contexts/CategoriesContext";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { ModalContextProvider } from "@/contexts/ModalContext";
@@ -19,6 +19,7 @@ import { Texts } from "@/constants/Texts";
 import SwitchLanguageModal from "@/components/modal/SwitchLanguageModal";
 import { ReadArticlesContextProvider } from "@/contexts/ReadArticlesContext";
 import { PurchasesService } from "@/services/Purchases";
+import { AccessibilityInfo } from "react-native";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -37,7 +38,27 @@ function Root() {
         'Montserrat-SemiBold': Montserrat_600SemiBold,
         'Montserrat-Bold': Montserrat_700Bold,
     });
-    const { setCategories } = useContext(CategoriesContext);
+
+    const [fontScale, setFontScale] = useState(1);
+
+    useEffect(() => {
+        AccessibilityInfo.addEventListener(
+            'change',
+            (event) => {
+                setFontScale(1); // Rétablir la taille de texte fixe
+            }
+        );
+
+        // return () => {
+        //     AccessibilityInfo.removeEventListener(
+        //         'change',
+        //         (event) => {
+        //         setFontScale(1); // Rétablir la taille de texte fixe
+        //         }
+        //     );
+        // };
+    }, []);
+
     
     useEffect(() => {
         if (loaded) {
