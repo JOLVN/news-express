@@ -17,7 +17,7 @@ const SettingsButton = forwardRef<View>((props, ref) => {
             style={({pressed}) => [styles.container, pressed && styles.pressed]}
         >
             <View style={[styles.button, {backgroundColor: colors.accent500}]}>
-                <Feather name="settings" size={24} color="black" />
+                <Feather name="settings" size={24} color={colors.background} />
             </View>
             <ThemedText variant="medium">{Texts[language].settingsButton}</ThemedText>
         </Pressable>

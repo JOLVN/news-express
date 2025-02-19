@@ -149,8 +149,8 @@ const styles = StyleSheet.create({
     },
     closeButton: {
         position: 'absolute',
-        top: Platform.OS === 'ios' ? 20 : 30,
-        left: 20,
+        top: 30,
+        right: 20,
     },
     keyboardAvoidingView: {
         flex: 1,

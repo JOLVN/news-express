@@ -27,6 +27,7 @@ export default function ChatInput({onInput, onSubmit, value, style}: Props) {
                 placeholder={Texts[language].chatInputPlaceholder}
                 placeholderTextColor={colors.gray500}
                 value={value}
+                allowFontScaling={false}
                 style={[
                     styles.input, 
                     { backgroundColor: colors.background, color: colors.text },
@@ -34,7 +35,7 @@ export default function ChatInput({onInput, onSubmit, value, style}: Props) {
                 ]}
             />
             <Pressable onPress={onSubmit} style={[styles.submitButton, {backgroundColor: colors.accent500}]}>
-                <Entypo name="chevron-right" size={24} color="black" />
+                <Entypo name="chevron-right" size={24} color={colors.background} />
             </Pressable>
         </View>
     )

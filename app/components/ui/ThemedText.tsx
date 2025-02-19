@@ -1,6 +1,6 @@
 import { Colors } from "@/constants/Colors";
 import { useThemeColors } from "@/hooks/useThemeColors";
-import { Platform, StyleSheet, Text, TextProps } from "react-native"
+import { StyleSheet, Text, TextProps } from "react-native"
 
 const styles = StyleSheet.create({
     articleSummaryTitle: {
