@@ -95,7 +95,7 @@ export const Texts = {
         monthlySubscriptionDescription: "per month after 7 day trial",
         discount: "SAVE 20%",
         subscriptionButton: "Start 1 week free trial ⚡️",
-        subscriptionInfo: "You’ll be charged €XX.XX per UU after your 7 days free trial ends. You can cancel anytime.",
+        subscriptionInfo: "You’ll be charged €XX.XX per UU after your 7 day free trial ends. You can cancel anytime.",
         year: "year",
         month: "month",
         // Errors

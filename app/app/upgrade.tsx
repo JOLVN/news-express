@@ -5,12 +5,15 @@ import { Texts } from "@/constants/Texts";
 import { LanguageContext } from "@/contexts/LanguageContext";
 import { ThemeContext } from "@/contexts/ThemeContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
+import { PurchasesService } from "@/services/Purchases";
 import { Entypo, Ionicons } from "@expo/vector-icons";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
+import { PurchasesPackage } from "react-native-purchases";
 
 export default function Upgrade() {
 
+    const [packages, setPackages] = useState<PurchasesPackage[]>([]);
     const { language } = useContext(LanguageContext);
     const { theme } = useContext(ThemeContext);
     const colors = useThemeColors();
@@ -18,6 +21,17 @@ export default function Upgrade() {
 
     const ANNUAL_SUBSCRIPTION_PRICE = 28.99;
     const MONTHLY_SUBSCRIPTION_PRICE = 2.99;
+
+    async function loadOfferings() {
+        const offerings = await PurchasesService.getOfferings();
+        setPackages(offerings);
+        console.log(offerings);
+        
+    };
+
+    useEffect(() => {
+        loadOfferings();
+    }, []);
 
     return (
         <View style={[styles.container, { backgroundColor: colors.coloredBackground }]}>
@@ -51,7 +65,7 @@ export default function Upgrade() {
                 />
             </View>
             <View style={styles.bottom}>
-                <SubscriptionButton isAnnual={selectedSubscription === 'annual'} />
+                <SubscriptionButton isAnnual={selectedSubscription === 'annual'} packages={packages} />
                 <ThemedText variant="mediumXs" color="gray500" style={styles.textCenter}>
                     {Texts[language].subscriptionInfo
                         .replace('XX.XX', selectedSubscription === 'annual' ? String(ANNUAL_SUBSCRIPTION_PRICE) : String(MONTHLY_SUBSCRIPTION_PRICE))

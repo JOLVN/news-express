@@ -71,7 +71,7 @@ export default function SubscriptionChoice({ isAnnual, isSelected, price, onPres
                     <>
                         <View style={styles.barredPrice}>
                             <View style={[styles.barredLine, { backgroundColor: colors.gray500 }]} />
-                            <ThemedText variant="regularSm" color="gray500" style={styles.textCenter}>
+                            <ThemedText variant="regularSm" color="gray500">
                                 € 35.99
                             </ThemedText>
                         </View>
