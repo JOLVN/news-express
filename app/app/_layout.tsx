@@ -9,7 +9,6 @@ import { Montserrat_400Regular, Montserrat_500Medium, Montserrat_600SemiBold, Mo
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { ArticlesContextProvider } from "@/contexts/ArticlesContext";
 import { CategoriesContext, CategoriesContextProvider } from "@/contexts/CategoriesContext";
-import categories from "@/data/categories.json";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { ModalContextProvider } from "@/contexts/ModalContext";
@@ -19,6 +18,7 @@ import { LanguageContext, LanguageContextProvider } from "@/contexts/LanguageCon
 import { Texts } from "@/constants/Texts";
 import SwitchLanguageModal from "@/components/modal/SwitchLanguageModal";
 import { ReadArticlesContextProvider } from "@/contexts/ReadArticlesContext";
+import { PurchasesService } from "@/services/Purchases";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -47,10 +47,7 @@ function Root() {
 
     useEffect(() => {
         GoogleTTSService.initialize();
-    }, []);
-
-    useEffect(() => {
-        setCategories(categories);
+        PurchasesService.initialize();
     }, []);
     
     if (!loaded) {

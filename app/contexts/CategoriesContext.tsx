@@ -1,6 +1,7 @@
 import { Category } from "@/types/categories";
 import { createContext, useEffect, useState } from "react";
 import { UserCategoriesService } from '@/services/UserCategories';
+import categoriesData from '@/data/categories.json';
 
 interface CategoriesContextProps {
     categories: Category[];
@@ -22,7 +23,7 @@ export const CategoriesContext = createContext<CategoriesContextProps>({
 
 export function CategoriesContextProvider({children}: {children: React.ReactNode}) {
 
-    const [categories, setCategories] = useState<Category[]>([]);
+    const [categories, setCategories] = useState<Category[]>(categoriesData);
     const [userCategories, setUserCategories] = useState<Category[]>([]);
 
     const loadSavedCategories = async () => {

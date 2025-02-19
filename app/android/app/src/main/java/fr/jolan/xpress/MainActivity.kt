@@ -1,4 +1,4 @@
-package com.jolvn.xpressnews
+package fr.jolan.xpress
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build

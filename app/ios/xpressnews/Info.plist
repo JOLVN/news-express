@@ -28,7 +28,7 @@
         <key>CFBundleURLSchemes</key>
         <array>
           <string>myapp</string>
-          <string>com.jolvn.xpressnews</string>
+          <string>fr.jolan.xpress</string>
         </array>
       </dict>
       <dict>

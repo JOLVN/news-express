@@ -86,9 +86,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.jolvn.xpressnews'
+    namespace 'fr.jolan.xpress'
     defaultConfig {
-        applicationId 'com.jolvn.xpressnews'
+        applicationId 'fr.jolan.xpress'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

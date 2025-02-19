@@ -10,14 +10,14 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.jolvn.xpressnews"
+      "bundleIdentifier": "fr.jolan.xpress"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#010121"
       },
-      "package": "com.jolvn.xpressnews"
+      "package": "fr.jolan.xpress"
     },
     "web": {
       "bundler": "metro",
@@ -42,6 +42,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "c6013862-def3-440f-87a5-a1911b08d9f0"
+      }
     }
   }
 }
