@@ -18,20 +18,6 @@ export class PurchasesService {
         }
     }
 
-    static async checkTrialEligibility() {
-        try {
-            const customerInfo = await Purchases.getCustomerInfo();
-            // Verify if the user has already tried the app            
-            const hasTriedBefore = Object.keys(customerInfo.entitlements.active).length > 0 
-                || customerInfo.originalPurchaseDate !== null;
-            
-            return !hasTriedBefore;
-        } catch (error) {
-            console.error('Error checking trial eligibility:', error);
-            return false;
-        }
-    }
-
     static async getOfferings(): Promise<PurchasesPackage[]> {
         try {
             const offerings = await Purchases.getOfferings();
@@ -46,23 +32,31 @@ export class PurchasesService {
         try {
             const { customerInfo } = await Purchases.purchasePackage(pkg);
             return customerInfo;
-        } catch (error) {
-            console.error('Error purchasing package:', error);
-            throw error;
+        } catch (error: any) {
+            if (error.userCancelled) {
+                console.log('User cancelled purchase');
+                return;
+            } else {
+                console.error('Error purchasing package:', error);
+                throw error;
+            }
         }
     }
 
     static async checkSubscriptionStatus() {
         try {
             const customerInfo = await Purchases.getCustomerInfo();
-        return {
-            isSubscribed: customerInfo.activeSubscriptions.length > 0,
-            // Verify if the user is in a trial period
-            isTrialing: customerInfo.entitlements.active['premium']?.periodType === 'TRIAL',
-        };
+            const hasTriedBefore = Object.keys(customerInfo.entitlements.active).length > 0 
+                || customerInfo.originalPurchaseDate !== null;
+            const isTrialEligible = !hasTriedBefore;
+            const isSubscribed = customerInfo.activeSubscriptions.length > 0;
+            return {
+                isSubscribed,
+                isTrialEligible,
+            };
         } catch (error) {
             console.error('Error checking subscription:', error);
-        return { isSubscribed: false, isTrialing: false };
+            return { isSubscribed: false, isTrialEligible: false };
         }
     }
 }

@@ -6,6 +6,7 @@ interface CreditsContextType {
     credits: number;
     useCredit: () => Promise<boolean>;
     refreshCredits: () => Promise<void>;
+    buyCredits: () => Promise<void>;
 }
 
 const DEFAULT_CREDITS = 10;
@@ -15,6 +16,7 @@ export const CreditsContext = createContext<CreditsContextType>({
     credits: 0,
     useCredit: async () => false,
     refreshCredits: async () => {},
+    buyCredits: async () => {},
 });
 
 export function CreditsContextProvider({ children }: {children: React.ReactNode}) {
@@ -47,6 +49,12 @@ export function CreditsContextProvider({ children }: {children: React.ReactNode}
         return false;
     };
 
+    const buyCredits = async () => {
+        const newCredits = credits + 200;
+        setCredits(newCredits);
+        await AsyncStorage.setItem('credits', String(newCredits));
+    }
+
     // Load saved credits at startup
     useEffect(() => {        
         const loadCredits = async () => {
@@ -64,6 +72,7 @@ export function CreditsContextProvider({ children }: {children: React.ReactNode}
         credits,
         useCredit,
         refreshCredits,
+        buyCredits,
     }
 
     return (

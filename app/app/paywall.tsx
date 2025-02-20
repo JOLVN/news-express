@@ -19,6 +19,7 @@ export default function Paywall() {
     
 
     const [isTrialEligible, setIsTrialEligible] = useState<boolean>(true);
+    const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
     const [packages, setPackages] = useState<PurchasesPackage[]>([]);
     const [pricePerYear, setPricePerYear] = useState<string>('');
     const [annualSubscriptionPrice, setAnnualSubscriptionPrice] = useState<string>('');
@@ -40,8 +41,9 @@ export default function Paywall() {
 
     useEffect(() => {
         async function initialize() {
-            const trialEligibility = await PurchasesService.checkTrialEligibility();
-            setIsTrialEligible(trialEligibility);
+            const { isTrialEligible, isSubscribed } = await PurchasesService.checkSubscriptionStatus();
+            setIsTrialEligible(isTrialEligible);
+            setIsSubscribed(isSubscribed);
             await loadOfferings();
         }
         
@@ -92,6 +94,7 @@ export default function Paywall() {
                     selectedSubscription={selectedSubscription} 
                     packages={packages} 
                     isTrialEligible={isTrialEligible}
+                    isSubscribed={isSubscribed}
                 />
                 <ThemedText variant="mediumXs" color="gray500" style={styles.textCenter}>
                     {isTrialEligible ?

@@ -54,6 +54,8 @@ export const Texts = {
         subscriptionTrialButton: "Commencer l'essai gratuit ⚡️",
         subscriptionInfo: "Vous serez facturé XX.XX par UU. Vous pouvez annuler à tout moment.",
         subscriptionTrialInfo: "Vous serez facturé XX.XX par UU après la fin de votre essai gratuit de 1 mois. Vous pouvez annuler à tout moment.",
+        subscriptionAlreadySubscribedAlertTitle: "Déjà abonné",
+        subscriptionAlreadySubscribedAlertMessage: "Vous êtes déjà abonné à Xpress Premium",
         year: "an",
         month: "mois",
         // Errors
@@ -119,6 +121,8 @@ export const Texts = {
         subscriptionTrialButton: "Start 1 month free trial ⚡️",
         subscriptionInfo: "You’ll be charged XX.XX per UU. You can cancel anytime.",
         subscriptionTrialInfo: "You’ll be charged XX.XX per UU after your 1 month free trial ends. You can cancel anytime.",
+        subscriptionAlreadySubscribedAlertTitle: "Already subscribed",
+        subscriptionAlreadySubscribedAlertMessage: "You are already subscribed to Xpress Premium",
         year: "year",
         month: "month",
         // Errors

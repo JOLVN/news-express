@@ -5,19 +5,30 @@ import CategoriesContainer from "@/components/drawer/CategoriesContainer";
 import ThemeButton from "@/components/ui/buttons/ThemeButton";
 import SettingsButton from "@/components/ui/buttons/SettingsButton";
 import { Link } from "expo-router";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LanguageContext } from "@/contexts/LanguageContext";
 import { Texts } from "@/constants/Texts";
 import { Entypo } from "@expo/vector-icons";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { CreditsContext } from "@/contexts/CreditsContext";
 import PaywallButton from "../ui/buttons/PaywallButton";
+import { PurchasesService } from "@/services/Purchases";
 
 export default function CustomDrawerContent() {
 
+    const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
     const { language } = useContext(LanguageContext);
     const { credits } = useContext(CreditsContext);
     const colors = useThemeColors();
+
+    useEffect(() => {
+        async function initialize() {
+            const { isSubscribed } = await PurchasesService.checkSubscriptionStatus();
+            setIsSubscribed(isSubscribed);
+        }
+        
+        initialize();
+    });
     
     return (
         <SafeArea>
@@ -32,9 +43,11 @@ export default function CustomDrawerContent() {
                             <ThemedText variant="semiboldMd">{ credits }</ThemedText>
                         </View>
                     </View>
-                    <Link href={{ pathname: '/paywall'}} asChild>
-                        <PaywallButton />
-                    </Link>
+                    {!isSubscribed && (
+                        <Link href={{ pathname: '/paywall'}} asChild>
+                            <PaywallButton />
+                        </Link>
+                    )}
                     <View style={styles.bottomButtons}>
                         <Link href={{ pathname: '/settings'}} asChild>
                             <SettingsButton />
