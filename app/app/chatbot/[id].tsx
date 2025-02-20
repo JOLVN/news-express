@@ -8,10 +8,12 @@ import { useThemeColors } from "@/hooks/useThemeColors";
 import { Message } from "@/types/chat";
 import { router, useLocalSearchParams } from "expo-router";
 import { useContext, useEffect, useRef, useState } from "react";
-import { Dimensions, FlatList, KeyboardAvoidingView, Platform, StyleSheet, View } from "react-native";
+import { Alert, Dimensions, FlatList, KeyboardAvoidingView, Platform, StyleSheet, View } from "react-native";
 import { Image as ExpoImage } from 'expo-image';
 import ChatMessageLoading from "@/components/ChatMessageLoading";
 import { LanguageContext } from "@/contexts/LanguageContext";
+import { CreditsContext } from "@/contexts/CreditsContext";
+import { Texts } from "@/constants/Texts";
 
 export default function Chatbot() {
 
@@ -20,6 +22,7 @@ export default function Chatbot() {
     const { language } = useContext(LanguageContext);
     const article = getArticleById(id as string);
     const colors = useThemeColors();
+    const { useCredit } = useContext(CreditsContext);
 
     const [isMounted, setIsMounted] = useState(false);
     const [inputText, setInputText] = useState('');
@@ -36,8 +39,6 @@ export default function Chatbot() {
         flatListRef.current?.scrollToEnd({ animated: true });
     };
 
-    
-
     async function sendMessage() {
         if (!article || !inputText) return;
 
@@ -50,6 +51,12 @@ export default function Chatbot() {
         
         setMessages(prev => [...prev, userMessage]);
         setInputText('');
+
+        const canUseCredit = await useCredit();
+        if (!canUseCredit) {
+            Alert.alert(Texts[language].errorInsufficientCredits, Texts[language].errorInsufficientCreditsChatbotMessage);
+            return;
+        }
         
         try {
             setIsLoading(true);
@@ -74,7 +81,7 @@ export default function Chatbot() {
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsMounted(true);
-        }, 50);
+        }, 100);
         return () => clearTimeout(timer);
     }, []);
 

@@ -36,6 +36,10 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat-Regular',
         fontSize: 14,
     },
+    regularXs: {
+        fontFamily: 'Montserrat-Regular',
+        fontSize: 10,
+    },
     regularSm: {
         fontFamily: 'Montserrat-Regular',
         fontSize: 12,

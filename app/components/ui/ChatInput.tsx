@@ -5,7 +5,9 @@ import { Shadows } from "@/constants/Shadows";
 import { useContext } from "react";
 import { ThemeContext } from "@/contexts/ThemeContext";
 import { LanguageContext } from "@/contexts/LanguageContext";
+import ThemedText from "@/components/ui/ThemedText";
 import { Texts } from "@/constants/Texts";
+import { CreditsContext } from "@/contexts/CreditsContext";
 
 type Props = {
     onInput: (text: string) => void;
@@ -17,26 +19,35 @@ type Props = {
 export default function ChatInput({onInput, onSubmit, value, style}: Props) {
 
     const colors = useThemeColors();
+    const { credits } = useContext(CreditsContext);
     const { theme } = useContext(ThemeContext);
     const { language } = useContext(LanguageContext);
 
     return (
         <View style={[styles.container, style]}>
-            <TextInput 
-                onChangeText={onInput}
-                placeholder={Texts[language].chatInputPlaceholder}
-                placeholderTextColor={colors.gray500}
-                value={value}
-                allowFontScaling={false}
-                style={[
-                    styles.input, 
-                    { backgroundColor: colors.background, color: colors.text },
-                    {...Shadows[theme].extraLarge}
-                ]}
-            />
-            <Pressable onPress={onSubmit} style={[styles.submitButton, {backgroundColor: colors.accent500}]}>
-                <Entypo name="chevron-right" size={24} color={colors.background} />
-            </Pressable>
+            <View>
+                <TextInput 
+                    onChangeText={onInput}
+                    placeholder={Texts[language].chatInputPlaceholder}
+                    placeholderTextColor={colors.gray500}
+                    value={value}
+                    allowFontScaling={false}
+                    style={[
+                        styles.input, 
+                        { backgroundColor: colors.background, color: colors.text },
+                        {...Shadows[theme].extraLarge}
+                    ]}
+                />
+                <Pressable 
+                    onPress={onSubmit} 
+                    style={({pressed}) => [styles.submitButton, {backgroundColor: value.length > 0 ? colors.accent500 : colors.accent400}, pressed && styles.pressed]}
+                >
+                    <Entypo name="chevron-right" size={24} color={colors.background} />
+                </Pressable>
+            </View>
+            <ThemedText style={styles.remainingCredits} variant="regularSm" color="gray500">{Texts[language].remainingCredits} : 
+                <ThemedText variant="regularSm"> {credits}</ThemedText>
+            </ThemedText>
         </View>
     )
 }
@@ -44,6 +55,10 @@ export default function ChatInput({onInput, onSubmit, value, style}: Props) {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
+    },
+    remainingCredits: {
+        marginTop: 10,
+        alignSelf: 'center',
     },
     input: {
         height: 50,
@@ -53,6 +68,9 @@ const styles = StyleSheet.create({
         paddingRight: 70,
         fontFamily: 'Montserrat_400Regular',
         fontSize: 14,
+    },
+    pressed: {
+        opacity: 0.6,
     },
     submitButton: {
         position: 'absolute',

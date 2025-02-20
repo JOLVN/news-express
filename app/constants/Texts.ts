@@ -52,6 +52,9 @@ export const Texts = {
         error: "Erreur",
         errorFetchingArticles: "Erreur lors de la récupération des articles",
         errorFetchingChatbotResponse: "Erreur lors de la récupération de la réponse du chatbot",
+        errorInsufficientCredits: "Crédits insuffisants",
+        errorInsufficientCreditsChatbotMessage: "Vous n'avez plus de crédits pour utiliser le chatbot",
+        errorInsufficientCreditsListenMessage: "Vous n'avez plus de crédits pour écouter l'article",
     },
     en: {
         // Home
@@ -106,5 +109,8 @@ export const Texts = {
         error: "Error",
         errorFetchingArticles: "Error while fetching articles",
         errorFetchingChatbotResponse: "Error while fetching chatbot response",
+        errorInsufficientCredits: "Insufficient credits",
+        errorInsufficientCreditsChatbotMessage: "You don't have enough credits to use the chatbot",
+        errorInsufficientCreditsListenMessage: "You don't have enough credits to listen to the article",
     }
 }
