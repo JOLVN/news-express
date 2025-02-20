@@ -33,6 +33,9 @@ export const Texts = {
         english: "Anglais (US)",
         // Settings
         settings: "Paramètres",
+        country: "Pays",
+        france: "France",
+        usa: "États-Unis",
         upgradeToXpressPremium: "Passer à Xpress Premium",
         // Upgrade
         upgradeTitle1: "Essaie",
@@ -90,6 +93,9 @@ export const Texts = {
         english: "English (US)",
         // Settings
         settings: "Settings",
+        country: "Country",
+        france: "France",
+        usa: "United States",
         upgradeToXpressPremium: "Upgrade to Xpress Premium",
         // Upgrade
         upgradeTitle1: "Try",

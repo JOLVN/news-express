@@ -7,17 +7,17 @@ import { LanguageContext } from '@/contexts/LanguageContext';
 import { Texts } from '@/constants/Texts';
 import BottomSheetModal from '@/components/modal/BottomSheetModal';
 
-export default function SwitchLanguageModal() {
+export default function SwitchCountryModal() {
 
-    const { isLanguageModalVisible, hideLanguageModal } = useContext(ModalContext);
+    const { isCountryModalVisible, hideCountryModal } = useContext(ModalContext);
     const { language, changeLanguage } = useContext(LanguageContext);
 
     return (
-        <BottomSheetModal isVisible={isLanguageModalVisible} hideModal={hideLanguageModal}>
-            <ThemedText variant="title" style={styles.title}>{Texts[language].language}</ThemedText>
+        <BottomSheetModal isVisible={isCountryModalVisible} hideModal={hideCountryModal}>
+            <ThemedText variant="title" style={styles.title}>{Texts[language].country}</ThemedText>
             
             <ModalOption 
-                title={Texts[language].english} 
+                title={Texts[language].usa} 
                 selected={language === 'en'}
                 onPress={() => {
                     changeLanguage('en');
@@ -25,7 +25,7 @@ export default function SwitchLanguageModal() {
             />
             
             <ModalOption 
-                title={Texts[language].french}
+                title={Texts[language].france}
                 selected={language === 'fr'}
                 onPress={() => {
                     changeLanguage('fr');  

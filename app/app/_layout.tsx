@@ -16,10 +16,9 @@ import SwitchThemeModal from "@/components/modal/SwitchThemeModal";
 import { GoogleTTSService } from "@/services/GoogleTTS";
 import { LanguageContext, LanguageContextProvider } from "@/contexts/LanguageContext";
 import { Texts } from "@/constants/Texts";
-import SwitchLanguageModal from "@/components/modal/SwitchLanguageModal";
+import SwitchCountryModal from "@/components/modal/SwitchCountryModal";
 import { ReadArticlesContextProvider } from "@/contexts/ReadArticlesContext";
 import { PurchasesService } from "@/services/Purchases";
-import { AccessibilityInfo } from "react-native";
 import { CreditsContextProvider } from "@/contexts/CreditsContext";
 
 SplashScreen.preventAutoHideAsync();
@@ -39,26 +38,6 @@ function Root() {
         'Montserrat-SemiBold': Montserrat_600SemiBold,
         'Montserrat-Bold': Montserrat_700Bold,
     });
-
-    const [fontScale, setFontScale] = useState(1);
-
-    useEffect(() => {
-        AccessibilityInfo.addEventListener(
-            'change',
-            (event) => {
-                setFontScale(1); // Rétablir la taille de texte fixe
-            }
-        );
-
-        // return () => {
-        //     AccessibilityInfo.removeEventListener(
-        //         'change',
-        //         (event) => {
-        //         setFontScale(1); // Rétablir la taille de texte fixe
-        //         }
-        //     );
-        // };
-    }, []);
 
     
     useEffect(() => {
@@ -108,7 +87,7 @@ function Root() {
                  }} />
             </Stack>
             <SwitchThemeModal />
-            <SwitchLanguageModal />
+            <SwitchCountryModal />
         </>
     )
 }

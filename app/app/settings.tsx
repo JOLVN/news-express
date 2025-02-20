@@ -11,7 +11,7 @@ export default function Settings() {
 
     const colors = useThemeColors();
     const { language } = useContext(LanguageContext);
-    const { showThemeModal, showLanguageModal } = useContext(ModalContext);
+    const { showThemeModal, showCountryModal } = useContext(ModalContext);
 
     return (
         <View style={[styles.container, { backgroundColor: colors.coloredBackground }]}>
@@ -22,7 +22,7 @@ export default function Settings() {
             </View>
             <View style={[styles.section, {borderColor: colors.text}]}>
                 <SettingButton text={Texts[language].appearance} onPress={showThemeModal} />
-                <SettingButton text={Texts[language].language} onPress={showLanguageModal} />
+                <SettingButton text={Texts[language].country} onPress={showCountryModal} />
             </View>
         </View>
     )

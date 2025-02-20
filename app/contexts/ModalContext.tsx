@@ -4,45 +4,45 @@ interface ModalContextType {
     isThemeModalVisible: boolean;
     showThemeModal: () => void;
     hideThemeModal: () => void;
-    isLanguageModalVisible: boolean;
-    showLanguageModal: () => void;
-    hideLanguageModal: () => void;
+    isCountryModalVisible: boolean;
+    showCountryModal: () => void;
+    hideCountryModal: () => void;
 };
 
 export const ModalContext = createContext<ModalContextType>({
     isThemeModalVisible: false,
     showThemeModal: () => {},
     hideThemeModal: () => {},
-    isLanguageModalVisible: false,
-    showLanguageModal: () => {},
-    hideLanguageModal: () => {},
+    isCountryModalVisible: false,
+    showCountryModal: () => {},
+    hideCountryModal: () => {},
 });
 
 export function ModalContextProvider({ children }: { children: React.ReactNode }) {
 
     const [isThemeModalVisible, setThemeModalVisible] = useState(false);
-    const [isLanguageModalVisible, setLanguageModalVisible] = useState(false);
+    const [isCountryModalVisible, setCountryModalVisible] = useState(false);
 
     const showThemeModal = () => {
         setThemeModalVisible(true);
     }
     const hideThemeModal = () => setThemeModalVisible(false);
 
-    const showLanguageModal = () => {
-        setLanguageModalVisible(true);
+    const showCountryModal = () => {
+        setCountryModalVisible(true);
     }
 
-    const hideLanguageModal = () => {
-        setLanguageModalVisible(false);
+    const hideCountryModal = () => {
+        setCountryModalVisible(false);
     }
 
     const values = {
         isThemeModalVisible,
         showThemeModal,
         hideThemeModal,
-        isLanguageModalVisible,
-        showLanguageModal,
-        hideLanguageModal,
+        isCountryModalVisible,
+        showCountryModal,
+        hideCountryModal,
     }
 
     return (
