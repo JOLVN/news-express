@@ -1,3 +1,4 @@
+import LoadingArticlesOverlay from "@/components/LoadingArticlesOverlay";
 import SubscriptionButton from "@/components/ui/buttons/SubscriptionButton";
 import SubscriptionChoice from "@/components/ui/SubscriptionChoice";
 import ThemedText from "@/components/ui/ThemedText";
@@ -13,32 +14,52 @@ import { PurchasesPackage } from "react-native-purchases";
 
 export default function Paywall() {
 
+    const ANNUAL_RC_ID = `$${process.env.EXPO_PUBLIC_ANNUAL_RC_ID}` as string;
+    const MONTHLY_RC_ID = `$${process.env.EXPO_PUBLIC_MONTHLY_RC_ID}` as string;
+    
+
+    const [isTrialEligible, setIsTrialEligible] = useState<boolean>(true);
     const [packages, setPackages] = useState<PurchasesPackage[]>([]);
+    const [pricePerYear, setPricePerYear] = useState<string>('');
+    const [annualSubscriptionPrice, setAnnualSubscriptionPrice] = useState<string>('');
+    const [monthlySubscriptionPrice, setMonthlySubscriptionPrice] = useState<string>('');
     const { language } = useContext(LanguageContext);
     const { theme } = useContext(ThemeContext);
     const colors = useThemeColors();
-    const [selectedSubscription, setSelectedSubscription] = useState<'annual' | 'monthly'>('annual');
-
-    const ANNUAL_SUBSCRIPTION_PRICE = 28.99;
-    const MONTHLY_SUBSCRIPTION_PRICE = 2.99;
+    const [selectedSubscription, setSelectedSubscription] = useState<string>(ANNUAL_RC_ID);
 
     async function loadOfferings() {
         const offerings = await PurchasesService.getOfferings();
         setPackages(offerings);
-        console.log(offerings);
-        
+        if (offerings.length > 0) {
+            setPricePerYear(offerings[0].product.pricePerYearString);
+            setMonthlySubscriptionPrice(offerings[0].product.priceString);
+            setAnnualSubscriptionPrice(offerings[1].product.priceString);
+        }
     };
 
     useEffect(() => {
-        loadOfferings();
+        async function initialize() {
+            const trialEligibility = await PurchasesService.checkTrialEligibility();
+            setIsTrialEligible(trialEligibility);
+            await loadOfferings();
+        }
+        
+        initialize();
     }, []);
+
+    if (!packages || packages.length === 0) {
+        return (
+            <LoadingArticlesOverlay />
+        )
+    }
 
     return (
         <View style={[styles.container, { backgroundColor: colors.coloredBackground }]}>
             <ThemedText variant="titleXl" style={styles.title}>
-                {Texts[language].upgradeTitle1}
+                {isTrialEligible ? Texts[language].upgradeTitle1WithTrial : Texts[language].upgradeTitle1}
                 <ThemedText variant="titleBoldXl" color="accent500"> Xpress Premium </ThemedText>
-                {Texts[language].upgradeTitle2}
+                {isTrialEligible && Texts[language].upgradeTitle2WithTrial}
             </ThemedText>
             <View>
                 <View style={styles.advantage}>
@@ -51,25 +72,36 @@ export default function Paywall() {
                 </View>
             </View>
             <View style={styles.subscriptionChoices}>
-                <SubscriptionChoice 
-                    isAnnual={true} 
-                    isSelected={selectedSubscription === 'annual'} 
-                    price={ANNUAL_SUBSCRIPTION_PRICE}
-                    onPress={() => setSelectedSubscription('annual')} 
-                />
-                <SubscriptionChoice 
-                    isAnnual={false} 
-                    isSelected={selectedSubscription === 'monthly'} 
-                    price={MONTHLY_SUBSCRIPTION_PRICE}
-                    onPress={() => setSelectedSubscription('monthly')}
-                />
+                {packages.map((p, i) => {
+
+                    return (
+                        <SubscriptionChoice 
+                            key={p.identifier}
+                            isAnnual={p.identifier === ANNUAL_RC_ID}
+                            pricePerYear={pricePerYear}
+                            isSelected={selectedSubscription === p.identifier} 
+                            isTrialEligible={isTrialEligible}
+                            price={p.product.priceString}
+                            onPress={() => setSelectedSubscription(p.identifier)}
+                        />
+                    )
+                })}
             </View>
             <View style={styles.bottom}>
-                <SubscriptionButton isAnnual={selectedSubscription === 'annual'} packages={packages} />
+                <SubscriptionButton 
+                    selectedSubscription={selectedSubscription} 
+                    packages={packages} 
+                    isTrialEligible={isTrialEligible}
+                />
                 <ThemedText variant="mediumXs" color="gray500" style={styles.textCenter}>
-                    {Texts[language].subscriptionInfo
-                        .replace('XX.XX', selectedSubscription === 'annual' ? String(ANNUAL_SUBSCRIPTION_PRICE) : String(MONTHLY_SUBSCRIPTION_PRICE))
-                        .replace('UU', selectedSubscription === 'annual' ? Texts[language].year : Texts[language].month)
+                    {isTrialEligible ?
+                        Texts[language].subscriptionTrialInfo
+                            .replace('XX.XX', selectedSubscription === ANNUAL_RC_ID ? String(annualSubscriptionPrice) : String(monthlySubscriptionPrice))
+                            .replace('UU', selectedSubscription === ANNUAL_RC_ID ? Texts[language].year : Texts[language].month)
+                        :
+                        Texts[language].subscriptionInfo
+                            .replace('XX.XX', selectedSubscription === ANNUAL_RC_ID ? String(annualSubscriptionPrice) : String(monthlySubscriptionPrice))
+                            .replace('UU', selectedSubscription === ANNUAL_RC_ID ? Texts[language].year : Texts[language].month)
                     }
                 </ThemedText>
             </View>
@@ -94,7 +126,7 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
     subscriptionChoices: {
-        flexDirection: 'row',
+        flexDirection: 'row-reverse',
         justifyContent: 'space-between',
     },
     textCenter: {

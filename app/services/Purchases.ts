@@ -18,6 +18,20 @@ export class PurchasesService {
         }
     }
 
+    static async checkTrialEligibility() {
+        try {
+            const customerInfo = await Purchases.getCustomerInfo();
+            // Verify if the user has already tried the app            
+            const hasTriedBefore = Object.keys(customerInfo.entitlements.active).length > 0 
+                || customerInfo.originalPurchaseDate !== null;
+            
+            return !hasTriedBefore;
+        } catch (error) {
+            console.error('Error checking trial eligibility:', error);
+            return false;
+        }
+    }
+
     static async getOfferings(): Promise<PurchasesPackage[]> {
         try {
             const offerings = await Purchases.getOfferings();

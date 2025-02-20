@@ -8,12 +8,14 @@ import Animated, { useAnimatedStyle, withSpring, withTiming } from "react-native
 
 type Props = {
     isAnnual: boolean;
+    pricePerYear: string;
     isSelected?: boolean;
-    price: number;
+    isTrialEligible?: boolean;
+    price: string;
     onPress: () => void;
 }
 
-export default function SubscriptionChoice({ isAnnual, isSelected, price, onPress }: Props) {
+export default function SubscriptionChoice({ isAnnual, pricePerYear, isSelected, isTrialEligible, price, onPress }: Props) {
 
     const colors = useThemeColors();
     const { language } = useContext(LanguageContext);
@@ -61,10 +63,13 @@ export default function SubscriptionChoice({ isAnnual, isSelected, price, onPres
                 </ThemedText>
                 <View style={styles.price}>
                     <ThemedText variant="semiboldXl" style={styles.textCenter}>
-                        € {price}
+                        {price}
                     </ThemedText>
                     <ThemedText variant="regularSm" style={styles.textCenter}>
-                        {isAnnual ? Texts[language].annualSubscriptionDescription : Texts[language].monthlySubscriptionDescription}
+                        {isAnnual && isTrialEligible && Texts[language].annualSubscriptionTrialDescription}
+                        {isAnnual && !isTrialEligible && Texts[language].annualSubscriptionDescription}
+                        {!isAnnual && isTrialEligible && Texts[language].monthlySubscriptionTrialDescription}
+                        {!isAnnual && !isTrialEligible && Texts[language].monthlySubscriptionDescription}
                     </ThemedText>
                 </View>
                 {isAnnual && (
@@ -72,7 +77,7 @@ export default function SubscriptionChoice({ isAnnual, isSelected, price, onPres
                         <View style={styles.barredPrice}>
                             <View style={[styles.barredLine, { backgroundColor: colors.gray500 }]} />
                             <ThemedText variant="regularSm" color="gray500">
-                                € 35.99
+                                {pricePerYear}
                             </ThemedText>
                         </View>
                         <View style={[styles.discount, { backgroundColor: colors.accent600 }]}>

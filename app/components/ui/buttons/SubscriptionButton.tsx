@@ -9,12 +9,13 @@ import { PurchasesService } from "@/services/Purchases";
 import { PurchasesPackage } from "react-native-purchases";
 
 type Props = ViewStyle & {
-    isAnnual: boolean,
+    selectedSubscription: string,
     packages: PurchasesPackage[],
+    isTrialEligible: boolean,
     style?: object,
 }
 
-export default function SubscriptionButton({isAnnual, packages, style}: Props) {
+export default function SubscriptionButton({selectedSubscription, isTrialEligible, packages, style}: Props) {
 
     const { refreshCredits } = useContext(CreditsContext);
     const colors = useThemeColors();
@@ -42,7 +43,9 @@ export default function SubscriptionButton({isAnnual, packages, style}: Props) {
             style={({pressed}) => [styles.button, style, {backgroundColor: colors.accent500}, pressed && styles.pressed]}
             android_ripple={{color: colors.accent500}}
         >
-            <ThemedText variant={'semibold'} color={'black'}>{Texts[language].subscriptionButton}</ThemedText>
+            <ThemedText variant={'semibold'} color={'black'}>
+                {isTrialEligible ? Texts[language].subscriptionTrialButton : Texts[language].subscriptionButton}
+            </ThemedText>
         </Pressable>
     )
 }
