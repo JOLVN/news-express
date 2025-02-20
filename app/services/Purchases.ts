@@ -13,9 +13,17 @@ export class PurchasesService {
             } else if (Platform.OS === 'android') {
                 Purchases.configure({ apiKey: REVENUE_CAT_ANDROID_API_KEY });
             }
+            await Purchases.restorePurchases();
         } catch (error) {
             console.error('Error initializing Purchases:', error);
         }
+    }
+
+    static async getRCUserId() {
+        const customerInfo = await Purchases.getCustomerInfo();
+        const originalAppUserId = customerInfo.originalAppUserId;
+        const RCUserId = originalAppUserId.split(':')[1];
+        return RCUserId;
     }
 
     static async getOfferings(): Promise<PurchasesPackage[]> {
@@ -50,6 +58,8 @@ export class PurchasesService {
                 || customerInfo.originalPurchaseDate !== null;
             const isTrialEligible = !hasTriedBefore;
             const isSubscribed = customerInfo.activeSubscriptions.length > 0;
+            console.log(customerInfo);
+            
             return {
                 isSubscribed,
                 isTrialEligible,

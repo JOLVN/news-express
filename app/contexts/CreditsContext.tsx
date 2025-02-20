@@ -31,7 +31,7 @@ export function CreditsContextProvider({ children }: {children: React.ReactNode}
 
         if (lastRefresh !== currentMonth) {
             const { isSubscribed } = await PurchasesService.checkSubscriptionStatus();
-            const newCredits = isSubscribed ? SUBSCRIPTION_CREDITS : DEFAULT_CREDITS;
+            const newCredits = credits + (isSubscribed ? SUBSCRIPTION_CREDITS : DEFAULT_CREDITS);
             setCredits(newCredits);
             await AsyncStorage.setItem('credits', String(newCredits));
             await AsyncStorage.setItem('lastCreditsRefresh', currentMonth);
@@ -50,7 +50,7 @@ export function CreditsContextProvider({ children }: {children: React.ReactNode}
     };
 
     const buyCredits = async () => {
-        const newCredits = credits + 200;
+        const newCredits = credits + SUBSCRIPTION_CREDITS;
         setCredits(newCredits);
         await AsyncStorage.setItem('credits', String(newCredits));
     }
@@ -61,6 +61,8 @@ export function CreditsContextProvider({ children }: {children: React.ReactNode}
             const savedCredits = await AsyncStorage.getItem('credits');
             if (savedCredits) {
                 setCredits(Number(savedCredits));
+            } else {
+                
             }
             await refreshCredits();
         };

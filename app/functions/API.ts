@@ -8,7 +8,7 @@ const API_KEY = process.env.EXPO_PUBLIC_PERSONAL_API_KEY;
 
 export async function fetchArticles(day: string, language: Language) {
 
-    const path = `news/${day}/${language}?apiKey=${API_KEY}`;
+    const path = `api/news/${day}/${language}?apiKey=${API_KEY}`;
 
     try {
         const response = await fetch(`${API_URL}${
