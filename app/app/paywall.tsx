@@ -11,7 +11,7 @@ import { useContext, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { PurchasesPackage } from "react-native-purchases";
 
-export default function Upgrade() {
+export default function Paywall() {
 
     const [packages, setPackages] = useState<PurchasesPackage[]>([]);
     const { language } = useContext(LanguageContext);

@@ -48,7 +48,7 @@ export function CreditsContextProvider({ children }: {children: React.ReactNode}
     };
 
     // Load saved credits at startup
-    useEffect(() => {
+    useEffect(() => {        
         const loadCredits = async () => {
             const savedCredits = await AsyncStorage.getItem('credits');
             if (savedCredits) {

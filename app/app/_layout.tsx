@@ -20,6 +20,7 @@ import SwitchLanguageModal from "@/components/modal/SwitchLanguageModal";
 import { ReadArticlesContextProvider } from "@/contexts/ReadArticlesContext";
 import { PurchasesService } from "@/services/Purchases";
 import { AccessibilityInfo } from "react-native";
+import { CreditsContextProvider } from "@/contexts/CreditsContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -97,7 +98,7 @@ function Root() {
                 <Stack.Screen name="settings" options={{ 
                     title: Texts[language].settings,
                  }} />
-                <Stack.Screen name="upgrade" options={{ 
+                <Stack.Screen name="paywall" options={{ 
                     title: '',
                  }} />
                 <Stack.Screen name="chatbot/[id]" options={{ 
@@ -118,15 +119,17 @@ export default function RootLayout() {
             <LanguageContextProvider>
                 <ArticlesContextProvider>
                     <ReadArticlesContextProvider>
-                        <CategoriesContextProvider>
-                            <ModalContextProvider>
-                                <GestureHandlerRootView style={{ flex: 1 }}>
-                                    <BottomSheetModalProvider>
-                                        <Root />
-                                    </BottomSheetModalProvider>
-                                </GestureHandlerRootView>
-                            </ModalContextProvider>
-                        </CategoriesContextProvider>
+                        <CreditsContextProvider>
+                            <CategoriesContextProvider>
+                                <ModalContextProvider>
+                                    <GestureHandlerRootView style={{ flex: 1 }}>
+                                        <BottomSheetModalProvider>
+                                            <Root />
+                                        </BottomSheetModalProvider>
+                                    </GestureHandlerRootView>
+                                </ModalContextProvider>
+                            </CategoriesContextProvider>
+                        </CreditsContextProvider>
                     </ReadArticlesContextProvider>
                 </ArticlesContextProvider>
             </LanguageContextProvider>

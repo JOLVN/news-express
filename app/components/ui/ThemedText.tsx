@@ -56,6 +56,10 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat-SemiBold',
         fontSize: 10,
     },
+    semiboldMd: {
+        fontFamily: 'Montserrat-SemiBold',
+        fontSize: 18,
+    },
     semiboldXl: {
         fontFamily: 'Montserrat-SemiBold',
         fontSize: 20,

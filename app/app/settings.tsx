@@ -16,7 +16,7 @@ export default function Settings() {
     return (
         <View style={[styles.container, { backgroundColor: colors.coloredBackground }]}>
             <View style={[styles.section, {borderColor: colors.text}]}>
-                <Link href={{ pathname: '/upgrade'}} asChild>
+                <Link href={{ pathname: '/paywall'}} asChild>
                     <SettingButton text={Texts[language].upgradeToXpressPremium} />
                 </Link>
             </View>

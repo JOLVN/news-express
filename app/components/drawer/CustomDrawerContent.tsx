@@ -8,10 +8,16 @@ import { Link } from "expo-router";
 import { useContext } from "react";
 import { LanguageContext } from "@/contexts/LanguageContext";
 import { Texts } from "@/constants/Texts";
+import { Entypo } from "@expo/vector-icons";
+import { useThemeColors } from "@/hooks/useThemeColors";
+import { CreditsContext } from "@/contexts/CreditsContext";
+import PaywallButton from "../ui/buttons/PaywallButton";
 
 export default function CustomDrawerContent() {
 
     const { language } = useContext(LanguageContext);
+    const { credits } = useContext(CreditsContext);
+    const colors = useThemeColors();
     
     return (
         <SafeArea>
@@ -19,10 +25,22 @@ export default function CustomDrawerContent() {
                 <ThemedText variant="articleSummaryTitle">{Texts[language].personalizeFeed}</ThemedText>
                 <CategoriesContainer style={{ marginTop: 10 }} />
                 <View style={styles.bottomContainer}>
-                    <Link href={{ pathname: '/settings'}} asChild>
-                        <SettingsButton />
+                    <View style={styles.remainingCredits}>
+                        <ThemedText variant="regular">{Texts[language].remainingCredits}</ThemedText>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Entypo name="credit" size={20} color={colors.text} />
+                            <ThemedText variant="semiboldMd">{ credits }</ThemedText>
+                        </View>
+                    </View>
+                    <Link href={{ pathname: '/paywall'}} asChild>
+                        <PaywallButton />
                     </Link>
-                    <ThemeButton />
+                    <View style={styles.bottomButtons}>
+                        <Link href={{ pathname: '/settings'}} asChild>
+                            <SettingsButton />
+                        </Link>
+                        <ThemeButton />
+                    </View>
                 </View>
             </View>
         </SafeArea>
@@ -39,7 +57,13 @@ const styles = StyleSheet.create({
         width: '100%',
         bottom: 16,
         right: 16,
+        gap: 16
+    },
+    remainingCredits: {
+        alignItems: 'center',
+    },
+    bottomButtons: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-    }
+    },
 });

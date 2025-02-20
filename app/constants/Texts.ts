@@ -8,6 +8,8 @@ export const Texts = {
         // Drawer
         personalizeFeed: "Personnalise ton feed",
         settingsButton: "Paramètres",
+        remainingCredits: "Crédits restants",
+        upgrade: "Passer à Premium ⚡️",
         // Theme
         appearance: "Apparence",
         system: "Système",
@@ -60,6 +62,8 @@ export const Texts = {
         // Drawer
         personalizeFeed: "Personalize your feed",
         settingsButton: "Settings",
+        remainingCredits: "Remaining credits",
+        upgrade: "Upgrade to Premium ⚡️",
         // Theme
         appearance: "Appearance",
         system: "System",
