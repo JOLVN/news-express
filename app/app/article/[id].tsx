@@ -74,14 +74,16 @@ export default function ArticleDetails() {
                     <View style={styles.section}>
                         <ThemedText variant={'articleTitle'} style={styles.sectionTitle}>{Texts[language].qAndA}</ThemedText>
                     </View>
-                    {article.questions.map((qa: Question, index: number) => (
-                        <ArticleQuestion 
-                            key={index} 
-                            question={qa} 
-                            isExpanded={expandedQuestionIndex === index} 
-                            onToggle={() => toggleQuestion(index)} 
-                        />
-                    ))}
+                    <View style={styles.questions}>
+                        {article.questions.map((qa: Question, index: number) => (
+                            <ArticleQuestion 
+                                key={index} 
+                                question={qa} 
+                                isExpanded={expandedQuestionIndex === index} 
+                                onToggle={() => toggleQuestion(index)} 
+                            />
+                        ))}
+                    </View>
                 </View>
             </ScrollView>
             <Link href={{ pathname: '/chatbot/[id]', params: {id: article.id }}} asChild>
@@ -100,6 +102,9 @@ const styles = StyleSheet.create({
     },
     sectionTitle: {
         marginBottom: 10,
+    },
+    questions: {
+        gap: 10
     },
     chatbotButton: {
         position: 'absolute',

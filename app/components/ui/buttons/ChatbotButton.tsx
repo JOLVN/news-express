@@ -11,12 +11,12 @@ const ChatbotButton = forwardRef<View, Props>(({ style, onPress, ...props }, ref
     return (
         <Pressable 
             ref={ref}
-            style={style}
+            style={({ pressed }) => [style, pressed && styles.pressed]}
             onPress={onPress}
             {...props}
         >
             <ExpoImage
-                style={styles.image} 
+                style={styles.image}
                 source={require('@/assets/images/chatbot.png')} 
                 contentFit="contain"
                 cachePolicy="memory-disk"
@@ -34,5 +34,8 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         width: 60,
         height: 60,
+    },
+    pressed: {
+        opacity: 0.8,
     }
 });

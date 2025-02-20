@@ -3,7 +3,7 @@ import { ThemeContext } from "@/contexts/ThemeContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { Article } from "@/types/articles";
 import { useCallback, useContext, useRef, useState } from "react";
-import { Dimensions, FlatList, Platform, RefreshControl, StyleSheet, View, ViewProps, ViewToken } from "react-native";
+import { Alert, Dimensions, FlatList, Platform, RefreshControl, StyleSheet, View, ViewProps, ViewToken } from "react-native";
 import ThemedText from "@/components/ui/ThemedText";
 import FlatButton from "../ui/buttons/FlatButton";
 import { Link } from "expo-router";
@@ -11,6 +11,7 @@ import ListenButton from "@/components/ui/buttons/ListenButton";
 import { useGoogleTTS } from "@/hooks/useGoogleTTS";
 import { LanguageContext } from "@/contexts/LanguageContext";
 import { Texts } from "@/constants/Texts";
+import { CreditsContext } from "@/contexts/CreditsContext";
 
 const CONTAINER_HEIGHT = 450;
 
@@ -27,6 +28,7 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, on
     const { theme } = useContext(ThemeContext);
     const { language } = useContext(LanguageContext);
     const { speak, stop, isPlaying, error } = useGoogleTTS();
+    const { useCredit } = useContext(CreditsContext);
     const [isRefreshing, setIsRefreshing] = useState(false);
 
     const onViewableItemsChanged = useRef(({ viewableItems }: {
@@ -53,9 +55,16 @@ export default function ArticleSummaryBox({ articles, onArticleChange, style, on
         }
     }, [onRefetchArticles]);
 
-    function onListenPress(article: Article) {
+    async function onListenPress(article: Article) {
         if (isPlaying) stop();
-        else speak(article.summary, language);
+        else {
+            const canUseCredit = await useCredit();
+            if (canUseCredit) {
+                speak(article.summary, language);
+            } else {
+                Alert.alert(Texts[language].errorInsufficientCredits, Texts[language].errorInsufficientCreditsListenMessage);
+            }
+        }
     }
 
     function EmptyList() {

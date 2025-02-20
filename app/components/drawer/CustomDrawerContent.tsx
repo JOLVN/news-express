@@ -26,9 +26,9 @@ export default function CustomDrawerContent() {
                 <CategoriesContainer style={{ marginTop: 10 }} />
                 <View style={styles.bottomContainer}>
                     <View style={styles.remainingCredits}>
-                        <ThemedText variant="regular">{Texts[language].remainingCredits}</ThemedText>
-                        <View style={{ flexDirection: 'row' }}>
-                            <Entypo name="credit" size={20} color={colors.text} />
+                        <ThemedText variant="regularSm">{Texts[language].remainingCredits}</ThemedText>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Entypo name="credit" size={18} color={colors.text} />
                             <ThemedText variant="semiboldMd">{ credits }</ThemedText>
                         </View>
                     </View>

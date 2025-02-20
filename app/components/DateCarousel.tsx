@@ -5,6 +5,7 @@ import {
     FlatList,
     ViewToken,
     Platform,
+    Pressable,
 } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { format } from 'date-fns';
@@ -121,12 +122,13 @@ export default function DateCarousel({ onDateChange, style }: Props) {
 
     return (
         <View style={styles.container}>
-            <Ionicons 
-                name="arrow-back" 
-                size={24} 
-                color={currentIndex === 0 ? colors.gray500 : colors.white}
-                onPress={handlePrevious}
-            />
+            <Pressable onPress={handlePrevious} style={({pressed}) => pressed && styles.pressed}>
+                <Ionicons 
+                    name="arrow-back" 
+                    size={24} 
+                    color={currentIndex === 0 ? colors.gray500 : colors.white}
+                />
+            </Pressable>
             <View style={[styles.boxContainer, style, { backgroundColor: colors.lowOpacityBackground }]}>
                 <FlatList
                     ref={flatListRef}
@@ -148,12 +150,13 @@ export default function DateCarousel({ onDateChange, style }: Props) {
                     })}
                 />
             </View>
-            <Ionicons 
-                name="arrow-forward" 
-                size={24} 
-                color={currentIndex === dates.length - 1 ? colors.gray500 : colors.white}
-                onPress={handleNext}
-            />
+            <Pressable onPress={handleNext} style={({pressed}) => pressed && styles.pressed}>
+                <Ionicons 
+                    name="arrow-forward" 
+                    size={24} 
+                    color={currentIndex === dates.length - 1 ? colors.gray500 : colors.white}
+                />
+            </Pressable>
         </View>
     );
 }
@@ -176,6 +179,9 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.5,
         shadowRadius: 15,
+    },
+    pressed: {
+        opacity: 0.5,
     },
     itemContainer: {
         width: ITEM_WIDTH,

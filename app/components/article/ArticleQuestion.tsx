@@ -51,7 +51,7 @@ export default function ArticleQuestion({question, isExpanded, onToggle}: Props)
     }, [isExpanded]);
 
     return (
-        <View style={styles.container}>
+        <View>
             <Pressable onPress={toggleAccordion}>
                 <View style={[styles.questionContainer, {borderColor: colors.text}]}>
                     <ThemedText variant={'articleQuestion'} style={styles.question}>
@@ -72,8 +72,6 @@ export default function ArticleQuestion({question, isExpanded, onToggle}: Props)
 }
 
 const styles = StyleSheet.create({
-    container: {
-    },
     questionContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
