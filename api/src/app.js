@@ -82,7 +82,7 @@ app.post('/api/chat', async (req, res) => {
 });
 
 // Get credits for a user
-app.get('/api/:userId', async (req, res) => {
+app.get('/api/credits/:userId', async (req, res) => {
     const apiKey = req.headers['x-api-key'] || req.query.apiKey;
     if (apiKey !== process.env.API_KEY) {
         return res.status(401).json({ error: 'Unauthorized' });
@@ -97,7 +97,7 @@ app.get('/api/:userId', async (req, res) => {
 });
 
 // Update credits for a user
-app.post('/api/:userId', async (req, res) => {
+app.post('/api/credits/:userId', async (req, res) => {
     const apiKey = req.headers['x-api-key'] || req.query.apiKey;
     if (apiKey !== process.env.API_KEY) {
         return res.status(401).json({ error: 'Unauthorized' });
