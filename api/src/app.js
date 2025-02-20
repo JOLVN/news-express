@@ -26,7 +26,7 @@ app.get('/run-cron', async (req, res) => {
     }
 });
 
-app.get('/news/:date/:language', async (req, res) => {
+app.get('/api/news/:date/:language', async (req, res) => {
     try {
         const apiKey = req.headers['x-api-key'] || req.query.apiKey;
         if (apiKey !== process.env.API_KEY) {
@@ -78,6 +78,37 @@ app.post('/api/chat', async (req, res) => {
     } catch (error) {
         console.error('Error processing chat:', error);
         res.status(500).json({ error: error.message });
+    }
+});
+
+// Get credits for a user
+app.get('/api/:userId', async (req, res) => {
+    const apiKey = req.headers['x-api-key'] || req.query.apiKey;
+    if (apiKey !== process.env.API_KEY) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+    try {
+        const userId = req.params.userId;
+        const credits = await firebaseService.getCredits(userId);
+        res.json({ credits });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to get credits' });
+    }
+});
+
+// Update credits for a user
+app.post('/api/:userId', async (req, res) => {
+    const apiKey = req.headers['x-api-key'] || req.query.apiKey;
+    if (apiKey !== process.env.API_KEY) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+    try {
+        const { credits } = req.body;
+        const userId = req.params.userId;
+        await firebaseService.setCredits(userId, credits);
+        res.json({ success: true });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to update credits' });
     }
 });
 

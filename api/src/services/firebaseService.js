@@ -3,6 +3,42 @@ const { db } = require('../config/firebase');
 class FirebaseService {
     constructor() {
         this.articlesCollection = db.collection('articles');
+        this.creditsCollection = db.collection('credits');
+    }
+
+    async getCredits(userId) {
+        try {
+            const docRef = await this.creditsCollection.doc(userId).get();
+
+            if (docRef.exists) {
+                return docRef.data().credits;
+            } else {
+                // Si l'utilisateur n'existe pas, on crée un nouveau document avec 0 crédits
+                await this.creditsCollection.doc(userId).set({
+                    credits: 0,
+                    createdAt: new Date(),
+                    lastUpdated: new Date()
+                });
+                return 0;
+            }
+        } catch (error) {
+            console.error('Error getting credits:', error);
+            throw error;
+        }
+    }
+
+    async setCredits(userId, newCredits) {
+        try {
+            await this.creditsCollection.doc(userId).set({
+                credits: newCredits,
+                lastUpdated: new Date()
+            }, { merge: true });
+
+            return true;
+        } catch (error) {
+            console.error('Error setting credits:', error);
+            throw error;
+        }
     }
 
     // Vérifier si un article existe déjà
