@@ -16,6 +16,7 @@ export default function Button({children, onPress, style}: Props) {
         <Pressable 
             onPress={onPress} 
             style={({pressed}) => [styles.button, style, {backgroundColor: colors.accent500}, pressed && styles.pressed]}
+            android_ripple={{color: colors.gray600}}
         >
             <ThemedText variant={'medium'} color={'black'}>{children}</ThemedText>
         </Pressable>

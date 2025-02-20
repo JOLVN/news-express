@@ -21,6 +21,7 @@ const PaywallButton = forwardRef<View, Props>(({...rest}, ref) => {
         <Pressable 
             ref={ref}  
             {...rest}
+            android_ripple={{color: colors.gray600}}
             style={({pressed}) => [styles.button, pressed && styles.pressed, { backgroundColor: colors.gray700 }, Shadows[theme].large]}
         >
             <ThemedText variant="medium">{Texts[language].upgrade}</ThemedText>
