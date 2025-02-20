@@ -5,7 +5,7 @@ import { StyleSheet, Text, TextProps } from "react-native"
 const styles = StyleSheet.create({
     articleSummaryTitle: {
         fontFamily: 'PTSerif-Bold',
-        fontSize: 18,
+        fontSize: 16,
         marginBottom: 8,
     },
     articleBody: {

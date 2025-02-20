@@ -29,7 +29,7 @@ export function CategoriesContextProvider({children}: {children: React.ReactNode
     const loadSavedCategories = async () => {
         try {
             const savedCategories = await UserCategoriesService.getUserCategories();
-            if (savedCategories) {
+            if (savedCategories.length > 0) {
                 setUserCategories(savedCategories);
             } else {
                 await UserCategoriesService.setUserCategories(categories);
