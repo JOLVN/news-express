@@ -68,3 +68,47 @@ export async function getChatbotResponse(articleUrl: string, question: string, l
         throw error;
     }
 }
+
+export async function getCreditsFromFirebase(userId: string): Promise<number> {
+    const path = `api/credits/${userId}?apiKey=${API_KEY}`;
+    
+    try {
+        const response = await fetch(`${API_URL}${path}`);
+        const data = await response.json();
+        return data.credits;
+    } catch (error) {
+        if (error instanceof Error) {
+            throw {
+                message: error.message,
+                status: 500,
+            };
+        }
+        throw error;
+    }
+}
+
+export async function setCreditsInFirebase(userId: string, credits: number): Promise<boolean> {
+    const path = `api/credits/${userId}?apiKey=${API_KEY}`;
+    
+    try {
+        const response = await fetch(`${API_URL}${path}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ credits }),
+        });
+        
+        const data = await response.json();
+        return data.success;
+    } catch (error) {
+        if (error instanceof Error) {
+            throw {
+                message: error.message,
+                status: 500,
+            };
+        }
+        throw error;
+    }
+}
+
