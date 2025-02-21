@@ -17,8 +17,9 @@ import { fetchArticles } from "@/functions/API";
 import { sortArticles } from "@/functions/articles";
 import { formatDate } from "@/functions/date";
 import { useThemeColors } from "@/hooks/useThemeColors";
+import { Article } from "@/types/articles";
 import { useContext, useEffect, useState } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function Index() {
@@ -29,6 +30,7 @@ export default function Index() {
     const [visibleImage, setVisibleImage] = useState<string | ''>('');
     const [isCurrentArticleRead, setIsCurrentArticleRead] = useState(false);
     const [isCurrentArticleBookmarked, setIsCurrentArticleBookmarked] = useState(false);
+    const [preloadedImages, setPreloadedImages] = useState<Set<string>>(new Set());
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -51,15 +53,47 @@ export default function Index() {
             const sortedArticles = sortArticles(data.articles, readArticles);
             setUserArticlesByCategories(userCategories, sortedArticles);
             
-            if (!visibleImage && data.articles.length > 0) {
+            if (sortedArticles.length > 0) {
                 setVisibleImage(sortedArticles[0].image);
+                
+                // Preload images in the background
+                setTimeout(() => {
+                    preloadImages(sortedArticles.slice(1));
+                }, 100);
             }
+
             console.log(data.count);
             
         } catch (error) {
             console.error(error);
         } finally {
             if (changeIsLoading) setIsLoading(false);
+        }
+    }
+
+    async function preloadImages(articles: Article[]) {
+        const imagesToLoad = articles
+            .map(article => article.image)
+            .filter(image => 
+                image && 
+                image !== '' && 
+                !preloadedImages.has(image)
+            );
+    
+        // Preload images in batches of 3
+        const batchSize = 3;
+        for (let i = 0; i < imagesToLoad.length; i += batchSize) {
+            const batch = imagesToLoad.slice(i, i + batchSize);
+            await Promise.all(
+                batch.map(async (imageUrl) => {
+                    try {
+                        await Image.prefetch(imageUrl);
+                        setPreloadedImages(prev => new Set([...prev, imageUrl]));
+                    } catch (error) {
+                        console.error(`Failed to preload image: ${imageUrl}`, error);
+                    }
+                })
+            );
         }
     }
 
