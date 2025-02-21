@@ -1,5 +1,4 @@
 const { db } = require('../config/firebase');
-import { documentId, getDocs, query, where } from 'firebase/firestore';
 
 class FirebaseService {
     constructor() {
@@ -163,24 +162,32 @@ class FirebaseService {
 
     async getArticlesByIds(ids) {
         if (!ids || ids.length === 0) return [];
-
         try {
             const articles = [];
 
+            // Get articles in batches of 10 (Firestore limit)
             for (let i = 0; i < ids.length; i += 10) {
-                const chunk = ids.slice(i, i + 10);
-                const q = query(
-                    this.articlesCollection,
-                    where(documentId(), 'in', chunk)
-                );
+                const batch = ids.slice(i, i + 10);
+                const snapshot = await this.articlesCollection
+                    .where(db.FieldPath.documentId(), 'in', batch)
+                    .get();
 
-                const querySnapshot = await getDocs(q);
-                articles.push(...querySnapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                })));
+                snapshot.forEach(doc => {
+                    if (doc.exists) {
+                        articles.push({
+                            id: doc.id,
+                            ...doc.data()
+                        });
+                    }
+                });
             }
-            return articles;
+
+            // Sort articles in the order of the ids array
+            const orderedArticles = articles.sort((a, b) => {
+                return ids.indexOf(a.id) - ids.indexOf(b.id);
+            });
+
+            return orderedArticles;
         } catch (error) {
             console.error('Error getting articles by ids:', error);
             throw error;
