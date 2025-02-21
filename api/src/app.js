@@ -26,6 +26,31 @@ app.get('/run-cron', async (req, res) => {
     }
 });
 
+app.get('/api/news', async (req, res) => {
+    try {
+        const apiKey = req.headers['x-api-key'] || req.query.apiKey;
+        if (apiKey !== process.env.API_KEY) {
+            return res.status(401).json({ error: 'Unauthorized' });
+        }
+
+        const { ids } = req.body;
+        const articles = await firebaseService.getArticlesByIds(ids);
+
+        res.json({
+            success: true,
+            count: articles.length,
+            articles: articles
+        });
+
+    } catch (error) {
+        console.error('Error fetching news:', error);
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+});
+
 app.get('/api/news/:date/:language', async (req, res) => {
     try {
         const apiKey = req.headers['x-api-key'] || req.query.apiKey;

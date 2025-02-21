@@ -42,7 +42,6 @@ class FirebaseService {
             const bookmarks = doc.data().bookmarks || [];
 
             if (!bookmarks.includes(articleId)) {
-                console.log('Adding bookmark:', articleId);
                 bookmarks.push(articleId);
                 await docRef.set({
                     bookmarks,
@@ -160,6 +159,27 @@ class FirebaseService {
 
         return articles;
     }
+
+    async getArticlesByIds(ids) {
+        if (!ids || ids.length === 0) return [];
+
+        try {
+            const q = query(
+                this.articlesCollection,
+                where(documentId(), 'in', ids)
+            );
+
+            const querySnapshot = await getDocs(q);
+            return querySnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+        } catch (error) {
+            console.error('Error getting articles by ids:', error);
+            throw error;
+        }
+    }
+
 }
 
 module.exports = new FirebaseService();
