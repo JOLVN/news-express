@@ -27,6 +27,9 @@ export const Texts = {
         yesterday: "Hier",
         // Chat
         chatInputPlaceholder: "Pose moi une question sur l'article !",
+        // Bookmarks
+        bookmarks: "Favoris",
+        bookmarksButton: "Accéder aux favoris",
         // Language
         language: "Langue",
         french: "Français",
@@ -94,6 +97,9 @@ export const Texts = {
         yesterday: "Yesterday",
         // Chat
         chatInputPlaceholder: "Ask me a question about the article !",
+        // Bookmarks
+        bookmarks: "Bookmarks",
+        bookmarksButton: "Access bookmarks",
         // Language
         language: "Language",
         french: "French",

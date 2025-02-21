@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import SafeArea from "@/components/SafeArea";
 import ThemedText from "@/components/ui/ThemedText";
 import CategoriesContainer from "@/components/drawer/CategoriesContainer";
@@ -11,8 +11,8 @@ import { Texts } from "@/constants/Texts";
 import { Entypo } from "@expo/vector-icons";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { CreditsContext } from "@/contexts/CreditsContext";
-import PaywallButton from "../ui/buttons/PaywallButton";
 import { PurchasesService } from "@/services/Purchases";
+import DrawerButton from "@/components/ui/buttons/DrawerButton";
 
 export default function CustomDrawerContent() {
 
@@ -43,9 +43,15 @@ export default function CustomDrawerContent() {
                             <ThemedText variant="semiboldMd">{ credits }</ThemedText>
                         </View>
                     </View>
-                    {!isSubscribed && (
+                    {isSubscribed ?
+                    (
+                        <Link href={{ pathname: '/bookmarks'}} asChild>
+                            <DrawerButton text={Texts[language].bookmarksButton} />
+                        </Link>
+                    ) :
+                    (
                         <Link href={{ pathname: '/paywall'}} asChild>
-                            <PaywallButton />
+                            <DrawerButton text={Texts[language].upgrade} />
                         </Link>
                     )}
                     <View style={styles.bottomButtons}>

@@ -80,6 +80,9 @@ function Root() {
                 <Stack.Screen name="paywall" options={{ 
                     title: '',
                  }} />
+                <Stack.Screen name="bookmarks" options={{ 
+                    title: Texts[language].bookmarks,
+                 }} />
                 <Stack.Screen name="chatbot/[id]" options={{ 
                     title: "",
                     headerShown: false,
