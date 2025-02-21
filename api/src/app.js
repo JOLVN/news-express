@@ -112,6 +112,22 @@ app.post('/api/credits/:userId', async (req, res) => {
     }
 });
 
+// Refresh credits for a user
+app.post('/api/credits/:userId/refresh', async (req, res) => {
+    const apiKey = req.headers['x-api-key'] || req.query.apiKey;
+    if (apiKey !== process.env.API_KEY) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+    try {
+        const { credits } = req.body;
+        const userId = req.params.userId;
+        await firebaseService.refreshCredits(userId, credits);
+        res.json({ success: true });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to refresh credits' });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });

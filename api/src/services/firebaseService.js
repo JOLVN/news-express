@@ -11,11 +11,12 @@ class FirebaseService {
             const docRef = await this.creditsCollection.doc(userId).get();
 
             if (docRef.exists) {
-                return docRef.data().credits;
+                return docRef.data();
             } else {
                 // Si l'utilisateur n'existe pas, on crée un nouveau document avec 0 crédits
                 await this.creditsCollection.doc(userId).set({
                     credits: 0,
+                    lastCreditRefresh: null,
                     createdAt: new Date(),
                     lastUpdated: new Date()
                 });
@@ -40,6 +41,22 @@ class FirebaseService {
             throw error;
         }
     }
+
+    async refreshCredits(userId, newCredits) {
+        try {
+            await this.creditsCollection.doc(userId).set({
+                credits: newCredits,
+                lastCreditRefresh: new Date(),
+                lastUpdated: new Date()
+            }, { merge: true });
+
+            return true;
+        } catch (error) {
+            console.error('Error refreshing credits:', error);
+            throw error;
+        }
+    }
+
 
     // Vérifier si un article existe déjà
     async articleExists(articleUrl) {
