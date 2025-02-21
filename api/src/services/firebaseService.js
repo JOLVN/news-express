@@ -20,7 +20,12 @@ class FirebaseService {
                     createdAt: new Date(),
                     lastUpdated: new Date()
                 });
-                return 0;
+                return {
+                    credits: 0,
+                    lastCreditRefresh: null,
+                    createdAt: new Date(),
+                    lastUpdated: new Date()
+                };
             }
         } catch (error) {
             console.error('Error getting credits:', error);
