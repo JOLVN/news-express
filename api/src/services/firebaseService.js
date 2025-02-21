@@ -42,6 +42,7 @@ class FirebaseService {
             const bookmarks = doc.data().bookmarks || [];
 
             if (!bookmarks.includes(articleId)) {
+                console.log('Adding bookmark:', articleId);
                 bookmarks.push(articleId);
                 await docRef.set({
                     bookmarks,
