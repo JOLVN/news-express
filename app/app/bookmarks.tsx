@@ -6,7 +6,7 @@ import { fetchArticlesByIds } from "@/functions/API";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { Article } from "@/types/articles";
 import { useContext, useEffect, useState } from "react";
-import { Dimensions, FlatList, Image, Pressable, StyleSheet, View } from "react-native";
+import { Dimensions, FlatList, StyleSheet, View } from "react-native";
 
 const { width } = Dimensions.get('window');
 const COLUMN_COUNT = 3;

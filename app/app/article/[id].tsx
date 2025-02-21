@@ -2,28 +2,41 @@ import * as WebBrowser from 'expo-web-browser';
 import Button from "@/components/ui/buttons/Button";
 import ThemedText from "@/components/ui/ThemedText";
 import { useThemeColors } from "@/hooks/useThemeColors";
-import { Link, useLocalSearchParams } from "expo-router";
+import { Link, useLocalSearchParams, useNavigation } from "expo-router";
 import { Image, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Article, Question } from '@/types/articles';
 import ArticleQuestion from '@/components/article/ArticleQuestion';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import { ArticlesContext } from '@/contexts/ArticlesContext';
 import ChatbotButton from '@/components/ui/buttons/ChatbotButton';
 import { Texts } from '@/constants/Texts';
 import { LanguageContext } from '@/contexts/LanguageContext';
 import { fetchArticleById } from '@/functions/API';
 import SkeletonArticle from '@/components/ui/skeletons/SkeletonArticle';
+import BookmarkButton from '@/components/ui/buttons/BookmarkButton';
+import { BookmarksContext } from '@/contexts/BookmarksContext';
 
 export default function ArticleDetails() {
 
+    const navigation = useNavigation();
     const { getArticleById } = useContext(ArticlesContext);
+    const { isArticleBookmarked, bookmarkArticle, unbookmarkArticle } = useContext(BookmarksContext);
     const { id } = useLocalSearchParams();
     
     const [article, setArticle] = useState<Article | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [isCurrentArticleBookmarked, setIsCurrentArticleBookmarked] = useState(false);
     const colors = useThemeColors();
     const { language } = useContext(LanguageContext);
     const [expandedQuestionIndex, setExpandedQuestionIndex] = useState<number | null>(null);
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (
+                <BookmarkButton onPress={handleBookmark} isBookmarked={isCurrentArticleBookmarked} />
+            ),
+        });
+    }, [navigation, article, isCurrentArticleBookmarked]);
 
     function toggleQuestion(index: number) {
         setExpandedQuestionIndex(index === expandedQuestionIndex ? null : index);
@@ -54,6 +67,22 @@ export default function ArticleDetails() {
             }
         }
     }
+
+    async function handleBookmark() {
+        if (!article) return;
+        if (isArticleBookmarked(article.id)) {
+            unbookmarkArticle(article.id);
+            setIsCurrentArticleBookmarked(false);
+        } else {
+            bookmarkArticle(article.id);
+            setIsCurrentArticleBookmarked(true);
+        }
+    }
+
+    useEffect(() => {
+        if (article)
+            setIsCurrentArticleBookmarked(isArticleBookmarked(article.id));
+    }, [article]);
 
 
     useEffect(() => {
