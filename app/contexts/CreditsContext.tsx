@@ -24,7 +24,7 @@ export const CreditsContext = createContext<CreditsContextType>({
 
 export function CreditsContextProvider({ children }: {children: React.ReactNode}) {
 
-    const [credits, setCredits] = useState(DEFAULT_CREDITS);
+    const [credits, setCredits] = useState(0);
 
     // Refresh credits every month
     const refreshCredits = async () => {

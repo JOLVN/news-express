@@ -62,6 +62,9 @@ function Root() {
     // Load saved credits at startup
     useEffect(() => {        
         const initialize = async () => {
+            GoogleTTSService.initialize();
+            await PurchasesService.initialize();
+
             // Handle user id
             let userId = await UserIdService.getUserId();
             if (userId) {
@@ -97,8 +100,6 @@ function Root() {
             await refreshCredits();
         };
 
-        GoogleTTSService.initialize();
-        PurchasesService.initialize();
         initialize();
     }, []);
     

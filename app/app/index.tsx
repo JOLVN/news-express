@@ -36,7 +36,7 @@ export default function Index() {
 
     const {articles, userArticles, setArticles, setUserArticlesByCategories} = useContext(ArticlesContext);
     const { readArticles, isArticleRead, markArticleAsRead } = useContext(ReadArticlesContext);
-    const { isArticleBookmarked, bookmarkArticle, unbookmarkArticle } = useContext(BookmarksContext);
+    const { bookmarks, isArticleBookmarked, bookmarkArticle, unbookmarkArticle } = useContext(BookmarksContext);
     const {userCategories} = useContext(CategoriesContext);
     const { language } = useContext(LanguageContext);
     const colors = useThemeColors();
@@ -101,11 +101,11 @@ export default function Index() {
         if (userArticles.length > 0 && userArticles[articleIndex]) {
             setVisibleImage(userArticles[articleIndex].image);
             handleReadArticle(userArticles[articleIndex].id);
-            setIsCurrentArticleBookmarked(isArticleBookmarked(userArticles[articleIndex].id));
+            setIsCurrentArticleBookmarked(isArticleBookmarked(userArticles[articleIndex].id));            
         } else {
             setVisibleImage('');
         }
-    }, [userArticles, articleIndex]);
+    }, [userArticles, articleIndex, bookmarks]);
 
     if (isLoading || !userArticles) {
         return <LoadingArticlesOverlay />;

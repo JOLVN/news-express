@@ -4,10 +4,10 @@ const BOOKMARKS_KEY = 'bookmarks';
 
 export const BookmarksService = {
 
-    async getBookmarksArticleIds(): Promise<string[]> {
+    async getBookmarksArticleIds(): Promise<string[] | null> {
         try {
             const bookmarks = await AsyncStorage.getItem(BOOKMARKS_KEY);
-            return bookmarks ? JSON.parse(bookmarks) : [];
+            return bookmarks ? JSON.parse(bookmarks) : null;
         } catch (error) {
             console.error('Error getting read articles:', error);
             return [];
@@ -27,10 +27,11 @@ export const BookmarksService = {
             const bookmarksArticleIds = await this.getBookmarksArticleIds();
             
             // Prevent duplicates
-            const updatesBookmarks = [
-                ...bookmarksArticleIds.filter(baId => baId !== articleId),
-                articleId
-            ];
+            if (bookmarksArticleIds && bookmarksArticleIds.includes(articleId)) {
+                return;
+            }
+            
+            const updatesBookmarks = [...(bookmarksArticleIds || []), articleId];
             
             await AsyncStorage.setItem(BOOKMARKS_KEY, JSON.stringify(updatesBookmarks));
         } catch (error) {
@@ -41,7 +42,7 @@ export const BookmarksService = {
     async unbookmarkArticle(articleId: string): Promise<void> {
         try {
             const bookmarksArticleIds = await this.getBookmarksArticleIds();
-            const updatesBookmarks = bookmarksArticleIds.filter(baId => baId !== articleId);
+            const updatesBookmarks = bookmarksArticleIds?.filter((id) => id !== articleId) || [];
             await AsyncStorage.setItem(BOOKMARKS_KEY, JSON.stringify(updatesBookmarks));
         } catch (error) {
             console.error('Error unmarking article as read:', error);

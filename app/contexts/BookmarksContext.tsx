@@ -34,9 +34,7 @@ export function BookmarksContextProvider({ children }: Props) {
 
     const bookmarkArticle = async (articleId: string) => {
         await BookmarksService.bookmarkArticle(articleId);
-        await loadBookmarks();
-        console.log('bookmarkArticle', userId);
-        
+        await loadBookmarks();        
         await addBookmarkToFirebase(userId, articleId);
     };
 
