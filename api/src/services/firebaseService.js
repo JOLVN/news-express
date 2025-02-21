@@ -169,7 +169,7 @@ class FirebaseService {
             for (let i = 0; i < ids.length; i += 10) {
                 const batch = ids.slice(i, i + 10);
                 const snapshot = await this.articlesCollection
-                    .where(db.FieldPath.documentId(), 'in', batch)
+                    .where('__name__', 'in', batch)
                     .get();
 
                 snapshot.forEach(doc => {
