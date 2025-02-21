@@ -42,7 +42,6 @@ export class PurchasesService {
             return customerInfo;
         } catch (error: any) {
             if (error.userCancelled) {
-                console.log('User cancelled purchase');
                 return;
             } else {
                 console.error('Error purchasing package:', error);
@@ -58,8 +57,6 @@ export class PurchasesService {
                 || customerInfo.originalPurchaseDate !== null;
             const isTrialEligible = !hasTriedBefore;
             const isSubscribed = customerInfo.activeSubscriptions.length > 0;
-            console.log(customerInfo);
-            
             return {
                 isSubscribed,
                 isTrialEligible,

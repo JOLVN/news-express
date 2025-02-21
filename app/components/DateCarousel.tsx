@@ -75,8 +75,6 @@ export default function DateCarousel({ onDateChange, style }: Props) {
             setCurrentIndex(index);
             const newDate = formatDate(viewableItems[0].item);
             if (newDate && newDate !== lastDate.current) {
-                console.log(newDate);
-                
                 lastDate.current = newDate;
                 onDateChange(newDate);
             }
