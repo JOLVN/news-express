@@ -26,7 +26,7 @@ app.get('/run-cron', async (req, res) => {
     }
 });
 
-app.get('/api/news', async (req, res) => {
+app.post('/api/news', async (req, res) => {
     try {
         const apiKey = req.headers['x-api-key'] || req.query.apiKey;
         if (apiKey !== process.env.API_KEY) {
