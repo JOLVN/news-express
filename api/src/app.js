@@ -119,9 +119,9 @@ app.post('/api/credits/:userId/refresh', async (req, res) => {
         return res.status(401).json({ error: 'Unauthorized' });
     }
     try {
-        const { credits } = req.body;
+        const { credits, date } = req.body;
         const userId = req.params.userId;
-        await firebaseService.refreshCredits(userId, credits);
+        await firebaseService.refreshCredits(userId, date, credits);
         res.json({ success: true });
     } catch (error) {
         res.status(500).json({ error: 'Failed to refresh credits' });

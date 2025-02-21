@@ -42,11 +42,11 @@ class FirebaseService {
         }
     }
 
-    async refreshCredits(userId, newCredits) {
+    async refreshCredits(userId, date, newCredits) {
         try {
             await this.creditsCollection.doc(userId).set({
                 credits: newCredits,
-                lastCreditRefresh: new Date(),
+                lastCreditRefresh: date,
                 lastUpdated: new Date()
             }, { merge: true });
 
