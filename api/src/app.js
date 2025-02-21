@@ -90,7 +90,7 @@ app.get('/api/credits/:userId', async (req, res) => {
     try {
         const userId = req.params.userId;
         const credits = await firebaseService.getCredits(userId);
-        res.json({ credits });
+        res.json(credits);
     } catch (error) {
         res.status(500).json({ error: 'Failed to get credits' });
     }
