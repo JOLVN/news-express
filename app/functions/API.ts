@@ -1,5 +1,5 @@
 import { Texts } from "@/constants/Texts";
-import { ArticleResponse } from "@/types/articles";
+import { ArticleByIdResponse, ArticleResponse } from "@/types/articles";
 import { UserData } from "@/types/user";
 import { Language } from "@/types/languages";
 import { Alert } from "react-native";
@@ -33,6 +33,59 @@ export async function fetchArticles(day: string, language: Language) {
         throw error;
     }
 }
+
+export async function fetchArticleById(id: string) {
+    const path = `api/news/${id}?apiKey=${API_KEY}`;
+    
+    try {
+        const response = await fetch(`${API_URL}${path}`);
+        if (!response.ok) {
+            throw {
+                message: 'Error while fetching article by id',
+                status: response.status,
+            };
+        }
+        return response.json() as Promise<ArticleByIdResponse>;
+    } catch (error) {
+        if (error instanceof Error) {
+            throw {
+                message: error.message,
+                status: 500,
+            };
+        }
+        throw error;
+    }
+}
+
+export async function fetchArticlesByIds(ids: string[]) {
+    const path = `api/news?apiKey=${API_KEY}`;
+    
+    try {
+        const response = await fetch(`${API_URL}${path}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ ids }),
+        });
+        if (!response.ok) {
+            throw {
+                message: 'Error while fetching articles by ids',
+                status: response.status,
+            };
+        }
+        return response.json() as Promise<ArticleResponse>;
+    } catch (error) {
+        if (error instanceof Error) {
+            throw {
+                message: error.message,
+                status: 500,
+            };
+        }
+        throw error;
+    }
+}
+    
 
 export async function getChatbotResponse(articleUrl: string, question: string, language: Language): Promise<string> {
     const path = `api/chat?apiKey=${API_KEY}&language=${language}`;

@@ -29,7 +29,7 @@ export function BookmarksContextProvider({ children }: Props) {
 
     const loadBookmarks = async () => {
         const bookmarks = await BookmarksService.getBookmarksArticleIds();
-        setBookmarks(bookmarks);
+        if (bookmarks) setBookmarks(bookmarks);
     };
 
     const bookmarkArticle = async (articleId: string) => {

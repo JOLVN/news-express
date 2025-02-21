@@ -33,6 +33,10 @@ export interface ArticleResponse {
     articles: Article[];
 }
 
+export interface ArticleByIdResponse {
+    article: Article;
+}
+
 export interface ReadArticle {
     id: string;
     readAt: string;
