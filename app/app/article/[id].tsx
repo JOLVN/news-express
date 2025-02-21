@@ -34,7 +34,7 @@ export default function ArticleDetails() {
     useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (
-                <BookmarkButton onPress={handleBookmark} isBookmarked={isCurrentArticleBookmarked} />
+                <BookmarkButton onPress={handleBookmark} isBookmarked={isCurrentArticleBookmarked} color={colors.text} />
             ),
         });
     }, [navigation, article, isCurrentArticleBookmarked]);
@@ -71,12 +71,15 @@ export default function ArticleDetails() {
 
     async function handleBookmark() {
         if (!article) return;
-        if (isArticleBookmarked(article.id)) {
+        if (isCurrentArticleBookmarked) {
             unbookmarkArticle(article.id);
             setIsCurrentArticleBookmarked(false);
+            console.log('Article unbookmarked');
+            
         } else {
             bookmarkArticle(article.id);
             setIsCurrentArticleBookmarked(true);
+            console.log('Article bookmarked');
         }
     }
 
