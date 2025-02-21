@@ -20,6 +20,7 @@ import SwitchCountryModal from "@/components/modal/SwitchCountryModal";
 import { ReadArticlesContextProvider } from "@/contexts/ReadArticlesContext";
 import { PurchasesService } from "@/services/Purchases";
 import { CreditsContextProvider } from "@/contexts/CreditsContext";
+import { BookmarksContextProvider } from "@/contexts/BookmarksContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -101,17 +102,19 @@ export default function RootLayout() {
             <LanguageContextProvider>
                 <ArticlesContextProvider>
                     <ReadArticlesContextProvider>
-                        <CreditsContextProvider>
-                            <CategoriesContextProvider>
-                                <ModalContextProvider>
-                                    <GestureHandlerRootView style={{ flex: 1 }}>
-                                        <BottomSheetModalProvider>
-                                            <Root />
-                                        </BottomSheetModalProvider>
-                                    </GestureHandlerRootView>
-                                </ModalContextProvider>
-                            </CategoriesContextProvider>
-                        </CreditsContextProvider>
+                        <BookmarksContextProvider>
+                            <CreditsContextProvider>
+                                <CategoriesContextProvider>
+                                    <ModalContextProvider>
+                                        <GestureHandlerRootView style={{ flex: 1 }}>
+                                            <BottomSheetModalProvider>
+                                                <Root />
+                                            </BottomSheetModalProvider>
+                                        </GestureHandlerRootView>
+                                    </ModalContextProvider>
+                                </CategoriesContextProvider>
+                            </CreditsContextProvider>
+                        </BookmarksContextProvider>
                     </ReadArticlesContextProvider>
                 </ArticlesContextProvider>
             </LanguageContextProvider>

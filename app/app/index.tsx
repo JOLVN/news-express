@@ -7,7 +7,9 @@ import CustomDrawerContent from "@/components/drawer/CustomDrawerContent";
 import EdgeDetector from "@/components/EdgeDetector";
 import LoadingArticlesOverlay from "@/components/LoadingArticlesOverlay";
 import SafeArea from "@/components/SafeArea";
+import BookmarkButton from "@/components/ui/buttons/BookmarkButton";
 import { ArticlesContext } from "@/contexts/ArticlesContext";
+import { BookmarksContext } from "@/contexts/BookmarksContext";
 import { CategoriesContext } from "@/contexts/CategoriesContext";
 import { LanguageContext } from "@/contexts/LanguageContext";
 import { ReadArticlesContext } from "@/contexts/ReadArticlesContext";
@@ -16,7 +18,7 @@ import { sortArticles } from "@/functions/articles";
 import { formatDate } from "@/functions/date";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { useContext, useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function Index() {
@@ -26,6 +28,7 @@ export default function Index() {
     const [isDrawerVisible, setIsDrawerVisible] = useState(false);
     const [visibleImage, setVisibleImage] = useState<string | ''>('');
     const [isCurrentArticleRead, setIsCurrentArticleRead] = useState(false);
+    const [isCurrentArticleBookmarked, setIsCurrentArticleBookmarked] = useState(false);
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -33,6 +36,7 @@ export default function Index() {
 
     const {articles, userArticles, setArticles, setUserArticlesByCategories} = useContext(ArticlesContext);
     const { readArticles, isArticleRead, markArticleAsRead } = useContext(ReadArticlesContext);
+    const { isArticleBookmarked, bookmarkArticle, unbookmarkArticle } = useContext(BookmarksContext);
     const {userCategories} = useContext(CategoriesContext);
     const { language } = useContext(LanguageContext);
     const colors = useThemeColors();
@@ -63,9 +67,18 @@ export default function Index() {
         if (isArticleRead(articleId)) {
             setIsCurrentArticleRead(true);
         } else {
-            await markArticleAsRead(articleId, language);
             setIsCurrentArticleRead(false);
+            await markArticleAsRead(articleId, language);
         }
+    };
+
+    function handleBookmark() {
+        if (isCurrentArticleBookmarked) {
+            unbookmarkArticle(userArticles[articleIndex].id);
+        } else {
+            bookmarkArticle(userArticles[articleIndex].id);
+        }
+        setIsCurrentArticleBookmarked(!isCurrentArticleBookmarked);
     };
 
     function handleDateChange(newDate: string) {
@@ -87,6 +100,7 @@ export default function Index() {
         if (userArticles.length > 0 && userArticles[articleIndex]) {
             setVisibleImage(userArticles[articleIndex].image);
             handleReadArticle(userArticles[articleIndex].id);
+            setIsCurrentArticleBookmarked(isArticleBookmarked(userArticles[articleIndex].id));
         } else {
             setVisibleImage('');
         }
@@ -112,6 +126,7 @@ export default function Index() {
                 <SafeArea style={styles.contentContainer}>
                     <EdgeDetector style={{ left: -20 }} onSwipeStart={() => setIsDrawerVisible(true)} />
                     <View style={styles.summaryBox}>
+                        <BookmarkButton style={styles.bookmarkButton} onPress={handleBookmark} isBookmarked={isCurrentArticleBookmarked} />
                         <DateCarousel 
                             style={{ marginBottom: 16 }}
                             onDateChange={handleDateChange} 
@@ -139,6 +154,10 @@ const styles = StyleSheet.create({
     contentContainer: {
         flex: 1,
         marginHorizontal: 20,
+    },
+    bookmarkButton: {
+        flexDirection: 'row-reverse',
+        marginBottom: 16,
     },
     summaryBox: {
         position: 'absolute',
