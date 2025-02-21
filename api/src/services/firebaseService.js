@@ -6,7 +6,7 @@ class FirebaseService {
         this.creditsCollection = db.collection('credits');
     }
 
-    async getCredits(userId) {
+    async getUserData(userId) {
         try {
             const docRef = await this.creditsCollection.doc(userId).get();
 
@@ -16,12 +16,14 @@ class FirebaseService {
                 // Si l'utilisateur n'existe pas, on crée un nouveau document avec 0 crédits
                 await this.creditsCollection.doc(userId).set({
                     credits: 0,
+                    bookmarks: [],
                     lastCreditRefresh: null,
                     createdAt: new Date(),
                     lastUpdated: new Date()
                 });
                 return {
                     credits: 0,
+                    bookmarks: [],
                     lastCreditRefresh: null,
                     createdAt: new Date(),
                     lastUpdated: new Date()
@@ -29,6 +31,50 @@ class FirebaseService {
             }
         } catch (error) {
             console.error('Error getting credits:', error);
+            throw error;
+        }
+    }
+
+    async addBookmark(userId, articleId) {
+        try {
+            const docRef = this.creditsCollection.doc(userId);
+            const doc = await docRef.get();
+            const bookmarks = doc.data().bookmarks || [];
+
+            if (!bookmarks.includes(articleId)) {
+                bookmarks.push(articleId);
+                await docRef.set({
+                    bookmarks,
+                    lastUpdated: new Date()
+                }, { merge: true });
+                return true;
+            } else {
+                return false;
+            }
+        } catch (error) {
+            console.error('Error adding bookmark:', error);
+            throw error;
+        }
+    }
+
+    async removeBookmark(userId, articleId) {
+        try {
+            const docRef = this.creditsCollection.doc(userId);
+            const doc = await docRef.get();
+            const bookmarks = doc.data().bookmarks || [];
+
+            if (bookmarks.includes(articleId)) {
+                const updatedBookmarks = bookmarks.filter(id => id !== articleId);
+                await docRef.set({
+                    bookmarks: updatedBookmarks,
+                    lastUpdated: new Date()
+                }, { merge: true });
+                return true;
+            } else {
+                return false;
+            }
+        } catch (error) {
+            console.error('Error removing bookmark:', error);
             throw error;
         }
     }

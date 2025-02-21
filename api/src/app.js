@@ -81,7 +81,7 @@ app.post('/api/chat', async (req, res) => {
     }
 });
 
-// Get credits for a user
+// Get user credits data
 app.get('/api/credits/:userId', async (req, res) => {
     const apiKey = req.headers['x-api-key'] || req.query.apiKey;
     if (apiKey !== process.env.API_KEY) {
@@ -89,10 +89,42 @@ app.get('/api/credits/:userId', async (req, res) => {
     }
     try {
         const userId = req.params.userId;
-        const credits = await firebaseService.getCredits(userId);
+        const credits = await firebaseService.getUserData(userId);
         res.json(credits);
     } catch (error) {
         res.status(500).json({ error: 'Failed to get credits' });
+    }
+});
+
+// Add bookmark for a user
+app.post('/api/bookmarks/:userId', async (req, res) => {
+    const apiKey = req.headers['x-api-key'] || req.query.apiKey;
+    if (apiKey !== process.env.API_KEY) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+    try {
+        const { articleId } = req.body;
+        const userId = req.params.userId;
+        const result = await firebaseService.addBookmark(userId, articleId);
+        res.json({ success: result });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to add bookmark' });
+    }
+});
+
+// Remove bookmark for a user
+app.delete('/api/bookmarks/:userId/:articleId', async (req, res) => {
+    const apiKey = req.headers['x-api-key'] || req.query.apiKey;
+    if (apiKey !== process.env.API_KEY) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+    try {
+        const { articleId } = req.params;
+        const userId = req.params.userId;
+        const result = await firebaseService.removeBookmark(userId, articleId);
+        res.json({ success: result });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to remove bookmark' });
     }
 });
 
