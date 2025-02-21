@@ -46,7 +46,7 @@ export default function CustomDrawerContent() {
                     {isSubscribed ?
                     (
                         <Link href={{ pathname: '/bookmarks'}} asChild>
-                            <DrawerButton text={Texts[language].bookmarksButton} />
+                            <DrawerButton text={Texts[language].bookmarksButton} icon="bookmark" />
                         </Link>
                     ) :
                     (

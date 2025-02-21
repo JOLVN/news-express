@@ -4,12 +4,14 @@ import { useThemeColors } from "@/hooks/useThemeColors";
 import { forwardRef, useContext } from "react";
 import { ThemeContext } from "@/contexts/ThemeContext";
 import { Shadows } from "@/constants/Shadows";
+import { Ionicons } from "@expo/vector-icons";
 
 type Props = {
     text: string;
+    icon?: string;
 }
 
-const DrawerButton = forwardRef<View, Props>(({text, ...rest}, ref) => {
+const DrawerButton = forwardRef<View, Props>(({text, icon, ...rest}, ref) => {
 
     const colors = useThemeColors();
     const { theme } = useContext(ThemeContext);
@@ -22,6 +24,7 @@ const DrawerButton = forwardRef<View, Props>(({text, ...rest}, ref) => {
             style={({pressed}) => [styles.button, pressed && styles.pressed, { backgroundColor: colors.gray700 }, Shadows[theme].large]}
         >
             <ThemedText variant="medium">{text}</ThemedText>
+            {icon && <Ionicons name={icon as any} size={20} color={colors.text} />}
         </Pressable>
     )
 });
@@ -37,6 +40,9 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 16,
         borderRadius: 10,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        gap: 10
     },
     pressed: {
         opacity: 0.8,
