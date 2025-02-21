@@ -1,6 +1,6 @@
 import { Texts } from "@/constants/Texts";
 import { ArticleResponse } from "@/types/articles";
-import { CreditsResponse } from "@/types/credits";
+import { UserData } from "@/types/user";
 import { Language } from "@/types/languages";
 import { Alert } from "react-native";
 
@@ -70,13 +70,64 @@ export async function getChatbotResponse(articleUrl: string, question: string, l
     }
 }
 
-export async function getCreditsFromFirebase(userId: string): Promise<CreditsResponse> {
+export async function getUserDataFromFirebase(userId: string): Promise<UserData> {
     const path = `api/credits/${userId}?apiKey=${API_KEY}`;
     
     try {
         const response = await fetch(`${API_URL}${path}`);
         const data = await response.json();
         return data;
+    } catch (error) {
+        if (error instanceof Error) {
+            throw {
+                message: error.message,
+                status: 500,
+            };
+        }
+        throw error;
+    }
+}
+
+export async function addBookmarkToFirebase(userId: string, articleId: string): Promise<boolean> {
+    const path = `api/bookmarks/${userId}?apiKey=${API_KEY}`;
+    
+    try {        
+        const response = await fetch(`${API_URL}${path}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ articleId }),
+        });
+        
+        
+        const data = await response.json();
+        return data.success;
+    } catch (error) {        
+        if (error instanceof Error) {
+            throw {
+                message: error.message,
+                status: 500,
+            };
+        }
+        throw error;
+    }
+}
+
+export async function removeBookmarkFromFirebase(userId: string, articleId: string): Promise<boolean> {
+    const path = `api/bookmarks/${userId}/${articleId}?apiKey=${API_KEY}`;
+    
+    try {
+        const response = await fetch(`${API_URL}${path}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ articleId }),
+        });
+        
+        const data = await response.json();
+        return data.success;
     } catch (error) {
         if (error instanceof Error) {
             throw {

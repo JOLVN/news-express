@@ -1,8 +1,11 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { BookmarksService } from '@/services/Bookmarks';
+import { addBookmarkToFirebase, removeBookmarkFromFirebase } from '@/functions/API';
+import { UserIdContext } from '@/contexts/UserIdContext';
 
 interface BookmarksContextProps {
     bookmarks: string[];
+    setBookmarks: (bookmarks: string[]) => void;
     bookmarkArticle: (articleId: string) => Promise<void>;
     unbookmarkArticle: (articleId: string) => Promise<void>;
     isArticleBookmarked: (articleId: string) => boolean;
@@ -10,6 +13,7 @@ interface BookmarksContextProps {
 
 export const BookmarksContext = createContext<BookmarksContextProps>({
     bookmarks: [],
+    setBookmarks: () => {},
     bookmarkArticle: async () => {},
     unbookmarkArticle: async () => {},
     isArticleBookmarked: () => false
@@ -21,10 +25,7 @@ type Props = {
 
 export function BookmarksContextProvider({ children }: Props) {
     const [bookmarks, setBookmarks] = useState<string[]>([]);
-
-    useEffect(() => {
-        loadBookmarks();
-    }, []);
+    const { userId } = useContext(UserIdContext);
 
     const loadBookmarks = async () => {
         const bookmarks = await BookmarksService.getBookmarksArticleIds();
@@ -34,11 +35,15 @@ export function BookmarksContextProvider({ children }: Props) {
     const bookmarkArticle = async (articleId: string) => {
         await BookmarksService.bookmarkArticle(articleId);
         await loadBookmarks();
+        console.log('bookmarkArticle', userId);
+        
+        await addBookmarkToFirebase(userId, articleId);
     };
 
     const unbookmarkArticle = async (articleId: string) => {
         await BookmarksService.unbookmarkArticle(articleId);
         await loadBookmarks();
+        await removeBookmarkFromFirebase(userId, articleId);
     }
 
     const isArticleBookmarked = (articleId: string) => {
@@ -47,6 +52,7 @@ export function BookmarksContextProvider({ children }: Props) {
 
     const values = {
         bookmarks,
+        setBookmarks,
         bookmarkArticle,
         unbookmarkArticle,
         isArticleBookmarked

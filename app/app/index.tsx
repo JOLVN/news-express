@@ -73,6 +73,7 @@ export default function Index() {
     };
 
     function handleBookmark() {
+        if (!userArticles[articleIndex]) return;
         if (isCurrentArticleBookmarked) {
             unbookmarkArticle(userArticles[articleIndex].id);
         } else {

@@ -1,10 +1,11 @@
 import { createContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PurchasesService } from '../services/Purchases';
-import { getCreditsFromFirebase, refreshCreditsInFirebase, setCreditsInFirebase } from '@/functions/API';
+import { getUserDataFromFirebase, refreshCreditsInFirebase, setCreditsInFirebase } from '@/functions/API';
 
 interface CreditsContextType {
     credits: number;
+    setCredits: (credits: number) => void;
     useCredit: () => Promise<boolean>;
     refreshCredits: () => Promise<void>;
     buyCredits: () => Promise<void>;
@@ -15,6 +16,7 @@ const SUBSCRIPTION_CREDITS = 200;
 
 export const CreditsContext = createContext<CreditsContextType>({
     credits: 0,
+    setCredits: () => {},
     useCredit: async () => false,
     refreshCredits: async () => {},
     buyCredits: async () => {},
@@ -32,8 +34,8 @@ export function CreditsContextProvider({ children }: {children: React.ReactNode}
 
         if (lastRefresh !== currentMonth) {
             const userId = await PurchasesService.getRCUserId();
-            const firebaseCredits = await getCreditsFromFirebase(userId);
-            if (firebaseCredits.lastCreditRefresh !== currentMonth) {
+            const userData = await getUserDataFromFirebase(userId);
+            if (userData.lastCreditRefresh !== currentMonth) {
                 const { isSubscribed } = await PurchasesService.checkSubscriptionStatus();
                 const newCredits = credits + (isSubscribed ? SUBSCRIPTION_CREDITS : DEFAULT_CREDITS);
                 setCredits(newCredits);
@@ -67,29 +69,9 @@ export function CreditsContextProvider({ children }: {children: React.ReactNode}
         await setCreditsInFirebase(userId, newCredits);
     }
 
-    // Load saved credits at startup
-    useEffect(() => {        
-        const loadCredits = async () => {
-            const savedCredits = await AsyncStorage.getItem('credits');
-            if (savedCredits) {
-                setCredits(Number(savedCredits));
-            } else {
-                await PurchasesService.initialize();
-                const userId = await PurchasesService.getRCUserId();
-                const firebaseCredits = await getCreditsFromFirebase(userId);
-                if (firebaseCredits) {
-                    setCredits(firebaseCredits.credits);
-                    await AsyncStorage.setItem('credits', String(firebaseCredits.credits));
-                }
-            }
-            await refreshCredits();
-        };
-
-        loadCredits();
-    }, []);
-
     const values = {
         credits,
+        setCredits,
         useCredit,
         refreshCredits,
         buyCredits,

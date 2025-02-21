@@ -6,11 +6,19 @@ export const BookmarksService = {
 
     async getBookmarksArticleIds(): Promise<string[]> {
         try {
-            const data = await AsyncStorage.getItem(BOOKMARKS_KEY);
-            return data ? JSON.parse(data) : [];
+            const bookmarks = await AsyncStorage.getItem(BOOKMARKS_KEY);
+            return bookmarks ? JSON.parse(bookmarks) : [];
         } catch (error) {
             console.error('Error getting read articles:', error);
             return [];
+        }
+    },
+
+    async setBookmarksArticleIds(bookmarks: string[]): Promise<void> {
+        try {
+            await AsyncStorage.setItem(BOOKMARKS_KEY, JSON.stringify(bookmarks));
+        } catch (error) {
+            console.error('Error setting read articles:', error);
         }
     },
 

@@ -19,8 +19,13 @@ import { Texts } from "@/constants/Texts";
 import SwitchCountryModal from "@/components/modal/SwitchCountryModal";
 import { ReadArticlesContextProvider } from "@/contexts/ReadArticlesContext";
 import { PurchasesService } from "@/services/Purchases";
-import { CreditsContextProvider } from "@/contexts/CreditsContext";
-import { BookmarksContextProvider } from "@/contexts/BookmarksContext";
+import { CreditsContext, CreditsContextProvider } from "@/contexts/CreditsContext";
+import { BookmarksContext, BookmarksContextProvider } from "@/contexts/BookmarksContext";
+import { CreditsService } from "@/services/Credits";
+import { getUserDataFromFirebase } from "@/functions/API";
+import { BookmarksService } from "@/services/Bookmarks";
+import { UserIdService } from "@/services/UserId";
+import { UserIdContext, UserIdContextProvider } from "@/contexts/UserIdContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -28,6 +33,9 @@ function Root() {
 
     const { theme } = useContext(ThemeContext);
     const { language } = useContext(LanguageContext);
+    const { setCredits, refreshCredits } = useContext(CreditsContext);
+    const { setUserId } = useContext(UserIdContext);
+    const { setBookmarks } = useContext(BookmarksContext);
     const colors = useThemeColors();
     const [loaded] = useFonts({
         'PTSerif-Regular': PTSerif_400Regular,
@@ -48,8 +56,50 @@ function Root() {
     }, [loaded]);
 
     useEffect(() => {
+        
+    }, []);
+
+    // Load saved credits at startup
+    useEffect(() => {        
+        const initialize = async () => {
+            // Handle user id
+            let userId = await UserIdService.getUserId();
+            if (userId) {
+                setUserId(userId);
+            } else {
+                userId = await PurchasesService.getRCUserId();
+                await UserIdService.setUserId(userId);
+                setUserId(userId);
+                
+            }
+            const userData = await getUserDataFromFirebase(userId);
+            // Handle credits
+            const savedCredits = await CreditsService.getCredits();
+            if (savedCredits) {
+                setCredits(savedCredits);
+            } else {
+                if (userData.credits) {
+                    setCredits(userData.credits);
+                    await CreditsService.setCredits(userData.credits);
+                }
+            }
+            // Handle bookmarks
+            const bookmarks = await BookmarksService.getBookmarksArticleIds();
+            if (bookmarks) {
+                setBookmarks(bookmarks);
+            } else {
+                if (userData.bookmarks) {
+                    setBookmarks(userData.bookmarks);
+                    await BookmarksService.setBookmarksArticleIds(userData.bookmarks);
+                }
+            }
+            // Refresh credits
+            await refreshCredits();
+        };
+
         GoogleTTSService.initialize();
         PurchasesService.initialize();
+        initialize();
     }, []);
     
     if (!loaded) {
@@ -98,26 +148,28 @@ function Root() {
 
 export default function RootLayout() {
     return (
-        <ThemeContextProvider>
-            <LanguageContextProvider>
-                <ArticlesContextProvider>
-                    <ReadArticlesContextProvider>
-                        <BookmarksContextProvider>
-                            <CreditsContextProvider>
-                                <CategoriesContextProvider>
-                                    <ModalContextProvider>
-                                        <GestureHandlerRootView style={{ flex: 1 }}>
-                                            <BottomSheetModalProvider>
-                                                <Root />
-                                            </BottomSheetModalProvider>
-                                        </GestureHandlerRootView>
-                                    </ModalContextProvider>
-                                </CategoriesContextProvider>
-                            </CreditsContextProvider>
-                        </BookmarksContextProvider>
-                    </ReadArticlesContextProvider>
-                </ArticlesContextProvider>
-            </LanguageContextProvider>
-        </ThemeContextProvider>
+        <UserIdContextProvider>
+            <ThemeContextProvider>
+                <LanguageContextProvider>
+                    <ArticlesContextProvider>
+                        <ReadArticlesContextProvider>
+                            <BookmarksContextProvider>
+                                <CreditsContextProvider>
+                                    <CategoriesContextProvider>
+                                        <ModalContextProvider>
+                                            <GestureHandlerRootView style={{ flex: 1 }}>
+                                                <BottomSheetModalProvider>
+                                                    <Root />
+                                                </BottomSheetModalProvider>
+                                            </GestureHandlerRootView>
+                                        </ModalContextProvider>
+                                    </CategoriesContextProvider>
+                                </CreditsContextProvider>
+                            </BookmarksContextProvider>
+                        </ReadArticlesContextProvider>
+                    </ArticlesContextProvider>
+                </LanguageContextProvider>
+            </ThemeContextProvider>
+        </UserIdContextProvider>
     );
 }
