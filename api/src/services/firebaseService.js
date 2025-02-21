@@ -194,6 +194,18 @@ class FirebaseService {
         }
     }
 
+    async getArticleById(articleId) {
+        const doc = await this.articlesCollection.doc(articleId).get();
+        if (doc.exists) {
+            return {
+                id: doc.id,
+                ...doc.data()
+            };
+        } else {
+            return null;
+        }
+    }
 }
+
 
 module.exports = new FirebaseService();

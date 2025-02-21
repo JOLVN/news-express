@@ -51,6 +51,36 @@ app.post('/api/news', async (req, res) => {
     }
 });
 
+app.get('/api/news/:articleId', async (req, res) => {
+    try {
+        const apiKey = req.headers['x-api-key'] || req.query.apiKey;
+        if (apiKey !== process.env.API_KEY) {
+            return res.status(401).json({ error: 'Unauthorized' });
+        }
+
+        const articleId = req.params.articleId;
+        const article = await firebaseService.getArticleById(articleId);
+
+        if (article) {
+            res.json({
+                success: true,
+                article: article
+            });
+        } else {
+            res.status(404).json({
+                success: false,
+                error: 'Article not found'
+            });
+        }
+    } catch (error) {
+        console.error('Error fetching news:', error);
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+});
+
 app.get('/api/news/:date/:language', async (req, res) => {
     try {
         const apiKey = req.headers['x-api-key'] || req.query.apiKey;
@@ -79,6 +109,7 @@ app.get('/api/news/:date/:language', async (req, res) => {
         });
     }
 });
+
 
 app.post('/api/chat', async (req, res) => {
     const apiKey = req.headers['x-api-key'] || req.query.apiKey;
