@@ -25,6 +25,7 @@ export default function ArticleDetails() {
     
     const [article, setArticle] = useState<Article | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [isImageLoading, setIsImageLoading] = useState(true);
     const [isCurrentArticleBookmarked, setIsCurrentArticleBookmarked] = useState(false);
     const colors = useThemeColors();
     const { language } = useContext(LanguageContext);
@@ -107,11 +108,33 @@ export default function ArticleDetails() {
         <View style={{ flex: 1, backgroundColor: colors.coloredBackground }}>
             <ScrollView style={[styles.container]}>
                 <View style={{ gap: 30, paddingBottom: 40 }}>
+                    {/* TITLE */}
                     <ThemedText variant={'articleTitle'}>{article.title}</ThemedText>
+                    {/* IMAGE */}
                     {article.image && article.image !== 'None' && (
-                        <Image source={{uri: article.image}} style={{width: '100%', height: 200}} />
+                        <View style={{position: 'relative', width: '100%', height: 200}}>
+                            {isImageLoading && (
+                                <View 
+                                    style={{
+                                        position: 'absolute',
+                                        width: '100%',
+                                        height: 200,
+                                        backgroundColor: colors.gray600,
+                                        borderRadius: 8,
+                                    }}
+                                />
+                            )}
+                            <Image 
+                                source={{uri: article.image}} 
+                                style={{width: '100%', height: 200}}
+                                onLoadStart={() => setIsImageLoading(true)}
+                                onLoadEnd={() => setIsImageLoading(false)}
+                            />
+                        </View>
                     )}
+                    {/* ITALIC */}
                     <ThemedText variant={'articleItalic'}>{article.detailedArticle.introduction}</ThemedText>
+                    {/* SECTIONS */}
                     <View style={styles.section}>
                         <ThemedText variant={'articleTitle'} style={styles.sectionTitle}>{Texts[language].context}</ThemedText>
                         <ThemedText variant={'articleBody'}>{article.detailedArticle.context}</ThemedText>
@@ -128,12 +151,14 @@ export default function ArticleDetails() {
                         <ThemedText variant={'articleTitle'} style={styles.sectionTitle}>{Texts[language].conclusion}</ThemedText>
                         <ThemedText variant={'articleBody'}>{article.detailedArticle.conclusion}</ThemedText>
                     </View>
+                    {/* OPEN ARTICLE */}
                     <Button onPress={openArticle}>
                         {Texts[language].openArticle}
                     </Button>
                     <View style={styles.section}>
                         <ThemedText variant={'articleTitle'} style={styles.sectionTitle}>{Texts[language].qAndA}</ThemedText>
                     </View>
+                    {/* QUESTIONS */}
                     <View style={styles.questions}>
                         {article.questions.map((qa: Question, index: number) => (
                             <ArticleQuestion 
