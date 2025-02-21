@@ -195,14 +195,24 @@ class FirebaseService {
     }
 
     async getArticleById(articleId) {
-        const doc = await this.articlesCollection.doc(articleId).get();
-        if (doc.exists) {
+        try {
+            const snapshot = await this.articlesCollection
+                .where('id', '==', articleId)
+                .limit(1)
+                .get();
+
+            if (snapshot.empty) {
+                return null;
+            }
+
+            const doc = snapshot.docs[0];
             return {
                 id: doc.id,
                 ...doc.data()
             };
-        } else {
-            return null;
+        } catch (error) {
+            console.error('Error getting article by id:', error);
+            throw error;
         }
     }
 }
