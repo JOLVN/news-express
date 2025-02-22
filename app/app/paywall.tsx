@@ -7,7 +7,7 @@ import { LanguageContext } from "@/contexts/LanguageContext";
 import { UserDataContext } from "@/contexts/UserDataContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { PurchasesService } from "@/services/Purchases";
-import { Entypo, Ionicons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useContext, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { PurchasesPackage } from "react-native-purchases";
@@ -26,6 +26,24 @@ export default function Paywall() {
     const { language } = useContext(LanguageContext);
     const colors = useThemeColors();
     const [selectedSubscription, setSelectedSubscription] = useState<string>(ANNUAL_RC_ID);
+
+    const premiumFeatures = [
+        {
+            icon: "star",
+            title: Texts[language].premiumFeature1Title,
+            description: Texts[language].premiumFeature1Description,
+        },
+        {
+            icon: "rocket",
+            title: Texts[language].premiumFeature3Title,
+            description: Texts[language].premiumFeature3Description,
+        },
+        {
+            icon: "credit-card-outline",
+            title: Texts[language].premiumFeature2Title,
+            description: Texts[language].premiumFeature2Description,
+        },
+    ];
 
     async function loadOfferings() {
         const offerings = await PurchasesService.getOfferings();
@@ -58,15 +76,24 @@ export default function Paywall() {
                 <ThemedText variant="titleBoldXl" color="accent500"> Xpress Premium </ThemedText>
                 {isTrialEligible && Texts[language].upgradeTitle2WithTrial}
             </ThemedText>
-            <View>
-                <View style={styles.advantage}>
-                    <Entypo name="credit" size={24} color={colors.text} />
-                    <ThemedText variant="regular" style={styles.title}>{Texts[language].creditsByMonth}</ThemedText>
-                </View>
-                <View style={styles.advantage}>
-                    <Ionicons name="bookmarks" size={22} color={colors.text} />
-                    <ThemedText variant="regular" style={styles.title}>{Texts[language].accessBookmarks}</ThemedText>
-                </View>
+            <View style={styles.featuresContainer}>
+                {premiumFeatures.map((feature, index) => (
+                    <View key={index} style={styles.featureItem}>
+                        <MaterialCommunityIcons
+                            name={feature.icon as any}
+                            size={28}
+                            color={colors.accent500}
+                        />
+                        <View>
+                            <ThemedText variant="semibold">
+                                {feature.title}
+                            </ThemedText>
+                            <ThemedText variant="regular">
+                                {feature.description}
+                            </ThemedText>
+                        </View>
+                    </View>
+                ))}
             </View>
             <View style={styles.subscriptionChoices}>
                 {packages.map((p, i) => {
@@ -122,6 +149,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         gap: 16,
         marginVertical: 10,
+    },
+    featuresContainer: {
+        gap: 16,
+    },
+    featureItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 16,
     },
     subscriptionChoices: {
         flexDirection: 'row-reverse',

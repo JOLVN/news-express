@@ -84,7 +84,7 @@ export const Texts = {
         // Subscription modal
         premiumOffer: "Passez à l'offre Premium",
         premiumFeature1Title: "200 crédits mensuels",
-        premiumFeature1Description: "Profitez de 200 crédits chaque mois pour utiliser le chatbot et écouter les articles",
+        premiumFeature1Description: "Profitez de 200 crédits chaque mois pour utiliser le chatbot et écouter les résumés",
         premiumFeature2Title: "Sans engagement",
         premiumFeature2Description: "Annulez votre abonnement à tout moment",
         premiumFeature3Title: "Fonctionnalités exclusives",
@@ -176,7 +176,7 @@ export const Texts = {
         // Subscription modal
         premiumOffer: "Upgrade to Premium",
         premiumFeature1Title: "200 monthly credits",
-        premiumFeature1Description: "Get 200 credits every month to use the chatbot and listen to articles",
+        premiumFeature1Description: "Get 200 credits every month to use the chatbot and listen to summaries",
         premiumFeature2Title: "No commitment",
         premiumFeature2Description: "Cancel your subscription anytime",
         premiumFeature3Title: "Exclusive features",
