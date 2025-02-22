@@ -1,5 +1,4 @@
 import { Language } from "@/types/languages";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, useEffect, useState } from "react";
 import { UserLanguageService } from '@/services/UserLanguage';
 
@@ -35,6 +34,11 @@ export function LanguageContextProvider({children}: Props) {
             if (savedPreferences) {
                 const { language: savedLanguage } = savedPreferences;
                 setLanguage(savedLanguage);
+            } else {
+                // Set the language based on the device's language
+                const deviceLanguage = Intl.DateTimeFormat().resolvedOptions().locale;
+                const primaryLanguage = deviceLanguage.split('-')[0];
+                setLanguage(primaryLanguage === 'fr' ? 'fr' : 'en');
             }
         } catch (error) {
             console.error('Error while loading language preferences:', error);
