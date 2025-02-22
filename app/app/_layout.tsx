@@ -148,6 +148,9 @@ function Root() {
                     headerShown: false,
                     presentation: 'modal',
                  }} />
+                <Stack.Screen name="privacyPolicy" options={{ 
+                    title: Texts[language].privacyPolicy,
+                 }} />
             </Stack>
             <SwitchThemeModal />
             <SwitchCountryModal />

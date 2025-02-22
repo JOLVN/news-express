@@ -40,6 +40,7 @@ export const Texts = {
         france: "France",
         usa: "États-Unis",
         upgradeToXpressPremium: "Passer à Xpress Premium",
+        privacyPolicy: "Politique de Confidentialité",
         // Upgrade
         upgradeTitle1: "Passer à",
         upgradeTitle1WithTrial: "Essaie",
@@ -132,6 +133,7 @@ export const Texts = {
         france: "France",
         usa: "United States",
         upgradeToXpressPremium: "Upgrade to Xpress Premium",
+        privacyPolicy: "Privacy Policy",
         // Upgrade
         upgradeTitle1: "Upgrade to",
         upgradeTitle1WithTrial: "Try",

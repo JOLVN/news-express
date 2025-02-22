@@ -27,6 +27,11 @@ export default function Settings() {
                 <SettingButton text={Texts[language].appearance} onPress={showThemeModal} />
                 <SettingButton text={Texts[language].country} onPress={showCountryModal} />
             </View>
+            <View style={[styles.section, {borderColor: colors.text}]}>
+                <Link href={{ pathname: '/privacyPolicy'}} asChild>
+                    <SettingButton text={Texts[language].privacyPolicy} />
+                </Link>
+            </View>
         </View>
     )
 }
