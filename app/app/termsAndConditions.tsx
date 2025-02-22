@@ -28,7 +28,7 @@ export default function TermsAndConditionsScreen() {
         >
             <View style={styles.content}>
                 <ThemedText style={styles.title} variant="titleBoldXl">{content.title}</ThemedText>
-                <ThemedText style={styles.lastUpdate} variant="regular" color="accent600">{content.lastUpdate}</ThemedText>
+                <ThemedText style={styles.lastUpdate} variant="regular" color="accent500">{content.lastUpdate}</ThemedText>
 
                 <ThemedText style={styles.sectionTitle} variant="semiboldMd">{content.part1Title}</ThemedText>
                 <ThemedText style={styles.paragraph} variant="regular">{content.part1Content}</ThemedText>
@@ -73,23 +73,16 @@ const styles = StyleSheet.create({
         paddingBottom: 40,
     },
     title: {
-        fontSize: 24,
-        fontWeight: 'bold',
         marginBottom: 8,
     },
     lastUpdate: {
-        fontSize: 14,
-        fontStyle: 'italic',
         marginBottom: 20,
     },
     sectionTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
         marginTop: 20,
         marginBottom: 10,
     },
     paragraph: {
-        fontSize: 15,
         marginBottom: 10,
         lineHeight: 22,
     },
@@ -104,15 +97,12 @@ const styles = StyleSheet.create({
     },
     bullet: {
         marginRight: 8,
-        fontSize: 15,
     },
     bulletText: {
         flex: 1,
-        fontSize: 15,
         lineHeight: 22,
     },
     email: {
-        fontSize: 15,
         marginTop: 8,
         fontWeight: '500',
     },

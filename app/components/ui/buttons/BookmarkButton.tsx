@@ -1,6 +1,9 @@
+import { ModalContext } from "@/contexts/ModalContext";
+import { UserDataContext } from "@/contexts/UserDataContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { Ionicons } from "@expo/vector-icons";
-import { Pressable, StyleSheet } from "react-native";
+import { useContext } from "react";
+import { Pressable, StyleSheet, View } from "react-native";
 
 type Props = {
     onPress: () => void;
@@ -12,14 +15,31 @@ type Props = {
 export default function BookmarkButton({ onPress, isBookmarked, color, style }: Props) {
 
     const colors = useThemeColors();
+    const { isSubscribed } = useContext(UserDataContext);
+    const { showSubscriptionModal } = useContext(ModalContext);
+
+    function handlePress() {
+        if (!isSubscribed) {
+            showSubscriptionModal();
+            return;
+        }
+        onPress();
+    }
 
     return (
         <Pressable 
-            onPress={onPress} 
+            onPress={handlePress} 
             android_ripple={{ color: colors.gray600 }} 
             style={({ pressed }) => [pressed && styles.pressed, style]}
         >
-            <Ionicons name={isBookmarked ? 'bookmark' : 'bookmark-outline'} size={24} color={color || colors.white} />
+            <View>
+                <Ionicons name={isBookmarked && isSubscribed ? 'bookmark' : 'bookmark-outline'} size={24} color={color || colors.white} />
+                {!isSubscribed && (
+                    <View style={styles.lockContainer} >
+                        <Ionicons name="lock-closed" size={14} color={color || colors.white}  />
+                    </View>
+                )}
+            </View>
         </Pressable>
     );
 }
@@ -27,5 +47,13 @@ export default function BookmarkButton({ onPress, isBookmarked, color, style }: 
 const styles = StyleSheet.create({
     pressed: {
         opacity: 0.8,
-    }
+    },
+    lockContainer: {
+        position: 'absolute',
+        top: -3,
+        right: -3,
+        width: 14,
+        height: 14,
+        borderRadius: 4,
+    },
 });

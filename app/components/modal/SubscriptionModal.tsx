@@ -1,10 +1,9 @@
 import { useThemeColors } from "@/hooks/useThemeColors";
-import { Modal, StyleSheet, View, Dimensions } from "react-native";
+import { Modal, StyleSheet, View, Dimensions, Pressable } from "react-native";
 import Animated, { 
     useAnimatedStyle, 
     withSpring, 
-    useSharedValue, 
-    runOnJS,
+    useSharedValue,
 } from 'react-native-reanimated';
 import { useEffect } from "react";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -77,6 +76,10 @@ export default function SubscriptionPremiumModal() {
             onRequestClose={hideSubscriptionModal}
         >
             <View style={styles.overlay}>
+                <Pressable 
+                    style={{ flex: 1, position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
+                    onPress={hideSubscriptionModal}
+                />
                 <Animated.View 
                     style={[
                         styles.modalContainer,
@@ -89,13 +92,13 @@ export default function SubscriptionPremiumModal() {
                         <ThemedText variant="title" style={styles.title}>
                             {Texts[language].premiumOffer}
                         </ThemedText>
-                        <MaterialCommunityIcons
-                            name="close"
-                            size={24}
-                            color={colors.text}
-                            onPress={hideSubscriptionModal}
-                            style={styles.closeButton}
-                        />
+                        <Pressable onPress={hideSubscriptionModal} style={({pressed}) => [styles.closeButton, pressed && styles.pressed]}>
+                            <MaterialCommunityIcons
+                                name="close"
+                                size={24}
+                                color={colors.text}
+                            />
+                        </Pressable>
                     </View>
 
                     {/* Premium Features */}
@@ -182,5 +185,8 @@ const styles = StyleSheet.create({
     },
     button: {
         width: '100%',
+    },
+    pressed: {
+        opacity: 0.8,
     },
 });

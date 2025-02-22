@@ -20,7 +20,7 @@ export default function PrivacyPolicyScreen() {
                     {content.title}
                 </ThemedText>
                 
-                <ThemedText style={styles.lastUpdate} variant="regular" color="accent600">
+                <ThemedText style={styles.lastUpdate} variant="regular" color="accent500">
                     {content.lastUpdate}
                 </ThemedText>
 
