@@ -1,11 +1,5 @@
 import { useThemeColors } from "@/hooks/useThemeColors";
-import { Modal, StyleSheet, View, Dimensions, Pressable } from "react-native";
-import Animated, { 
-    useAnimatedStyle, 
-    withSpring, 
-    useSharedValue,
-} from 'react-native-reanimated';
-import { useEffect } from "react";
+import { StyleSheet, View } from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import ThemedText from "../ui/ThemedText";
 import Button from "../ui/buttons/Button";
@@ -14,8 +8,7 @@ import { Texts } from "@/constants/Texts";
 import { LanguageContext } from "@/contexts/LanguageContext";
 import { useContext } from "react";
 import { ModalContext } from "@/contexts/ModalContext";
-
-const { height: SCREEN_HEIGHT } = Dimensions.get('window');
+import CustomModal from "./CustomModal";
 
 
 export default function SubscriptionPremiumModal() {
@@ -23,7 +16,6 @@ export default function SubscriptionPremiumModal() {
     const { isSubscriptionModalVisible, hideSubscriptionModal } = useContext(ModalContext);
     const colors = useThemeColors();
     const { language } = useContext(LanguageContext);
-    const translateY = useSharedValue(SCREEN_HEIGHT);
 
     const premiumFeatures = [
         {
@@ -43,129 +35,50 @@ export default function SubscriptionPremiumModal() {
         },
     ];
 
-    const animatedStyle = useAnimatedStyle(() => {
-        return {
-            transform: [{ translateY: translateY.value }],
-        };
-    });
-
-    useEffect(() => {
-        if (isSubscriptionModalVisible) {
-            translateY.value = withSpring(0, {
-                damping: 20,
-                stiffness: 90,
-            });
-        } else {
-            translateY.value = withSpring(SCREEN_HEIGHT, {
-                damping: 20,
-                stiffness: 90,
-            });
-        }
-    }, [isSubscriptionModalVisible]);
-
     const handleNavigateToPaywall = () => {
         hideSubscriptionModal();
         router.push('/paywall');
     };
 
     return (
-        <Modal
+        <CustomModal
             visible={isSubscriptionModalVisible}
-            transparent
-            animationType="fade"
-            onRequestClose={hideSubscriptionModal}
+            onClose={hideSubscriptionModal}
+            title={Texts[language].premiumOffer}
         >
-            <View style={styles.overlay}>
-                <Pressable 
-                    style={{ flex: 1, position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
-                    onPress={hideSubscriptionModal}
-                />
-                <Animated.View 
-                    style={[
-                        styles.modalContainer,
-                        animatedStyle,
-                        { backgroundColor: colors.gray600 }
-                    ]}
-                >
-                    {/* Header */}
-                    <View style={styles.header}>
-                        <ThemedText variant="title" style={styles.title}>
-                            {Texts[language].premiumOffer}
-                        </ThemedText>
-                        <Pressable onPress={hideSubscriptionModal} style={({pressed}) => [styles.closeButton, pressed && styles.pressed]}>
-                            <MaterialCommunityIcons
-                                name="close"
-                                size={24}
-                                color={colors.text}
-                            />
-                        </Pressable>
+            <View style={styles.featuresContainer}>
+                {premiumFeatures.map((feature, index) => (
+                    <View key={index} style={styles.featureItem}>
+                        <MaterialCommunityIcons
+                            name={feature.icon as any}
+                            size={24}
+                            color={colors.accent500}
+                        />
+                        <View style={styles.featureText}>
+                            <ThemedText variant="semibold">
+                                {feature.title}
+                            </ThemedText>
+                            <ThemedText variant="regular">
+                                {feature.description}
+                            </ThemedText>
+                        </View>
                     </View>
-
-                    {/* Premium Features */}
-                    <View style={styles.featuresContainer}>
-                        {premiumFeatures.map((feature, index) => (
-                            <View key={index} style={styles.featureItem}>
-                                <MaterialCommunityIcons
-                                    name={feature.icon as any}
-                                    size={28}
-                                    color={colors.accent500}
-                                />
-                                <View style={styles.featureText}>
-                                    <ThemedText variant="semibold">
-                                        {feature.title}
-                                    </ThemedText>
-                                    <ThemedText variant="regular">
-                                        {feature.description}
-                                    </ThemedText>
-                                </View>
-                            </View>
-                        ))}
-                    </View>
-
-                    {/* Footer with CTA */}
-                    <View style={styles.footer}>
-                        <Button 
-                            onPress={handleNavigateToPaywall}
-                            style={styles.button}
-                        >
-                            {Texts[language].seeOffers}
-                        </Button>
-                    </View>
-                </Animated.View>
+                ))}
             </View>
-        </Modal>
+
+            <View style={styles.footer}>
+                <Button 
+                    onPress={handleNavigateToPaywall}
+                    style={styles.button}
+                >
+                    {Texts[language].seeOffers}
+                </Button>
+            </View>
+        </CustomModal>
     );
 }
 
 const styles = StyleSheet.create({
-    overlay: {
-        flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    modalContainer: {
-        width: '90%',
-        maxHeight: '80%',
-        borderRadius: 16,
-        padding: 20,
-        justifyContent: 'space-between',
-        gap: 30
-    },
-    header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    title: {
-        flex: 1,
-        textAlign: 'center',
-    },
-    closeButton: {
-        padding: 8,
-        position: 'absolute',
-        right: 0,
-    },
     featuresContainer: {
         gap: 24,
     },
@@ -185,8 +98,5 @@ const styles = StyleSheet.create({
     },
     button: {
         width: '100%',
-    },
-    pressed: {
-        opacity: 0.8,
     },
 });

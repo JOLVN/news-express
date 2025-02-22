@@ -2,7 +2,7 @@ import { Alert, Pressable, StyleSheet, ViewStyle } from "react-native";
 import ThemedText from "@/components/ui/ThemedText";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { Texts } from "@/constants/Texts";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { LanguageContext } from "@/contexts/LanguageContext";
 import { CreditsContext } from "@/contexts/CreditsContext";
 import { PurchasesService } from "@/services/Purchases";

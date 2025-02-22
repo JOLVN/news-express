@@ -93,7 +93,7 @@ export const Texts = {
         creditsPerMonth: "crédits par mois",
         upgradeToPremium: "Passer à l'offre Premium",
         // Subscription modal
-        premiumOffer: "Passez à l'offre Premium",
+        premiumOffer: "Passez à Premium",
         premiumFeature1Title: "200 crédits mensuels",
         premiumFeature1Description: "Profitez de 200 crédits chaque mois pour utiliser le chatbot et écouter les résumés",
         premiumFeature2Title: "Sans engagement",
