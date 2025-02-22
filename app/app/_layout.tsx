@@ -27,6 +27,7 @@ import { BookmarksService } from "@/services/Bookmarks";
 import { UserIdService } from "@/services/UserId";
 import { UserDataContext, UserDataContextProvider } from "@/contexts/UserDataContext";
 import SubscriptionPremiumModal from "@/components/modal/SubscriptionModal";
+import SubscribedModal from "@/components/modal/SubscribedModal";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -158,6 +159,7 @@ function Root() {
             <SwitchThemeModal />
             <SwitchCountryModal />
             <SubscriptionPremiumModal />
+            <SubscribedModal />
         </>
     )
 }

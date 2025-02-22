@@ -67,6 +67,11 @@ export const Texts = {
         subscriptionAlreadySubscribedAlertMessage: "Vous êtes déjà abonné à Xpress Premium",
         year: "an",
         month: "mois",
+        //Subscribed Modal
+        thankYou: "Merci !",
+        subscribedMessage: "Votre abonnement a été activé avec succès.",
+        yourCredits: "Crédits disponibles",
+        continue: "Continuer",
         // Errors
         error: "Erreur",
         errorFetchingArticles: "Erreur lors de la récupération des articles",
@@ -163,6 +168,11 @@ export const Texts = {
         subscriptionAlreadySubscribedAlertMessage: "You are already subscribed to Xpress Premium",
         year: "year",
         month: "month",
+        //Subscribed Modal
+        thankYou: "Thank you!",
+        subscribedMessage: "Your subscription has been successfully activated.",
+        yourCredits: "Available credits",
+        continue: "Continue",
         // Errors
         error: "Error",
         errorFetchingArticles: "Error while fetching articles",

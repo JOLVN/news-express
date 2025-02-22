@@ -7,6 +7,8 @@ import { LanguageContext } from "@/contexts/LanguageContext";
 import { CreditsContext } from "@/contexts/CreditsContext";
 import { PurchasesService } from "@/services/Purchases";
 import { PurchasesPackage } from "react-native-purchases";
+import { ModalContext } from "@/contexts/ModalContext";
+import { router } from "expo-router";
 
 type Props = ViewStyle & {
     selectedSubscription: string,
@@ -21,8 +23,10 @@ export default function SubscriptionButton({selectedSubscription, isTrialEligibl
     const { buyCredits } = useContext(CreditsContext);
     const colors = useThemeColors();
     const { language } = useContext(LanguageContext);
+    const { showSubscribedModal } = useContext(ModalContext);
 
     async function handlePurchase() {
+
         if (isSubscribed) {
             Alert.alert(Texts[language].subscriptionAlreadySubscribedAlertTitle, Texts[language].subscriptionAlreadySubscribedAlertMessage);
             return;
@@ -43,8 +47,8 @@ export default function SubscriptionButton({selectedSubscription, isTrialEligibl
         // Verify if the purchase was successful
         if (Object.keys(customerInfo.entitlements.active).length > 0) {
             await buyCredits();
-            // TODO: Add modal and go to home
-            console.log('Purchase successful');
+            showSubscribedModal();
+            router.push('/');
         }
     };
 
