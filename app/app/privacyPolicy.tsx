@@ -128,7 +128,7 @@ export default function PrivacyPolicyScreen() {
                 <ThemedText style={styles.paragraph} variant="regular">
                     {content.part7Content}
                 </ThemedText>
-                <ThemedText style={styles.email} color="accent500">
+                <ThemedText style={styles.email} color="accent500" variant='regular'>
                     {content.email}
                 </ThemedText>
             </View>
@@ -139,35 +139,26 @@ export default function PrivacyPolicyScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        padding: 20,
     },
     content: {
-        padding: 20,
-        paddingBottom: 100,
+        paddingBottom: 60,
     },
     title: {
-        fontSize: 24,
-        fontWeight: 'bold',
         marginBottom: 8,
     },
     lastUpdate: {
-        fontSize: 14,
-        fontStyle: 'italic',
         marginBottom: 20,
     },
     sectionTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
         marginTop: 20,
         marginBottom: 10,
     },
     subTitle: {
-        fontSize: 16,
-        fontWeight: '600',
         marginTop: 10,
         marginBottom: 8,
     },
     paragraph: {
-        fontSize: 15,
         marginBottom: 10,
         lineHeight: 22,
     },
@@ -182,15 +173,12 @@ const styles = StyleSheet.create({
     },
     bullet: {
         marginRight: 8,
-        fontSize: 15,
     },
     bulletText: {
         flex: 1,
-        fontSize: 15,
         lineHeight: 22,
     },
     email: {
-        fontSize: 15,
         marginTop: 8,
         fontWeight: '500',
     },

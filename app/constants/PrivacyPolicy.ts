@@ -1,7 +1,7 @@
 export const PrivacyPolicy = {
     fr: {
         title: "Politique de Confidentialité",
-        lastUpdate: "Dernière mise à jour : Février 2024",
+        lastUpdate: "Dernière mise à jour : Février 2025",
         part1Title: "1. Introduction",
         part1Content: "Xpress News s'engage à protéger votre vie privée. Cette Politique de Confidentialité explique comment nous collectons, utilisons et protégeons vos données lors de l'utilisation de notre application d'actualités.",
         part2Title: "2. Informations Collectées",
@@ -42,7 +42,7 @@ export const PrivacyPolicy = {
     },
     en: {
         title: "Privacy Policy",
-        lastUpdate: "Last update: February 2024",
+        lastUpdate: "Last update: February 2025",
         part1Title: "1. Introduction",
         part1Content: "Xpress News is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and protect your data when using our news application.",
         part2Title: "2. Collected Information",

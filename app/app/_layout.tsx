@@ -151,6 +151,9 @@ function Root() {
                 <Stack.Screen name="privacyPolicy" options={{ 
                     title: Texts[language].privacyPolicy,
                  }} />
+                <Stack.Screen name="termsAndConditions" options={{ 
+                    title: Texts[language].termsAndConditions,
+                 }} />
             </Stack>
             <SwitchThemeModal />
             <SwitchCountryModal />

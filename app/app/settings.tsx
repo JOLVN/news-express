@@ -31,6 +31,9 @@ export default function Settings() {
                 <Link href={{ pathname: '/privacyPolicy'}} asChild>
                     <SettingButton text={Texts[language].privacyPolicy} />
                 </Link>
+                <Link href={{ pathname: '/termsAndConditions'}} asChild>
+                    <SettingButton text={Texts[language].termsAndConditions} />
+                </Link>
             </View>
         </View>
     )
