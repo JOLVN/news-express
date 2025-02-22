@@ -1,4 +1,5 @@
 import SettingButton from "@/components/ui/buttons/SettingButton";
+import ThemedText from "@/components/ui/ThemedText";
 import { Texts } from "@/constants/Texts";
 import { LanguageContext } from "@/contexts/LanguageContext";
 import { ModalContext } from "@/contexts/ModalContext";
@@ -6,7 +7,8 @@ import { UserDataContext } from "@/contexts/UserDataContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { Link } from "expo-router";
 import { useContext } from "react";
-import { Platform, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+import Constants from 'expo-constants';
 
 export default function Settings() {
 
@@ -14,6 +16,7 @@ export default function Settings() {
     const { language } = useContext(LanguageContext);
     const { isSubscribed } = useContext(UserDataContext);
     const { showThemeModal, showCountryModal } = useContext(ModalContext);
+    const version = Constants.expoConfig?.version || '1.0.0';
 
     return (
         <View style={[styles.container, { backgroundColor: colors.coloredBackground }]}>
@@ -39,6 +42,9 @@ export default function Settings() {
                     <SettingButton text={Texts[language].termsAndConditions} />
                 </Link>
             </View>
+            <ThemedText variant="regularSm" style={styles.version}>
+                {Texts[language].version} {version}
+            </ThemedText>
         </View>
     )
 }
@@ -52,5 +58,8 @@ const styles = StyleSheet.create({
     section: {
         borderWidth: 1,
         borderRadius: 15,
+    },
+    version: {
+        textAlign: 'center',
     }
 });

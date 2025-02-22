@@ -1,3 +1,5 @@
+import { version } from "react";
+
 export const Texts = {
     fr: {
         // Home
@@ -43,6 +45,7 @@ export const Texts = {
         privacyPolicy: "Politique de Confidentialité",
         termsAndConditions: "Conditions Générales",
         restorePurchases: "Restaurer les achats",
+        version: "Version",
         // Upgrade
         upgradeTitle1: "Passer à",
         upgradeTitle1WithTrial: "Essaie",
@@ -138,6 +141,7 @@ export const Texts = {
         privacyPolicy: "Privacy Policy",
         termsAndConditions: "Terms & Conditions",
         restorePurchases: "Restore purchases",
+        version: "Version",
         // Upgrade
         upgradeTitle1: "Upgrade to",
         upgradeTitle1WithTrial: "Try",
