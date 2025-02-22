@@ -7,50 +7,28 @@ import { LanguageContext } from "@/contexts/LanguageContext";
 import { CreditsContext } from "@/contexts/CreditsContext";
 import { PurchasesService } from "@/services/Purchases";
 import { PurchasesPackage } from "react-native-purchases";
+import { UserDataContext } from "@/contexts/UserDataContext";
 
 type Props = ViewStyle & {
-    selectedSubscription: string,
-    packages: PurchasesPackage[],
-    isTrialEligible: boolean,
-    isSubscribed: boolean,
     style?: object,
 }
 
-export default function SubscriptionButton({selectedSubscription, isTrialEligible, isSubscribed, packages, style}: Props) {
+export default function CreditsSubscribeButton({style}: Props) {
 
-    const { buyCredits } = useContext(CreditsContext);
     const colors = useThemeColors();
     const { language } = useContext(LanguageContext);
+    const { isTrialEligible, isSubscribed } = useContext(UserDataContext);
 
-    async function handlePurchase() {
-        if (isSubscribed) {
-            Alert.alert(Texts[language].subscriptionAlreadySubscribedAlertTitle, Texts[language].subscriptionAlreadySubscribedAlertMessage);
-            return;
-        }
-        
-        const packageToPurchase = packages.find(pkg => pkg.identifier === selectedSubscription);
-        
-        if (!packageToPurchase) {
-            throw new Error('Package not found');
-        }
+    function handleSubscriptionModalOpening() {
+    }
 
-        const customerInfo = await PurchasesService.purchasePackage(packageToPurchase);
-        
-        if (!customerInfo) {
-            return;
-        }
-        
-        // Verify if the purchase was successful
-        if (Object.keys(customerInfo.entitlements.active).length > 0) {
-            await buyCredits();
-            // TODO: Add modal and go to home
-            console.log('Purchase successful');
-        }
-    };
+    // if (isSubscribed) {
+    //     return null;
+    // }
 
     return (
         <Pressable 
-            onPress={handlePurchase} 
+            onPress={handleSubscriptionModalOpening} 
             style={({pressed}) => [styles.button, style, {backgroundColor: colors.accent500}, pressed && styles.pressed]}
             android_ripple={{color: colors.accent500}}
         >

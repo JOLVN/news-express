@@ -4,7 +4,7 @@ import SubscriptionChoice from "@/components/ui/SubscriptionChoice";
 import ThemedText from "@/components/ui/ThemedText";
 import { Texts } from "@/constants/Texts";
 import { LanguageContext } from "@/contexts/LanguageContext";
-import { ThemeContext } from "@/contexts/ThemeContext";
+import { UserDataContext } from "@/contexts/UserDataContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { PurchasesService } from "@/services/Purchases";
 import { Entypo, Ionicons } from "@expo/vector-icons";
@@ -18,14 +18,12 @@ export default function Paywall() {
     const MONTHLY_RC_ID = `$${process.env.EXPO_PUBLIC_MONTHLY_RC_ID}` as string;
     
 
-    const [isTrialEligible, setIsTrialEligible] = useState<boolean>(true);
-    const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
+    const { isTrialEligible, isSubscribed } = useContext(UserDataContext);
     const [packages, setPackages] = useState<PurchasesPackage[]>([]);
     const [pricePerYear, setPricePerYear] = useState<string>('');
     const [annualSubscriptionPrice, setAnnualSubscriptionPrice] = useState<string>('');
     const [monthlySubscriptionPrice, setMonthlySubscriptionPrice] = useState<string>('');
     const { language } = useContext(LanguageContext);
-    const { theme } = useContext(ThemeContext);
     const colors = useThemeColors();
     const [selectedSubscription, setSelectedSubscription] = useState<string>(ANNUAL_RC_ID);
 
@@ -41,9 +39,6 @@ export default function Paywall() {
 
     useEffect(() => {
         async function initialize() {
-            const { isTrialEligible, isSubscribed } = await PurchasesService.checkSubscriptionStatus();
-            setIsTrialEligible(isTrialEligible);
-            setIsSubscribed(isSubscribed);
             await loadOfferings();
         }
         

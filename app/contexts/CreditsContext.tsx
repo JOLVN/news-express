@@ -1,7 +1,8 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { PurchasesService } from '../services/Purchases';
+import { PurchasesService } from '@/services/Purchases';
 import { getUserDataFromFirebase, refreshCreditsInFirebase, setCreditsInFirebase } from '@/functions/API';
+import { UserDataContext } from '@/contexts/UserDataContext';
 
 interface CreditsContextType {
     credits: number;
@@ -25,6 +26,7 @@ export const CreditsContext = createContext<CreditsContextType>({
 export function CreditsContextProvider({ children }: {children: React.ReactNode}) {
 
     const [credits, setCredits] = useState(0);
+    const { isSubscribed } = useContext(UserDataContext);
 
     // Refresh credits every month
     const refreshCredits = async () => {
@@ -36,7 +38,6 @@ export function CreditsContextProvider({ children }: {children: React.ReactNode}
             const userId = await PurchasesService.getRCUserId();
             const userData = await getUserDataFromFirebase(userId);
             if (userData.lastCreditRefresh !== currentMonth) {
-                const { isSubscribed } = await PurchasesService.checkSubscriptionStatus();
                 const newCredits = credits + (isSubscribed ? SUBSCRIPTION_CREDITS : DEFAULT_CREDITS);
                 setCredits(newCredits);
                 await AsyncStorage.setItem('credits', String(newCredits));

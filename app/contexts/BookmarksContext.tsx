@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from 'react';
 import { BookmarksService } from '@/services/Bookmarks';
 import { addBookmarkToFirebase, removeBookmarkFromFirebase } from '@/functions/API';
-import { UserIdContext } from '@/contexts/UserIdContext';
+import { UserDataContext } from '@/contexts/UserDataContext';
 
 interface BookmarksContextProps {
     bookmarks: string[];
@@ -25,7 +25,7 @@ type Props = {
 
 export function BookmarksContextProvider({ children }: Props) {
     const [bookmarks, setBookmarks] = useState<string[]>([]);
-    const { userId } = useContext(UserIdContext);
+    const { userId } = useContext(UserDataContext);
 
     const loadBookmarks = async () => {
         const bookmarks = await BookmarksService.getBookmarksArticleIds();

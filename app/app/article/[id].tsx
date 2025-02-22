@@ -74,12 +74,9 @@ export default function ArticleDetails() {
         if (isCurrentArticleBookmarked) {
             unbookmarkArticle(article.id);
             setIsCurrentArticleBookmarked(false);
-            console.log('Article unbookmarked');
-            
         } else {
             bookmarkArticle(article.id);
             setIsCurrentArticleBookmarked(true);
-            console.log('Article bookmarked');
         }
     }
 

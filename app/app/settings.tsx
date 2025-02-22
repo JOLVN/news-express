@@ -19,6 +19,9 @@ export default function Settings() {
                 <Link href={{ pathname: '/paywall'}} asChild>
                     <SettingButton text={Texts[language].upgradeToXpressPremium} />
                 </Link>
+                <Link href={{ pathname: '/aboutCredits'}} asChild>
+                    <SettingButton text={Texts[language].creditsTitle} />
+                </Link>
             </View>
             <View style={[styles.section, {borderColor: colors.text}]}>
                 <SettingButton text={Texts[language].appearance} onPress={showThemeModal} />

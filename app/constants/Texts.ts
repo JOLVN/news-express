@@ -68,6 +68,19 @@ export const Texts = {
         errorInsufficientCredits: "Crédits insuffisants",
         errorInsufficientCreditsChatbotMessage: "Vous n'avez plus de crédits pour utiliser le chatbot",
         errorInsufficientCreditsListenMessage: "Vous n'avez plus de crédits pour écouter l'article",
+        // Credits
+        credits: "Crédits",
+        creditsTitle: "Comprendre les crédits",
+        whatAreCredits: "Qu'est-ce que les crédits ?",
+        creditsExplanation: "Les crédits sont votre monnaie pour accéder aux fonctionnalités avancées de l'application. Ils vous permettent d'utiliser le chatbot pour poser des questions sur les articles et d'écouter le résumé des articles en audio. Tous les premiers du mois, des crédits sont ajoutés sur votre compte.",
+        howToUseCredits: "Comment utiliser vos crédits ?",
+        chatbotUsage: "1 crédit par message avec le chatbot",
+        listenUsage: "1 crédit pour écouter un article",
+        monthlyCredits: "Crédits mensuels",
+        freePlan: "Gratuit",
+        premiumPlan: "Premium",
+        creditsPerMonth: "crédits par mois",
+        upgradeToPremium: "Passer à l'offre Premium",
     },
     en: {
         // Home
@@ -138,5 +151,18 @@ export const Texts = {
         errorInsufficientCredits: "Insufficient credits",
         errorInsufficientCreditsChatbotMessage: "You don't have enough credits to use the chatbot",
         errorInsufficientCreditsListenMessage: "You don't have enough credits to listen to the article",
+        // Credits
+        credits: "Credits",
+        creditsTitle: "Understanding Credits",
+        whatAreCredits: "What are credits?",
+        creditsExplanation: "Credits are your currency to access advanced features in the application. They allow you to use the chatbot to ask questions about articles and listen to articles summaries in audio. Every first of the month, credits are added to your account.",
+        howToUseCredits: "How to use your credits?",
+        chatbotUsage: "1 credit per chatbot message",
+        listenUsage: "1 credit to listen to an article",
+        monthlyCredits: "Monthly Credits",
+        freePlan: "Free",
+        premiumPlan: "Premium",
+        creditsPerMonth: "credits per month",
+        upgradeToPremium: "Upgrade to Premium",
     }
 }

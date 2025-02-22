@@ -25,7 +25,7 @@ import { CreditsService } from "@/services/Credits";
 import { getUserDataFromFirebase } from "@/functions/API";
 import { BookmarksService } from "@/services/Bookmarks";
 import { UserIdService } from "@/services/UserId";
-import { UserIdContext, UserIdContextProvider } from "@/contexts/UserIdContext";
+import { UserDataContext, UserDataContextProvider } from "@/contexts/UserDataContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -34,7 +34,7 @@ function Root() {
     const { theme } = useContext(ThemeContext);
     const { language } = useContext(LanguageContext);
     const { setCredits, refreshCredits } = useContext(CreditsContext);
-    const { setUserId } = useContext(UserIdContext);
+    const { setUserId, setIsSubscribed, setIsTrialEligible } = useContext(UserDataContext);
     const { setBookmarks } = useContext(BookmarksContext);
     const colors = useThemeColors();
     const [loaded] = useFonts({
@@ -75,6 +75,10 @@ function Root() {
                 setUserId(userId);
                 
             }
+            // Handle isSubscribed and isTrialEligible
+            const { isTrialEligible, isSubscribed } = await PurchasesService.checkSubscriptionStatus();
+            setIsSubscribed(isSubscribed);
+            setIsTrialEligible(isTrialEligible);
             const userData = await getUserDataFromFirebase(userId);
             // Handle credits
             const savedCredits = await CreditsService.getCredits();
@@ -135,6 +139,9 @@ function Root() {
                 <Stack.Screen name="bookmarks" options={{ 
                     title: Texts[language].bookmarks,
                  }} />
+                <Stack.Screen name="aboutCredits" options={{ 
+                    title: Texts[language].credits,
+                 }} />
                 <Stack.Screen name="chatbot/[id]" options={{ 
                     title: "",
                     headerShown: false,
@@ -149,7 +156,7 @@ function Root() {
 
 export default function RootLayout() {
     return (
-        <UserIdContextProvider>
+        <UserDataContextProvider>
             <ThemeContextProvider>
                 <LanguageContextProvider>
                     <ArticlesContextProvider>
@@ -171,6 +178,6 @@ export default function RootLayout() {
                     </ArticlesContextProvider>
                 </LanguageContextProvider>
             </ThemeContextProvider>
-        </UserIdContextProvider>
+        </UserDataContextProvider>
     );
 }

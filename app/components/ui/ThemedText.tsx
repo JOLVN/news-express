@@ -44,6 +44,10 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat-Regular',
         fontSize: 12,
     },
+    regularMd: {
+        fontFamily: 'Montserrat-Regular',
+        fontSize: 16,
+    },
     medium: {
         fontFamily: 'Montserrat-Medium',
         fontSize: 14,

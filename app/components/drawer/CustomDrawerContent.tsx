@@ -5,30 +5,21 @@ import CategoriesContainer from "@/components/drawer/CategoriesContainer";
 import ThemeButton from "@/components/ui/buttons/ThemeButton";
 import SettingsButton from "@/components/ui/buttons/SettingsButton";
 import { Link } from "expo-router";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { LanguageContext } from "@/contexts/LanguageContext";
 import { Texts } from "@/constants/Texts";
 import { Entypo } from "@expo/vector-icons";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { CreditsContext } from "@/contexts/CreditsContext";
-import { PurchasesService } from "@/services/Purchases";
 import DrawerButton from "@/components/ui/buttons/DrawerButton";
+import { UserDataContext } from "@/contexts/UserDataContext";
 
 export default function CustomDrawerContent() {
 
-    const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
+    const { isSubscribed } = useContext(UserDataContext);
     const { language } = useContext(LanguageContext);
     const { credits } = useContext(CreditsContext);
     const colors = useThemeColors();
-
-    useEffect(() => {
-        async function initialize() {
-            const { isSubscribed } = await PurchasesService.checkSubscriptionStatus();
-            setIsSubscribed(isSubscribed);
-        }
-        
-        initialize();
-    });
     
     return (
         <SafeArea>
