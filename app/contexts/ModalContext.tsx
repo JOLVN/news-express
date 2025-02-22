@@ -7,6 +7,9 @@ interface ModalContextType {
     isCountryModalVisible: boolean;
     showCountryModal: () => void;
     hideCountryModal: () => void;
+    isSubscriptionModalVisible: boolean;
+    showSubscriptionModal: () => void;
+    hideSubscriptionModal: () => void;
 };
 
 export const ModalContext = createContext<ModalContextType>({
@@ -16,12 +19,16 @@ export const ModalContext = createContext<ModalContextType>({
     isCountryModalVisible: false,
     showCountryModal: () => {},
     hideCountryModal: () => {},
+    isSubscriptionModalVisible: false,
+    showSubscriptionModal: () => {},
+    hideSubscriptionModal: () => {},
 });
 
 export function ModalContextProvider({ children }: { children: React.ReactNode }) {
 
     const [isThemeModalVisible, setThemeModalVisible] = useState(false);
     const [isCountryModalVisible, setCountryModalVisible] = useState(false);
+    const [isSubscriptionModalVisible, setSubscriptionModalVisible] = useState(false);
 
     const showThemeModal = () => {
         setThemeModalVisible(true);
@@ -36,6 +43,14 @@ export function ModalContextProvider({ children }: { children: React.ReactNode }
         setCountryModalVisible(false);
     }
 
+    const showSubscriptionModal = () => {
+        setSubscriptionModalVisible(true);
+    }
+
+    const hideSubscriptionModal = () => {
+        setSubscriptionModalVisible(false);
+    }
+
     const values = {
         isThemeModalVisible,
         showThemeModal,
@@ -43,6 +58,9 @@ export function ModalContextProvider({ children }: { children: React.ReactNode }
         isCountryModalVisible,
         showCountryModal,
         hideCountryModal,
+        isSubscriptionModalVisible,
+        showSubscriptionModal,
+        hideSubscriptionModal,
     }
 
     return (

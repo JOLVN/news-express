@@ -8,6 +8,7 @@ import { CreditsContext } from "@/contexts/CreditsContext";
 import { PurchasesService } from "@/services/Purchases";
 import { PurchasesPackage } from "react-native-purchases";
 import { UserDataContext } from "@/contexts/UserDataContext";
+import { ModalContext } from "@/contexts/ModalContext";
 
 type Props = ViewStyle & {
     style?: object,
@@ -18,8 +19,10 @@ export default function CreditsSubscribeButton({style}: Props) {
     const colors = useThemeColors();
     const { language } = useContext(LanguageContext);
     const { isTrialEligible, isSubscribed } = useContext(UserDataContext);
+    const { showSubscriptionModal } = useContext(ModalContext);
 
     function handleSubscriptionModalOpening() {
+        showSubscriptionModal();
     }
 
     // if (isSubscribed) {

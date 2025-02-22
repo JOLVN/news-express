@@ -26,6 +26,7 @@ import { getUserDataFromFirebase } from "@/functions/API";
 import { BookmarksService } from "@/services/Bookmarks";
 import { UserIdService } from "@/services/UserId";
 import { UserDataContext, UserDataContextProvider } from "@/contexts/UserDataContext";
+import SubscriptionPremiumModal from "@/components/modal/SubscriptionModal";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -150,6 +151,7 @@ function Root() {
             </Stack>
             <SwitchThemeModal />
             <SwitchCountryModal />
+            <SubscriptionPremiumModal />
         </>
     )
 }

@@ -81,6 +81,15 @@ export const Texts = {
         premiumPlan: "Premium",
         creditsPerMonth: "crédits par mois",
         upgradeToPremium: "Passer à l'offre Premium",
+        // Subscription modal
+        premiumOffer: "Passez à l'offre Premium",
+        premiumFeature1Title: "200 crédits mensuels",
+        premiumFeature1Description: "Profitez de 200 crédits chaque mois pour utiliser le chatbot et écouter les articles",
+        premiumFeature2Title: "Sans engagement",
+        premiumFeature2Description: "Annulez votre abonnement à tout moment",
+        premiumFeature3Title: "Fonctionnalités exclusives",
+        premiumFeature3Description: "Accédez en avant-première aux nouvelles fonctionnalités",
+        seeOffers: "Voir les offres",
     },
     en: {
         // Home
@@ -164,5 +173,14 @@ export const Texts = {
         premiumPlan: "Premium",
         creditsPerMonth: "credits per month",
         upgradeToPremium: "Upgrade to Premium",
+        // Subscription modal
+        premiumOffer: "Upgrade to Premium",
+        premiumFeature1Title: "200 monthly credits",
+        premiumFeature1Description: "Get 200 credits every month to use the chatbot and listen to articles",
+        premiumFeature2Title: "No commitment",
+        premiumFeature2Description: "Cancel your subscription anytime",
+        premiumFeature3Title: "Exclusive features",
+        premiumFeature3Description: "Get early access to new features",
+        seeOffers: "See offers",
     }
 }
