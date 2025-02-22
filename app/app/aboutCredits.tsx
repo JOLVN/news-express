@@ -1,4 +1,3 @@
-import Button from "@/components/ui/buttons/Button";
 import ThemedText from "@/components/ui/ThemedText";
 import { Texts } from "@/constants/Texts";
 import { LanguageContext } from "@/contexts/LanguageContext";
@@ -6,17 +5,14 @@ import { useThemeColors } from "@/hooks/useThemeColors";
 import { useContext } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
-import DrawerButton from "@/components/ui/buttons/DrawerButton";
-import SubscriptionButton from "@/components/ui/buttons/SubscriptionButton";
 import CreditsSubscribeButton from "@/components/ui/buttons/CreditsSubscribeButton";
+import { UserDataContext } from "@/contexts/UserDataContext";
 
 export default function AboutCredits() {
+
     const colors = useThemeColors();
     const { language } = useContext(LanguageContext);
-
-    const handleUpgradeToPremium = () => {
-        // Fonction pour ouvrir la modal premium
-    };
+    const { isSubscribed } = useContext(UserDataContext);
 
     return (
         <ScrollView 
@@ -104,7 +100,9 @@ export default function AboutCredits() {
             </View>
 
             {/* Premium Button */}
-            <CreditsSubscribeButton style={styles.upgradeButton} />
+            {!isSubscribed && (
+                <CreditsSubscribeButton style={styles.upgradeButton} />
+            )}
         </ScrollView>
     );
 }

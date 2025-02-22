@@ -2,6 +2,7 @@ import SettingButton from "@/components/ui/buttons/SettingButton";
 import { Texts } from "@/constants/Texts";
 import { LanguageContext } from "@/contexts/LanguageContext";
 import { ModalContext } from "@/contexts/ModalContext";
+import { UserDataContext } from "@/contexts/UserDataContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { Link } from "expo-router";
 import { useContext } from "react";
@@ -11,14 +12,17 @@ export default function Settings() {
 
     const colors = useThemeColors();
     const { language } = useContext(LanguageContext);
+    const { isSubscribed } = useContext(UserDataContext);
     const { showThemeModal, showCountryModal } = useContext(ModalContext);
 
     return (
         <View style={[styles.container, { backgroundColor: colors.coloredBackground }]}>
             <View style={[styles.section, {borderColor: colors.text}]}>
-                <Link href={{ pathname: '/paywall'}} asChild>
-                    <SettingButton text={Texts[language].upgradeToXpressPremium} />
-                </Link>
+                {!isSubscribed && (
+                    <Link href={{ pathname: '/paywall'}} asChild>
+                        <SettingButton text={Texts[language].upgradeToXpressPremium} />
+                    </Link>
+                )}
                 <Link href={{ pathname: '/aboutCredits'}} asChild>
                     <SettingButton text={Texts[language].creditsTitle} />
                 </Link>
