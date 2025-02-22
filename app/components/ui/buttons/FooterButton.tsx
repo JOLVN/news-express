@@ -7,11 +7,10 @@ type Props = {
     children: string;
     onPress?: () => void;
     borderBottom?: boolean;
-    variant?: string;
     style?: object;
 }
 
-export const FlatButton = forwardRef<View, Props>(({children, onPress, style, borderBottom, variant, ...props }, ref) => {
+export const FlatButton = forwardRef<View, Props>(({children, onPress, style, borderBottom, ...props }, ref) => {
 
     const colors = useThemeColors();
 
@@ -22,7 +21,7 @@ export const FlatButton = forwardRef<View, Props>(({children, onPress, style, bo
             borderBottom && {borderColor: colors.accent600, borderBottomWidth: 1}, 
             pressed && styles.pressed
         ]} onPress={onPress} {...props}>
-            <ThemedText variant={variant as any || "regular"}>{children}</ThemedText>
+            <ThemedText variant={"regular"}>{children}</ThemedText>
         </Pressable>
     )
 });

@@ -42,6 +42,7 @@ export const Texts = {
         upgradeToXpressPremium: "Passer à Xpress Premium",
         privacyPolicy: "Politique de Confidentialité",
         termsAndConditions: "Conditions Générales",
+        restorePurchases: "Restaurer les achats",
         // Upgrade
         upgradeTitle1: "Passer à",
         upgradeTitle1WithTrial: "Essaie",
@@ -136,6 +137,7 @@ export const Texts = {
         upgradeToXpressPremium: "Upgrade to Xpress Premium",
         privacyPolicy: "Privacy Policy",
         termsAndConditions: "Terms & Conditions",
+        restorePurchases: "Restore purchases",
         // Upgrade
         upgradeTitle1: "Upgrade to",
         upgradeTitle1WithTrial: "Try",

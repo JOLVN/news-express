@@ -1,4 +1,5 @@
 import LoadingArticlesOverlay from "@/components/LoadingArticlesOverlay";
+import FlatButton from "@/components/ui/buttons/FlatButton";
 import SubscriptionButton from "@/components/ui/buttons/SubscriptionButton";
 import SubscriptionChoice from "@/components/ui/SubscriptionChoice";
 import ThemedText from "@/components/ui/ThemedText";
@@ -8,9 +9,10 @@ import { UserDataContext } from "@/contexts/UserDataContext";
 import { useThemeColors } from "@/hooks/useThemeColors";
 import { PurchasesService } from "@/services/Purchases";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Link, router } from "expo-router";
 import { useContext, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { PurchasesPackage } from "react-native-purchases";
+import Purchases, { PurchasesPackage } from "react-native-purchases";
 
 export default function Paywall() {
 
@@ -54,6 +56,11 @@ export default function Paywall() {
             setAnnualSubscriptionPrice(offerings[1].product.priceString);
         }
     };
+
+    async function handleRestorePurchases() {
+        await Purchases.restorePurchases();
+        router.push('/');
+    }
 
     useEffect(() => {
         async function initialize() {
@@ -118,7 +125,7 @@ export default function Paywall() {
                     isTrialEligible={isTrialEligible}
                     isSubscribed={isSubscribed}
                 />
-                <ThemedText variant="mediumXs" color="gray500" style={styles.textCenter}>
+                <ThemedText variant="mediumXs" style={styles.textCenter}>
                     {isTrialEligible ?
                         Texts[language].subscriptionTrialInfo
                             .replace('XX.XX', selectedSubscription === ANNUAL_RC_ID ? String(annualSubscriptionPrice) : String(monthlySubscriptionPrice))
@@ -129,6 +136,21 @@ export default function Paywall() {
                             .replace('UU', selectedSubscription === ANNUAL_RC_ID ? Texts[language].year : Texts[language].month)
                     }
                 </ThemedText>
+                <View style={[styles.bottomButtons, { borderColor: colors.gray500 }]}>
+                    <Link href={{ pathname: '/privacyPolicy'}} asChild>
+                        <FlatButton variant="regularXs">
+                            {Texts[language].privacyPolicy}
+                        </FlatButton>
+                    </Link>
+                    <Link href={{ pathname: '/termsAndConditions'}} asChild>
+                        <FlatButton variant="regularXs">
+                            {Texts[language].termsAndConditions}
+                        </FlatButton>
+                    </Link>
+                    <FlatButton variant="regularXs" onPress={handleRestorePurchases}>
+                        {Texts[language].restorePurchases}
+                    </FlatButton>
+                </View>
             </View>
         </View>
     )
@@ -171,5 +193,11 @@ const styles = StyleSheet.create({
         gap: 10,
         width: '100%',
         alignItems: 'center',
+    },
+    bottomButtons: {
+        paddingTop: 10,
+        borderTopWidth: 0.5,
+        flexDirection: 'row',
+        gap: 20,
     }
 });
