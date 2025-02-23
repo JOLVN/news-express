@@ -9,6 +9,7 @@ import { PurchasesService } from "@/services/Purchases";
 import { PurchasesPackage } from "react-native-purchases";
 import { ModalContext } from "@/contexts/ModalContext";
 import { router } from "expo-router";
+import { UserDataContext } from "@/contexts/UserDataContext";
 
 type Props = ViewStyle & {
     selectedSubscription: string,
@@ -20,6 +21,7 @@ type Props = ViewStyle & {
 
 export default function SubscriptionButton({selectedSubscription, isTrialEligible, isSubscribed, packages, style}: Props) {
 
+    const { setIsSubscribed } = useContext(UserDataContext);
     const { buyCredits } = useContext(CreditsContext);
     const colors = useThemeColors();
     const { language } = useContext(LanguageContext);
@@ -46,9 +48,11 @@ export default function SubscriptionButton({selectedSubscription, isTrialEligibl
         
         // Verify if the purchase was successful
         if (Object.keys(customerInfo.entitlements.active).length > 0) {
+            setIsSubscribed(true);
             await buyCredits();
             showSubscribedModal();
             router.push('/');
+
         }
     };
 
