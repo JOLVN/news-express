@@ -16,6 +16,12 @@
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "appleId": "callens@jolan.fr",
+        "ascAppId": "6742165300",
+        "appleTeamId": "8CF3M5LN9X"
+      }
+    }
   }
 }
