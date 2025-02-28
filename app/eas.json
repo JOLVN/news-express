@@ -12,7 +12,11 @@
       "distribution": "internal"
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_ANNUAL_RC_ID": "rc_annual",
+        "EXPO_PUBLIC_MONTHLY_RC_ID": "rc_monthly"
+      }
     }
   },
   "submit": {

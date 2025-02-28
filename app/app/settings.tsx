@@ -1,3 +1,4 @@
+import * as WebBrowser from 'expo-web-browser';
 import SettingButton from "@/components/ui/buttons/SettingButton";
 import ThemedText from "@/components/ui/ThemedText";
 import { Texts } from "@/constants/Texts";
@@ -18,6 +19,14 @@ export default function Settings() {
     const { showThemeModal, showCountryModal } = useContext(ModalContext);
     const version = Constants.expoConfig?.version || '1.0.0';
 
+    async function openPrivacyPolicy() {
+        await WebBrowser.openBrowserAsync('https://www.privacypolicies.com/live/6df2145b-1a79-4a71-89c9-51f654918374');
+    }
+
+    async function openTermsAndConditions() {
+        await WebBrowser.openBrowserAsync('https://www.apple.com/legal/internet-services/itunes/dev/stdeula/');
+    }
+
     return (
         <View style={[styles.container, { backgroundColor: colors.coloredBackground }]}>
             <View style={[styles.section, {borderColor: colors.text}]}>
@@ -35,12 +44,8 @@ export default function Settings() {
                 <SettingButton text={Texts[language].country} onPress={showCountryModal} />
             </View>
             <View style={[styles.section, {borderColor: colors.text}]}>
-                <Link href={{ pathname: '/privacyPolicy'}} asChild>
-                    <SettingButton text={Texts[language].privacyPolicy} />
-                </Link>
-                <Link href={{ pathname: '/termsAndConditions'}} asChild>
-                    <SettingButton text={Texts[language].termsAndConditions} />
-                </Link>
+                <SettingButton text={Texts[language].privacyPolicy} onPress={openPrivacyPolicy} />
+                <SettingButton text={Texts[language].termsAndConditions} onPress={openTermsAndConditions} />
             </View>
             <ThemedText variant="regularSm" style={styles.version}>
                 {Texts[language].version} {version}

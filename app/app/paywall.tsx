@@ -1,3 +1,4 @@
+import * as WebBrowser from 'expo-web-browser';
 import LoadingArticlesOverlay from "@/components/LoadingArticlesOverlay";
 import FlatButton from "@/components/ui/buttons/FlatButton";
 import SubscriptionButton from "@/components/ui/buttons/SubscriptionButton";
@@ -60,6 +61,14 @@ export default function Paywall() {
     async function handleRestorePurchases() {
         await Purchases.restorePurchases();
         router.push('/');
+    }
+
+    async function openPrivacyPolicy() {
+        await WebBrowser.openBrowserAsync('https://www.privacypolicies.com/live/6df2145b-1a79-4a71-89c9-51f654918374');
+    }
+
+    async function openTermsAndConditions() {
+        await WebBrowser.openBrowserAsync('https://www.apple.com/legal/internet-services/itunes/dev/stdeula/');
     }
 
     useEffect(() => {
@@ -137,16 +146,12 @@ export default function Paywall() {
                     }
                 </ThemedText>
                 <View style={[styles.bottomButtons, { borderColor: colors.gray500 }]}>
-                    <Link href={{ pathname: '/privacyPolicy'}} asChild>
-                        <FlatButton variant="regularXs">
-                            {Texts[language].privacyPolicy}
-                        </FlatButton>
-                    </Link>
-                    <Link href={{ pathname: '/termsAndConditions'}} asChild>
-                        <FlatButton variant="regularXs">
-                            {Texts[language].termsAndConditions}
-                        </FlatButton>
-                    </Link>
+                    <FlatButton variant="regularXs" onPress={openPrivacyPolicy}>
+                        {Texts[language].privacyPolicy}
+                    </FlatButton>
+                    <FlatButton variant="regularXs" onPress={openTermsAndConditions}>
+                        {Texts[language].termsAndConditions}
+                    </FlatButton>
                     <FlatButton variant="regularXs" onPress={handleRestorePurchases}>
                         {Texts[language].restorePurchases}
                     </FlatButton>
