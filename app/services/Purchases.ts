@@ -1,8 +1,9 @@
 import { Platform } from 'react-native';
 import Purchases, { PurchasesPackage } from 'react-native-purchases';
+import Constants from 'expo-constants';
 
-const REVENUE_CAT_IOS_API_KEY = process.env.EXPO_PUBLIC_REVENUE_CAT_IOS_API_KEY as string;
-const REVENUE_CAT_ANDROID_API_KEY = process.env.EXPO_PUBLIC_REVENUE_CAT_ANDROID_API_KEY as string;
+const REVENUE_CAT_IOS_API_KEY = Constants.expoConfig?.extra?.revenueCatIosApiKey;
+const REVENUE_CAT_ANDROID_API_KEY = Constants.expoConfig?.extra?.revenueCatAndroidApiKey;
 
 export class PurchasesService {
 

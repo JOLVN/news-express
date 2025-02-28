@@ -3,9 +3,10 @@ import { ArticleByIdResponse, ArticleResponse } from "@/types/articles";
 import { UserData } from "@/types/user";
 import { Language } from "@/types/languages";
 import { Alert } from "react-native";
+import Constants from 'expo-constants';
 
 const API_URL = 'https://news-express-1mmx.onrender.com/';
-const API_KEY = process.env.EXPO_PUBLIC_PERSONAL_API_KEY;
+const API_KEY = Constants.expoConfig?.extra?.personalApiKey;
 
 export async function fetchArticles(day: string, language: Language) {
 

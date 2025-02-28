@@ -1,9 +1,10 @@
 import { Language } from '@/types/languages';
 import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
+import Constants from 'expo-constants';
 
 const GOOGLE_TTS_ENDPOINT = 'https://texttospeech.googleapis.com/v1/text:synthesize';
-const GOOGLE_TTS_API_KEY = process.env.EXPO_PUBLIC_GOOGLE_TTS_API_KEY;
+const GOOGLE_TTS_API_KEY = Constants.expoConfig?.extra?.googleTTSApiKey;
 
 export class GoogleTTSService {
   static sound: Audio.Sound | null = null;

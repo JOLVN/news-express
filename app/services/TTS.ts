@@ -1,8 +1,9 @@
 import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
+import Constants from 'expo-constants';
 
 const ELEVENLABS_ENDPOINT = 'https://api.elevenlabs.io/v1/text-to-speech';
-const ELEVENLABS_API_KEY = process.env.EXPO_PUBLIC_ELEVENLABS_API_KEY as string;
+const ELEVENLABS_API_KEY = Constants.expoConfig?.extra?.elevenLabsApiKey;
 // const VOICE_ID = '21m00Tcm4TlvDq8ikWAM';
 // const VOICE_ID = 'dzKt73kkmFQQ0Qnznorl';
 const VOICE_ID = '1cQMpOQhhvKQYONTiETc';
