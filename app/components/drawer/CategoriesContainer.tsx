@@ -1,4 +1,4 @@
-import { StyleSheet, View, ViewProps } from "react-native";
+import { ScrollView, StyleSheet, View, ViewProps } from "react-native";
 import CategoryWrapper from "@/components/ui/CategoryWrapper";
 import { useContext,  } from "react";
 import { CategoriesContext } from "@/contexts/CategoriesContext";
@@ -18,16 +18,18 @@ export default function CategoriesContainer({style}: ViewProps) {
     }
 
     return (
-        <View style={[styles.container, style]}>
-            {categories.map((category, index) => (
-                <CategoryWrapper 
-                    key={index} 
-                    category={category} 
-                    onPress={() => handlePress(category.id)} 
-                    isSelected={!!userCategories.find(c => c.id === category.id)}
-                />
-            ))}
-        </View>
+        <ScrollView>
+            <View style={[styles.container, style]} >
+                {categories.map((category, index) => (
+                    <CategoryWrapper 
+                        key={index} 
+                        category={category} 
+                        onPress={() => handlePress(category.id)} 
+                        isSelected={!!userCategories.find(c => c.id === category.id)}
+                    />
+                ))}
+            </View>
+        </ScrollView>
     )
 }
 
@@ -36,5 +38,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         gap: 10,
+        paddingBottom: 20
     }
 });

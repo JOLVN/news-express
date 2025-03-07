@@ -26,7 +26,7 @@ export default function CustomDrawerContent() {
             <View style={styles.container}>
                 <ThemedText variant="articleSummaryTitle">{Texts[language].personalizeFeed}</ThemedText>
                 <CategoriesContainer style={{ marginTop: 10 }} />
-                <View style={styles.bottomContainer}>
+                <View style={[styles.bottomContainer, { backgroundColor: colors.background }]}>
                     <View style={styles.remainingCredits}>
                         <ThemedText variant="regularSm">{Texts[language].remainingCredits}</ThemedText>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -63,11 +63,11 @@ const styles = StyleSheet.create({
         padding: 16,
     },
     bottomContainer: {
-        position: 'absolute',
+        position: 'relative',
         width: '100%',
         bottom: 16,
-        right: 16,
-        gap: 16
+        gap: 16,
+        paddingTop: 16,
     },
     remainingCredits: {
         alignItems: 'center',
