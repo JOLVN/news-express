@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
     contentContainer: {
         padding: 20,
         gap: 24,
+        paddingBottom: 40,
     },
     header: {
         alignItems: 'center',

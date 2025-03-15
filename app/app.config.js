@@ -2,7 +2,7 @@ export default {
   expo: {
     name: "Xpress",
     slug: "xpress-news",
-    version: "1.0.1",
+    version: "1.0.4",
     orientation: "portrait",
     icon: "./assets/images/icon.png",
     scheme: "myapp",
