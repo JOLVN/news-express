@@ -2,14 +2,14 @@ export default {
   expo: {
     name: "Xpress",
     slug: "xpress-news",
-    version: "1.0.4",
+    version: "1.0.2",
     orientation: "portrait",
     icon: "./assets/images/icon.png",
     scheme: "myapp",
     userInterfaceStyle: "automatic",
     newArchEnabled: true,
     ios: {
-      supportsTablet: false,
+      supportsTablet: true,
       bundleIdentifier: "fr.jolan.xpress"
     },
     android: {
